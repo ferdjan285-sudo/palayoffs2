@@ -417,42 +417,112 @@ export default function ArenaDisplay({ landingData, onExit, onRefresh }) {
                             </div>
                         </div>
 
-                        {/* Match Switcher Tabs for Stadium Coordinator */}
+                        {/* MODERN ARENA STAGE MATCHUP SELECTOR */}
                         {sortedMatches.length > 1 && (
-                            <div className="relative z-10 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-slate-200 dark:border-[#1F2538]">
-                                <div className="flex items-center justify-between mb-2.5 text-xs font-bold text-slate-600 dark:text-slate-400">
-                                    <span>Select Arena Stage Matchup:</span>
-                                    <span className="font-mono text-[11px] text-slate-400 dark:text-slate-500">{sortedMatches.length} Fixtures</span>
+                            <div className="relative z-10 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-slate-200 dark:border-[#1F2538] space-y-3">
+                                <div className="flex items-center justify-between text-xs">
+                                    <div className="flex items-center gap-2">
+                                        <Sparkles className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                                        <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[11px] sm:text-xs">
+                                            Select Arena Stage Matchup
+                                        </span>
+                                    </div>
+                                    <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-white/[0.04] px-2 py-0.5 rounded-md border border-slate-200 dark:border-white/[0.05]">
+                                        {sortedMatches.length} Fixtures
+                                    </span>
                                 </div>
-                                <div className="flex flex-wrap gap-2">
+
+                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
                                     {sortedMatches.map((m) => {
                                         const isSelected = m.id === activeMatch.id;
-                                        const nameA = m.division_a?.name || m.divisionA?.name || 'TBD';
-                                        const nameB = m.division_b?.name || m.divisionB?.name || 'TBD';
+                                        const divAItem = m.division_a || m.divisionA;
+                                        const divBItem = m.division_b || m.divisionB;
+                                        const nameA = divAItem?.name || 'TBD';
+                                        const nameB = divBItem?.name || 'TBD';
+                                        const colorItemA = divAItem?.color_hex || '#B784A7';
+                                        const colorItemB = divBItem?.color_hex || '#98FF98';
                                         const isConcluded = Boolean(m.winner_id || m.status === 'finished');
+                                        const isLive = m.status === 'live' && !isConcluded;
+
                                         return (
                                             <button
                                                 key={m.id}
+                                                type="button"
                                                 onClick={() => setSelectedMatchId(m.id)}
-                                                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                                                className={`p-2.5 sm:p-3 rounded-2xl text-left transition-all duration-200 flex flex-col justify-between relative cursor-pointer group ${
                                                     isSelected
-                                                        ? 'bg-gradient-to-r from-rose-600 to-rose-700 text-white shadow-md border border-rose-400/50'
+                                                        ? 'bg-rose-500/10 dark:bg-rose-950/40 border-2 border-rose-500 ring-2 ring-rose-500/20 shadow-md'
                                                         : isConcluded
-                                                        ? 'bg-slate-100 dark:bg-[#10131E] hover:bg-slate-200 dark:hover:bg-[#161B29] text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800/80 opacity-80'
-                                                        : 'bg-white dark:bg-[#141724] hover:bg-slate-50 dark:hover:bg-[#1A1F30] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 shadow-sm'
+                                                        ? 'bg-slate-50/80 dark:bg-white/[0.02] border border-slate-200/80 dark:border-white/[0.04] hover:border-slate-300 dark:hover:border-white/[0.1] opacity-80'
+                                                        : 'bg-white dark:bg-[#141824] border border-slate-200 dark:border-white/[0.06] hover:border-rose-400 dark:hover:border-rose-500/50 shadow-xs'
                                                 }`}
                                             >
-                                                <span className="font-mono text-[10px] opacity-75">{m.match_identifier}</span>
-                                                <span className="truncate max-w-[120px] sm:max-w-none">{nameA} vs {nameB}</span>
-                                                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-black/10 dark:bg-black/40 text-slate-700 dark:text-slate-300 font-bold">
-                                                    {m.score_a ?? 0}-{m.score_b ?? 0}
-                                                </span>
-                                                {m.status === 'live' && !isConcluded && (
-                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                                                )}
-                                                {isConcluded && (
-                                                    <span className="text-[10px] text-emerald-500 dark:text-emerald-400 font-mono font-bold">✓</span>
-                                                )}
+                                                {/* Header: Identifier + Status Tag */}
+                                                <div className="flex items-center justify-between gap-1 mb-2">
+                                                    <span className={`px-1.5 py-0.5 rounded-md font-mono text-[10px] font-black uppercase ${
+                                                        isSelected
+                                                            ? 'bg-rose-600 text-white shadow-xs'
+                                                            : 'bg-slate-100 dark:bg-white/[0.06] text-slate-700 dark:text-slate-300'
+                                                    }`}>
+                                                        {m.match_identifier}
+                                                    </span>
+
+                                                    {isSelected ? (
+                                                        <span className="text-[9px] font-black uppercase tracking-wider text-rose-600 dark:text-rose-400 font-mono flex items-center gap-1">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                                                            On Stage
+                                                        </span>
+                                                    ) : isLive ? (
+                                                        <span className="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 font-mono flex items-center gap-1">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                                                            Live
+                                                        </span>
+                                                    ) : isConcluded ? (
+                                                        <span className="text-[9px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">
+                                                            ✓ Done
+                                                        </span>
+                                                    ) : (
+                                                        <span className="text-[9px] font-mono text-slate-400">
+                                                            Ready
+                                                        </span>
+                                                    )}
+                                                </div>
+
+                                                {/* Matchup Teams Row */}
+                                                <div className="space-y-1 my-1">
+                                                    <div className="flex items-center justify-between gap-1.5 text-xs">
+                                                        <div className="flex items-center gap-1.5 min-w-0">
+                                                            <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: colorItemA }} />
+                                                            <span className={`truncate text-[11px] font-extrabold ${
+                                                                m.winner_id === divAItem?.id ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-800 dark:text-slate-200'
+                                                            }`}>
+                                                                {nameA}
+                                                            </span>
+                                                        </div>
+                                                        <span className="font-mono text-xs font-black text-slate-900 dark:text-white shrink-0">
+                                                            {m.score_a ?? 0}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="flex items-center justify-between gap-1.5 text-xs">
+                                                        <div className="flex items-center gap-1.5 min-w-0">
+                                                            <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: colorItemB }} />
+                                                            <span className={`truncate text-[11px] font-extrabold ${
+                                                                m.winner_id === divBItem?.id ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-800 dark:text-slate-200'
+                                                            }`}>
+                                                                {nameB}
+                                                            </span>
+                                                        </div>
+                                                        <span className="font-mono text-xs font-black text-slate-900 dark:text-white shrink-0">
+                                                            {m.score_b ?? 0}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                {/* Footer Stage Name */}
+                                                <div className="mt-1 pt-1.5 border-t border-slate-100 dark:border-white/[0.04] text-[9px] font-mono text-slate-400 truncate">
+                                                    {getStageName(m.match_identifier)}
+                                                </div>
                                             </button>
                                         );
                                     })}

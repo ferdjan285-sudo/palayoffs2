@@ -2,7 +2,11 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0D0F15">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>PalayOffs — Esports Tournament Platform & Matchmaking Engine</title>
     <meta name="description" content="Premier esports tournament platform and automated matchmaking bracketing engine for Mobile Legends: Bang Bang and collegiate divisions.">

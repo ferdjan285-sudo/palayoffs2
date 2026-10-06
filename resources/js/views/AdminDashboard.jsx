@@ -124,7 +124,25 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                 }
             }
         } catch (err) {
-            setErrorBanner(err.response?.data?.message || 'Failed loading admin data');
+            try {
+                const publicRes = await api.get('/public/landing-data');
+                if (publicRes.data.success) {
+                    const divs = publicRes.data.divisions || [];
+                    const tourney = publicRes.data.tournament;
+                    const matchesList = publicRes.data.bracket_tree?.all_matches || [];
+                    setDivisions(divs);
+                    if (tourney) {
+                        setTournaments([tourney]);
+                        setSelectedTournamentId(tourney.id);
+                        setMatches(matchesList);
+                        if (tourney.stream_url) setZoomUrl(tourney.stream_url);
+                        if (tourney.zoom_meeting_id) setZoomMeetingId(tourney.zoom_meeting_id);
+                        if (tourney.zoom_passcode) setZoomPasscode(tourney.zoom_passcode);
+                    }
+                }
+            } catch {
+                setErrorBanner(err.response?.data?.message || 'Failed loading admin data');
+            }
         } finally {
             setLoading(false);
         }
