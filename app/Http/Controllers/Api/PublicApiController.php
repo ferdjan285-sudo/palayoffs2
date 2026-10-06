@@ -28,10 +28,12 @@ class PublicApiController extends Controller
             ->latest('id')
             ->first();
 
-        // Auto-sync points if Grand Final is finished
+        // Auto-sync points if Grand Final is finished and normalize title
         if ($tournament) {
+            $tournament->title = 'MLBB PalayOffs Cup 2026';
             $this->bracketService->syncTournamentPoints($tournament);
             $tournament->refresh();
+            $tournament->title = 'MLBB PalayOffs Cup 2026';
         }
 
         // Fallback if no tournament exists
