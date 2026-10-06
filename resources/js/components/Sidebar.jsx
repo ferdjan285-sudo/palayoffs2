@@ -28,15 +28,15 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
         >
             {/* Staff Console Header */}
             <div className="h-20 px-6 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0E1017]">
-                <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-600 via-rose-500 to-amber-500 p-0.5 shadow-md flex items-center justify-center">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-600 via-rose-500 to-amber-500 p-0.5 shadow-md flex items-center justify-center shrink-0">
                         <Flame className="w-5 h-5 text-white" />
                     </div>
-                    <div>
-                        <h2 className="font-black text-sm tracking-wider text-slate-900 dark:text-white uppercase leading-none">
+                    <div className="min-w-0">
+                        <h2 className="font-black text-sm tracking-wider text-slate-900 dark:text-white uppercase leading-none truncate">
                             Palay<span className="text-rose-600 dark:text-rose-500">Offs</span>
                         </h2>
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider block mt-1 text-purple-600 dark:text-purple-400">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider block mt-1 text-rose-600 dark:text-rose-400">
                             DIRECTOR STUDIO
                         </span>
                     </div>
