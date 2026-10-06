@@ -111,17 +111,10 @@ function AppContent() {
             )}
 
             {/* Platform Footer */}
-            <footer className="py-6 px-6 border-t border-slate-200 dark:border-[#1C202E] bg-white dark:bg-[#0A0C12] text-xs text-slate-500 dark:text-slate-400 text-center md:flex md:justify-between items-center transition-colors">
-                <div>
-                    © 2026 <strong>PalayOffs Esports Tournament Engine</strong>. Built with Laravel 12, MySQL, React 19 & Tailwind CSS.
-                </div>
-                <div className="mt-2 md:mt-0 flex items-center justify-center gap-4 text-[11px] font-mono">
-                    <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        Relational Directed Acyclic Graph Engine
-                    </span>
-                    <span>Vercel Serverless Ready</span>
-                </div>
+            <footer className="py-5 px-6 border-t border-slate-200/60 dark:border-white/[0.04] bg-white dark:bg-[#0A0C12] text-xs text-slate-500 dark:text-slate-400 text-center transition-colors">
+                <p className="font-medium">
+                    © 2026 <strong>PalayOffs</strong>. All rights reserved.
+                </p>
             </footer>
 
             {/* Top-Level Login Popup Modal */}
