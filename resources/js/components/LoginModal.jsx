@@ -34,14 +34,14 @@ export default function LoginModal({ onSuccess }) {
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fadeIn"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fadeIn"
             role="dialog"
             aria-modal="true"
             aria-labelledby="login-modal-title"
             onClick={() => !isLoading && setLoginModalOpen(false)}
         >
             <div
-                className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.08] rounded-3xl shadow-2xl p-6 sm:p-8 text-slate-900 dark:text-slate-100 transition-all animate-modal-pop"
+                className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white dark:bg-[#121520] border border-slate-200/80 dark:border-white/[0.08] rounded-3xl shadow-2xl p-6 sm:p-8 text-slate-900 dark:text-slate-100 transition-all animate-modal-pop"
                 onClick={(e) => e.stopPropagation()}
             >
 

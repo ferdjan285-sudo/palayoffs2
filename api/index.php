@@ -130,28 +130,47 @@ if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
 }
 
 // Ensure Authorization header is passed to PHP environment in FastCGI / Vercel
-if (empty($_SERVER['HTTP_AUTHORIZATION'])) {
-    if (!empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+if (!isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
-    } elseif (!empty($_SERVER['HTTP_X_AUTHORIZATION'])) {
-        $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['HTTP_X_AUTHORIZATION'];
-    } elseif (function_exists('getallheaders')) {
-        $headers = getallheaders();
-        foreach ($headers as $k => $v) {
-            if (strcasecmp($k, 'authorization') === 0 || strcasecmp($k, 'x-authorization') === 0) {
-                $_SERVER['HTTP_AUTHORIZATION'] = $v;
-                break;
-            }
-        }
     } elseif (function_exists('apache_request_headers')) {
         $headers = apache_request_headers();
-        foreach ($headers as $k => $v) {
-            if (strcasecmp($k, 'authorization') === 0 || strcasecmp($k, 'x-authorization') === 0) {
-                $_SERVER['HTTP_AUTHORIZATION'] = $v;
-                break;
-            }
+        if (isset($headers['Authorization'])) {
+            $_SERVER['HTTP_AUTHORIZATION'] = $headers['Authorization'];
+        } elseif (isset($headers['authorization'])) {
+            $_SERVER['HTTP_AUTHORIZATION'] = $headers['authorization'];
         }
+    } elseif (isset($_SERVER['HTTP_X_AUTHORIZATION'])) {
+        $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['HTTP_X_AUTHORIZATION'];
     }
+}
+
+// Lightweight diagnostics: /api/__diag
+if (strpos($_SERVER['REQUEST_URI'] ?? '', '/api/__diag') === 0) {
+    header('Content-Type: application/json');
+    $out = [
+        'php' => PHP_VERSION,
+        'pdo_drivers' => class_exists('PDO') ? PDO::getAvailableDrivers() : [],
+        'use_pgsql' => $usePgsql,
+        'db_connection' => getenv('DB_CONNECTION'),
+        'db_host' => getenv('DB_HOST'),
+        'db_user' => getenv('DB_USERNAME'),
+        'vendor_exists' => file_exists(__DIR__ . '/../vendor/autoload.php'),
+        'sqlite_exists' => file_exists(__DIR__ . '/../database/database.sqlite'),
+    ];
+    try {
+        require __DIR__ . '/../vendor/autoload.php';
+        $app = require __DIR__ . '/../bootstrap/app.php';
+        $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+        $kernel->bootstrap();
+        $out['users'] = \Illuminate\Support\Facades\DB::table('users')->count();
+        $out['tournaments'] = \Illuminate\Support\Facades\DB::table('tournaments')->count();
+    } catch (\Throwable $e) {
+        $out['error'] = get_class($e) . ': ' . $e->getMessage();
+        $out['file'] = $e->getFile() . ':' . $e->getLine();
+    }
+    echo json_encode($out, JSON_PRETTY_PRINT);
+    exit;
 }
 
 require __DIR__ . '/../public/index.php';
