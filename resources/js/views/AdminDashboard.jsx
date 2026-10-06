@@ -493,15 +493,15 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
     return (
         <div className="space-y-8 animate-fadeIn">
             {/* Header & Arena Presenter Mode Callout */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-[#212638]">
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/[0.04]">
                 <div className="flex items-center gap-3.5">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-600/20 border border-purple-200 dark:border-purple-500/40 flex items-center justify-center text-purple-600 dark:text-purple-400 shadow-sm">
+                    <div className="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-600/20 border border-purple-200 dark:border-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400 shadow-sm">
                         <ShieldCheck className="w-6 h-6" />
                     </div>
                     <div>
                         <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2.5">
                             Tournament Director Studio
-                            <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/40 uppercase">
+                            <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30 uppercase">
                                 Superuser
                             </span>
                         </h2>
@@ -526,7 +526,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                     <button
                         onClick={fetchAdminData}
                         disabled={loading}
-                        className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#141722] dark:hover:bg-[#1A1F2E] border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 shadow-sm"
+                        className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 dark:bg-white/[0.03] dark:hover:bg-white/[0.06] border border-slate-200 dark:border-white/[0.05] text-xs font-bold text-slate-700 dark:text-slate-300 shadow-sm"
                     >
                         <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
                         <span className="hidden sm:inline">Sync Data</span>
@@ -536,13 +536,13 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
 
             {/* Notification Banners */}
             {successBanner && (
-                <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2.5 shadow-sm">
+                <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/20 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2.5 shadow-sm">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <span className="font-bold">{successBanner}</span>
                 </div>
             )}
             {errorBanner && (
-                <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-500/40 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2.5 shadow-sm">
+                <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-500/20 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2.5 shadow-sm">
                     <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
                     <span className="font-bold">{errorBanner}</span>
                 </div>
@@ -567,7 +567,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                             className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                                 isActive
                                     ? 'bg-purple-600 text-white shadow-md'
-                                    : 'bg-white dark:bg-[#141722] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                    : 'bg-white dark:bg-white/[0.03] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/[0.04] hover:bg-slate-100 dark:hover:bg-white/[0.06]'
                             }`}
                         >
                             <Icon className="w-4 h-4 shrink-0" />
@@ -579,8 +579,8 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
 
             {/* TAB 1: MATCHMAKING & SEED STUDIO */}
             {activeTab === 'bracket' && (
-                <div className="rounded-3xl bg-white dark:bg-[#141722] border border-slate-200 dark:border-[#212638] p-6 sm:p-8 shadow-sm dark:shadow-2xl space-y-6">
-                    <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-[#212638]">
+                <div className="rounded-3xl bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.04] p-6 sm:p-8 shadow-sm dark:shadow-2xl space-y-6">
+                    <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/[0.04]">
                         <div>
                             <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
                                 <Sparkles className="w-5 h-5 text-purple-600 dark:text-purple-400" />
@@ -594,7 +594,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                         <button
                             type="button"
                             onClick={shuffleSeeds}
-                            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-[#1B2030] dark:hover:bg-[#23293D] text-xs font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors"
+                            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] text-xs font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/[0.04] transition-colors"
                         >
                             <Shuffle className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
                             <span>Shuffle Matchups</span>
@@ -614,7 +614,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     placeholder="e.g. MLBB PalayOffs Invitational Cup 2026"
-                                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#0D0F15] text-slate-900 dark:text-slate-200 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-[#23293D] focus:border-purple-500 focus:outline-none"
+                                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-white/[0.03] text-slate-900 dark:text-slate-200 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-white/[0.05] focus:border-purple-500 focus:outline-none"
                                 />
                             </div>
 
@@ -625,7 +625,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                 <select
                                     value={sportId}
                                     onChange={(e) => setSportId(e.target.value)}
-                                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#0D0F15] text-slate-900 dark:text-slate-200 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-[#23293D] focus:border-purple-500 focus:outline-none"
+                                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-white/[0.03] text-slate-900 dark:text-slate-200 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-white/[0.05] focus:border-purple-500 focus:outline-none"
                                 >
                                     {sports.map((s) => (
                                         <option key={s.id} value={s.id}>
@@ -639,8 +639,8 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                         {/* Interactive Matchmaking Cards (Who Fights Whom) */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* SF1 Clash Configuration */}
-                            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#0D0F15] border border-slate-200 dark:border-purple-500/30 space-y-4 shadow-sm">
-                                <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.04] space-y-4 shadow-sm">
+                                <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-white/[0.04]">
                                     <div>
                                         <span className="text-xs font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider">
                                             Match 1: Semifinal 1 (SF1)
@@ -651,7 +651,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                         type="button"
                                         onClick={swapSf1}
                                         title="Swap Opponents"
-                                        className="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
+                                        className="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] text-slate-700 dark:text-slate-300 transition-colors"
                                     >
                                         <ArrowLeftRight className="w-3.5 h-3.5" />
                                     </button>
@@ -665,7 +665,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                         <select
                                             value={seedA}
                                             onChange={(e) => setSeedA(e.target.value)}
-                                            className="w-full p-2.5 bg-white dark:bg-[#141722] text-xs text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-slate-700 font-bold"
+                                            className="w-full p-2.5 bg-white dark:bg-[#151926] text-xs text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.05] font-bold"
                                         >
                                             {divisions.map((d) => (
                                                 <option key={d.id} value={d.id}>
@@ -686,7 +686,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                         <select
                                             value={seedB}
                                             onChange={(e) => setSeedB(e.target.value)}
-                                            className="w-full p-2.5 bg-white dark:bg-[#141722] text-xs text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-slate-700 font-bold"
+                                            className="w-full p-2.5 bg-white dark:bg-[#151926] text-xs text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.05] font-bold"
                                         >
                                             {divisions.map((d) => (
                                                 <option key={d.id} value={d.id}>
@@ -699,8 +699,8 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                             </div>
 
                             {/* SF2 Clash Configuration */}
-                            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#0D0F15] border border-slate-200 dark:border-purple-500/30 space-y-4 shadow-sm">
-                                <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.04] space-y-4 shadow-sm">
+                                <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-white/[0.04]">
                                     <div>
                                         <span className="text-xs font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider">
                                             Match 2: Semifinal 2 (SF2)
@@ -711,7 +711,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                         type="button"
                                         onClick={swapSf2}
                                         title="Swap Opponents"
-                                        className="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
+                                        className="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] text-slate-700 dark:text-slate-300 transition-colors"
                                     >
                                         <ArrowLeftRight className="w-3.5 h-3.5" />
                                     </button>
@@ -725,7 +725,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                         <select
                                             value={seedC}
                                             onChange={(e) => setSeedC(e.target.value)}
-                                            className="w-full p-2.5 bg-white dark:bg-[#141722] text-xs text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-slate-700 font-bold"
+                                            className="w-full p-2.5 bg-white dark:bg-[#151926] text-xs text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.05] font-bold"
                                         >
                                             {divisions.map((d) => (
                                                 <option key={d.id} value={d.id}>
@@ -746,7 +746,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                         <select
                                             value={seedD}
                                             onChange={(e) => setSeedD(e.target.value)}
-                                            className="w-full p-2.5 bg-white dark:bg-[#141722] text-xs text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-slate-700 font-bold"
+                                            className="w-full p-2.5 bg-white dark:bg-[#151926] text-xs text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.05] font-bold"
                                         >
                                             {divisions.map((d) => (
                                                 <option key={d.id} value={d.id}>
@@ -769,7 +769,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                 value={streamUrl}
                                 onChange={(e) => setStreamUrl(e.target.value)}
                                 placeholder="https://www.youtube.com/watch?v=..."
-                                className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#0D0F15] text-slate-900 dark:text-slate-200 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-[#23293D] font-mono"
+                                className="w-full px-4 py-2.5 bg-slate-50 dark:bg-white/[0.03] text-slate-900 dark:text-slate-200 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-white/[0.05] font-mono"
                             />
                         </div>
 
@@ -969,9 +969,9 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                 };
 
                 return (
-                    <div className="rounded-3xl bg-white dark:bg-[#141722] border border-slate-200 dark:border-[#212638] p-5 sm:p-7 shadow-sm dark:shadow-2xl space-y-6">
+                    <div className="rounded-3xl bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.04] p-5 sm:p-7 shadow-sm dark:shadow-2xl space-y-6">
                         {/* Header & Tournament Level Actions */}
-                        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-[#212638]">
+                        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/[0.04]">
                             <div>
                                 <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2.5">
                                     <Calendar className="w-5 h-5 text-purple-600 dark:text-purple-400" />
@@ -998,7 +998,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                         <button
                                             type="button"
                                             onClick={() => handleResetTournament(selectedTournamentId)}
-                                            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-[#1A1F2E] dark:hover:bg-[#232A3D] text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200 dark:border-slate-700 transition-all cursor-pointer"
+                                            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200 dark:border-white/[0.04] transition-all cursor-pointer"
                                             title="Reset entire tournament bracket back to initial Double Elimination state"
                                         >
                                             <RotateCcw className="w-3.5 h-3.5 text-rose-500" />
@@ -1022,7 +1022,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                     className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                                         matchStageFilter === 'all'
                                             ? 'bg-purple-600 text-white shadow-sm'
-                                            : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
+                                            : 'bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/[0.04]'
                                     }`}
                                 >
                                     <Layers className="w-3 h-3" />
@@ -1042,10 +1042,10 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                 isSelected
                                                     ? 'ring-2 ring-purple-500 shadow-md bg-purple-500/10 border-purple-500/40'
                                                     : p.isDone
-                                                    ? 'bg-emerald-500/5 border-emerald-500/30 hover:bg-emerald-500/10'
+                                                    ? 'bg-emerald-500/5 border-emerald-500/20 hover:bg-emerald-500/10'
                                                     : p.unlocked
-                                                    ? 'bg-slate-50 dark:bg-[#121522] border-slate-200 dark:border-slate-800 hover:border-purple-400'
-                                                    : 'bg-slate-50/50 dark:bg-[#0E111A] border-slate-200/60 dark:border-slate-800/60 opacity-60'
+                                                    ? 'bg-slate-50 dark:bg-white/[0.02] border-slate-200 dark:border-white/[0.04] hover:border-purple-400'
+                                                    : 'bg-slate-50/50 dark:bg-white/[0.01] border-slate-200/60 dark:border-white/[0.02] opacity-60'
                                             }`}
                                         >
                                             <div className="flex items-center justify-between gap-2 mb-1">
@@ -1057,7 +1057,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                         ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
                                                         : p.unlocked
                                                         ? 'bg-purple-500/20 text-purple-600 dark:text-purple-300'
-                                                        : 'bg-slate-200 dark:bg-slate-800 text-slate-500'
+                                                        : 'bg-slate-200 dark:bg-white/[0.05] text-slate-500'
                                                 }`}>
                                                     {!p.unlocked && <Lock className="w-2.5 h-2.5" />}
                                                     {p.isDone ? `✓ Done (${p.total}/${p.total})` : p.unlocked ? `${p.doneCount}/${p.total} Done` : 'Locked'}
@@ -1076,7 +1076,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                         </div>
 
                         {/* COMPACT ACTIVE STAGE GUIDANCE BANNER */}
-                        <div className="p-3.5 rounded-xl bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/40 text-xs flex flex-wrap items-center justify-between gap-3 text-slate-700 dark:text-purple-200">
+                        <div className="p-3.5 rounded-xl bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 text-xs flex flex-wrap items-center justify-between gap-3 text-slate-700 dark:text-purple-200">
                             <div className="flex items-center gap-2.5">
                                 <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shrink-0" />
                                 <div>
@@ -1136,14 +1136,14 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                         key={m.id}
                                         className={`rounded-2xl border transition-all overflow-hidden ${
                                             !isUnlocked
-                                                ? 'bg-slate-50/50 dark:bg-[#0c0e15]/70 border-dashed border-slate-200 dark:border-slate-800'
+                                                ? 'bg-slate-50/50 dark:bg-white/[0.01] border-dashed border-slate-200 dark:border-white/[0.03]'
                                                 : m.winner_id
                                                 ? 'bg-white dark:bg-[#121623] border-emerald-500/30 shadow-sm'
-                                                : 'bg-white dark:bg-[#121623] border-slate-200 dark:border-[#212638] shadow-sm hover:border-purple-500/50'
+                                                : 'bg-white dark:bg-[#121623] border-slate-200 dark:border-white/[0.04] shadow-sm hover:border-purple-500/50'
                                         }`}
                                     >
                                         {/* 1. COMPACT HEADER BAR */}
-                                        <div className="p-3 sm:p-4 bg-slate-50/70 dark:bg-[#0f121d] border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                                        <div className="p-3 sm:p-4 bg-slate-50/70 dark:bg-white/[0.02] border-b border-slate-200 dark:border-white/[0.03] flex flex-wrap items-center justify-between gap-3">
                                             <div className="flex items-center gap-2.5 min-w-0">
                                                 <span className="px-2.5 py-1 rounded-lg bg-purple-600 text-white font-mono font-black text-xs shadow-sm">
                                                     {m.match_identifier}
@@ -1160,7 +1160,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
 
                                             <div className="flex items-center gap-2 shrink-0">
                                                 {/* Series Format Selector: BO1, BO3, BO5, BO7 */}
-                                                <div className="flex items-center bg-white dark:bg-[#181D2D] border border-slate-200 dark:border-slate-700 rounded-lg p-0.5 text-xs font-mono">
+                                                <div className="flex items-center bg-white dark:bg-[#151926] border border-slate-200 dark:border-white/[0.05] rounded-lg p-0.5 text-xs font-mono">
                                                     <span className="px-1.5 text-slate-400 text-[10px] uppercase font-bold">Series:</span>
                                                     {[1, 3, 5, 7].map((num) => {
                                                         // Prevent switching mid-series to a format that would already be decided
@@ -1174,7 +1174,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                             className={`px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer transition-colors disabled:opacity-30 disabled:cursor-not-allowed ${
                                                                 bestOfVal === num
                                                                     ? 'bg-purple-600 text-white shadow-sm'
-                                                                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                                                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.05]'
                                                             }`}
                                                             title={tooShort ? `Current series score exceeds BO${num}` : `Set series format to Best of ${num}`}
                                                         >
@@ -1196,7 +1196,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                         <span>{gamesPlayed > 0 ? `Live · Game ${nextGameNo}` : 'Ready to Log'}</span>
                                                     </span>
                                                 ) : (
-                                                    <span className="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-500 font-bold text-[11px] font-mono flex items-center gap-1 border border-slate-300 dark:border-slate-700">
+                                                    <span className="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-white/[0.05] text-slate-500 font-bold text-[11px] font-mono flex items-center gap-1 border border-slate-300 dark:border-white/[0.05]">
                                                         <Lock className="w-3 h-3 text-amber-500" />
                                                         <span>Locked</span>
                                                     </span>
@@ -1212,7 +1212,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                 <div className={`md:col-span-5 p-3.5 rounded-xl border flex items-center justify-between gap-3 ${
                                                     m.winner_id === divA?.id
                                                         ? 'bg-emerald-500/10 border-emerald-500/40 ring-1 ring-emerald-500/30'
-                                                        : 'bg-slate-50 dark:bg-[#151928] border-slate-200 dark:border-slate-800'
+                                                        : 'bg-slate-50 dark:bg-[#151928] border-slate-200 dark:border-white/[0.03]'
                                                 }`}>
                                                     <div className="flex items-center gap-3 min-w-0">
                                                         <div
@@ -1252,7 +1252,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                 <div className={`md:col-span-5 p-3.5 rounded-xl border flex items-center justify-between gap-3 ${
                                                     m.winner_id === divB?.id
                                                         ? 'bg-emerald-500/10 border-emerald-500/40 ring-1 ring-emerald-500/30'
-                                                        : 'bg-slate-50 dark:bg-[#151928] border-slate-200 dark:border-slate-800'
+                                                        : 'bg-slate-50 dark:bg-[#151928] border-slate-200 dark:border-white/[0.03]'
                                                 }`}>
                                                     <div className="flex items-center gap-3 min-w-0">
                                                         <div
@@ -1285,7 +1285,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                             {/* 3. SIMPLIFIED WINNER LOGGING / STATUS ACTION */}
                                             {/* CASE 1: LOCKED FIXTURE */}
                                             {!isUnlocked && (
-                                                <div className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-[#0e111a] border border-dashed border-slate-300 dark:border-slate-800 text-xs flex items-center justify-between gap-3">
+                                                <div className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-white/[0.01] border border-dashed border-slate-300 dark:border-white/[0.03] text-xs flex items-center justify-between gap-3">
                                                     <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400">
                                                         <Lock className="w-4 h-4 text-amber-500 shrink-0" />
                                                         <span><strong>Fixture Locked:</strong> {pendingMsg}. Will automatically unlock as soon as prior matches finish.</span>
@@ -1295,7 +1295,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
 
                                             {/* CASE 2: CONCLUDED FIXTURE */}
                                             {isUnlocked && m.winner_id && (
-                                                <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 flex flex-wrap items-center justify-between gap-3">
+                                                <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/30 flex flex-wrap items-center justify-between gap-3">
                                                     <div className="flex items-center gap-2 text-xs font-bold text-emerald-800 dark:text-emerald-300">
                                                         <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
                                                         <span>
@@ -1306,7 +1306,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                         type="button"
                                                         disabled={loading}
                                                         onClick={() => handleResetMatch(m.id)}
-                                                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-[#181D2D] hover:bg-rose-50 dark:hover:bg-rose-950/40 text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 text-xs font-bold border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer shadow-sm"
+                                                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-white/[0.04] hover:bg-rose-50 dark:hover:bg-rose-950/40 text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 text-xs font-bold border border-slate-200 dark:border-white/[0.05] transition-colors cursor-pointer shadow-sm"
                                                         title="Reset this match and clear downstream bracket slots"
                                                     >
                                                         <RotateCcw className="w-3.5 h-3.5 text-rose-500" />
@@ -1317,7 +1317,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
 
                                             {/* CASE 3: PER-GAME LOGGING (AUTO-DECLARES SERIES WINNER) */}
                                             {isUnlocked && !m.winner_id && (
-                                                <div className="p-4 rounded-xl bg-purple-50/70 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/40 space-y-4">
+                                                <div className="p-4 rounded-xl bg-purple-50/70 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 space-y-4">
                                                     {/* Instruction line */}
                                                     <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
                                                         <span className="font-extrabold text-slate-800 dark:text-purple-200 flex items-center gap-1.5">
@@ -1337,7 +1337,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                         ].map(({ side, div, wins, fallback, grad, pip }) => {
                                                             const isMatchPoint = wins === winsNeeded - 1;
                                                             return (
-                                                                <div key={side} className="p-3 rounded-xl bg-white dark:bg-[#141826] border border-slate-200 dark:border-slate-800 space-y-3">
+                                                                <div key={side} className="p-3 rounded-xl bg-white dark:bg-[#151926] border border-slate-200 dark:border-white/[0.04] space-y-3">
                                                                     <div className="flex items-center justify-between gap-2">
                                                                         <span className="font-extrabold text-xs text-slate-900 dark:text-white truncate">
                                                                             {div?.name || fallback}
@@ -1354,7 +1354,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                                         {Array.from({ length: winsNeeded }).map((_, i) => (
                                                                             <span
                                                                                 key={i}
-                                                                                className={`h-2 flex-1 rounded-full transition-colors ${i < wins ? pip : 'bg-slate-200 dark:bg-slate-700'}`}
+                                                                                className={`h-2 flex-1 rounded-full transition-colors ${i < wins ? pip : 'bg-slate-200 dark:bg-white/[0.08]'}`}
                                                                             />
                                                                         ))}
                                                                         <span className="ml-1 font-mono text-xs font-black text-slate-700 dark:text-slate-200 shrink-0">
@@ -1377,7 +1377,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                                             type="button"
                                                                             disabled={loading || wins === 0}
                                                                             onClick={() => handleLogGame(m, side, -1, divA, divB, bestOfVal, liveA, liveB)}
-                                                                            className="px-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-rose-500 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+                                                                            className="px-2.5 rounded-lg bg-slate-100 dark:bg-white/[0.04] text-slate-500 hover:text-rose-500 border border-slate-200 dark:border-white/[0.05] transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
                                                                             title="Undo one game win"
                                                                         >
                                                                             <RotateCcw className="w-3.5 h-3.5" />
@@ -1407,7 +1407,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                 </button>
 
                                                 {isAdvancedOpen && (
-                                                    <div className="mt-3 p-4 rounded-xl bg-slate-50 dark:bg-[#0E111B] border border-slate-200 dark:border-slate-800 space-y-3">
+                                                    <div className="mt-3 p-4 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.04] space-y-3">
                                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
                                                             <div>
                                                                 <label className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-mono block mb-1">
@@ -1421,7 +1421,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                                             [m.id]: { ...edits, division_a_id: e.target.value || null },
                                                                         })
                                                                     }
-                                                                    className="w-full p-2 bg-white dark:bg-[#141722] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-slate-700 font-semibold text-xs"
+                                                                    className="w-full p-2 bg-white dark:bg-[#151926] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-white/[0.05] font-semibold text-xs"
                                                                 >
                                                                     <option value="">TBD (Pending)</option>
                                                                     {divisions.map((d) => (
@@ -1444,7 +1444,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                                             [m.id]: { ...edits, division_b_id: e.target.value || null },
                                                                         })
                                                                     }
-                                                                    className="w-full p-2 bg-white dark:bg-[#141722] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-slate-700 font-semibold text-xs"
+                                                                    className="w-full p-2 bg-white dark:bg-[#151926] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-white/[0.05] font-semibold text-xs"
                                                                 >
                                                                     <option value="">TBD (Pending)</option>
                                                                     {divisions.map((d) => (
@@ -1468,7 +1468,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                                             [m.id]: { ...edits, scheduled_at: e.target.value },
                                                                         })
                                                                     }
-                                                                    className="w-full p-2 bg-white dark:bg-[#141722] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-slate-700 font-mono text-xs"
+                                                                    className="w-full p-2 bg-white dark:bg-[#151926] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-white/[0.05] font-mono text-xs"
                                                                 />
                                                             </div>
 
@@ -1484,7 +1484,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                                             [m.id]: { ...edits, status: e.target.value },
                                                                         })
                                                                     }
-                                                                    className="w-full p-2 bg-white dark:bg-[#141722] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-slate-700 font-semibold text-xs"
+                                                                    className="w-full p-2 bg-white dark:bg-[#151926] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-white/[0.05] font-semibold text-xs"
                                                                 >
                                                                     <option value="scheduled">Scheduled</option>
                                                                     <option value="live">Live in Progress</option>
@@ -1517,8 +1517,8 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
 
             {/* TAB 3: DIVISIONS & POINTING LEDGER WITH TEAM LOGO EDITOR */}
             {activeTab === 'divisions' && (
-                <div className="rounded-3xl bg-white dark:bg-[#141722] border border-slate-200 dark:border-[#212638] p-6 sm:p-8 shadow-sm dark:shadow-2xl space-y-6">
-                    <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-[#212638]">
+                <div className="rounded-3xl bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.04] p-6 sm:p-8 shadow-sm dark:shadow-2xl space-y-6">
+                    <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/[0.04]">
                         <div>
                             <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
                                 <Award className="w-5 h-5 text-purple-600 dark:text-purple-400" />
@@ -1533,7 +1533,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                         <button
                             type="button"
                             onClick={handleResetAllPoints}
-                            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/40 text-rose-700 dark:text-rose-300 font-bold text-xs border border-rose-200 dark:border-rose-800 transition-colors cursor-pointer"
+                            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/40 text-rose-700 dark:text-rose-300 font-bold text-xs border border-rose-200 dark:border-rose-800/40 transition-colors cursor-pointer"
                             title="Reset all division points to 0 for operational tournament start"
                         >
                             <RotateCcw className="w-3.5 h-3.5" />
@@ -1559,10 +1559,10 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                             return (
                                 <div
                                     key={div.id}
-                                    className="p-5 rounded-2xl bg-slate-50 dark:bg-[#0D0F15] border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm"
+                                    className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.04] space-y-4 shadow-sm"
                                 >
                                     {/* Division Header & Save */}
-                                    <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                                    <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-white/[0.04]">
                                         <div className="flex items-center gap-3">
                                             {/* Logo Preview */}
                                             <div 
@@ -1615,7 +1615,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                     </div>
 
                                     {/* Team Logo Image Editor */}
-                                    <div className="space-y-2 p-3 rounded-xl bg-white dark:bg-[#141722] border border-slate-200 dark:border-slate-800">
+                                    <div className="space-y-2 p-3 rounded-xl bg-white dark:bg-[#151926] border border-slate-200 dark:border-white/[0.04]">
                                         <label className="text-[11px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider block">
                                             Team Image / Logo Path (Used in Arena Display)
                                         </label>
@@ -1629,7 +1629,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                 })
                                             }
                                             placeholder="URL or /assets/divisions/..."
-                                            className="w-full p-2 bg-slate-50 dark:bg-[#0D0F15] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-slate-700 font-mono text-xs"
+                                            className="w-full p-2 bg-slate-50 dark:bg-white/[0.03] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-white/[0.05] font-mono text-xs"
                                         />
 
                                         {/* Presets & File Upload */}
@@ -1646,7 +1646,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                                 [div.id]: { ...edits, logo_path: p.path },
                                                             })
                                                         }
-                                                        className="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono"
+                                                        className="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.06] dark:hover:bg-white/[0.1] text-slate-700 dark:text-slate-300 font-mono"
                                                     >
                                                         {p.label.split(' ')[0]}
                                                     </button>
@@ -1681,7 +1681,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                         [div.id]: { ...edits, name: e.target.value },
                                                     })
                                                 }
-                                                className="w-full p-2 bg-white dark:bg-[#141722] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-slate-700 font-bold"
+                                                className="w-full p-2 bg-white dark:bg-[#151926] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-white/[0.05] font-bold"
                                             />
                                         </div>
 
@@ -1698,7 +1698,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                         [div.id]: { ...edits, color_hex: e.target.value },
                                                     })
                                                 }
-                                                className="w-full p-2 bg-white dark:bg-[#141722] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-slate-700 font-mono"
+                                                className="w-full p-2 bg-white dark:bg-[#151926] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-white/[0.05] font-mono"
                                             />
                                         </div>
 
@@ -1716,7 +1716,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                         [div.id]: { ...edits, total_accumulated_points: parseInt(e.target.value, 10) || 0 },
                                                     })
                                                 }
-                                                className="w-full p-2 bg-white dark:bg-[#141722] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-slate-700 font-mono font-bold"
+                                                className="w-full p-2 bg-white dark:bg-[#151926] text-slate-900 dark:text-white rounded-lg border border-slate-200 dark:border-white/[0.05] font-mono font-bold"
                                             />
                                         </div>
                                     </div>
@@ -1730,9 +1730,9 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
             {/* TAB 4: DYNAMIC ZOOM LIVE BROADCAST STUDIO */}
             {activeTab === 'zoom' && (
                 <div className="space-y-6">
-                    <div className="rounded-3xl bg-white dark:bg-[#141722] border border-slate-200 dark:border-[#212638] p-6 sm:p-8 shadow-sm dark:shadow-2xl">
+                    <div className="rounded-3xl bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.04] p-6 sm:p-8 shadow-sm dark:shadow-2xl">
                         {/* Header */}
-                        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-[#212638]">
+                        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-white/[0.04]">
                             <div>
                                 <h3 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2.5">
                                     <Video className="w-6 h-6 text-blue-500" />
@@ -1765,7 +1765,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                     <select
                                         value={selectedTournamentId}
                                         onChange={(e) => setSelectedTournamentId(e.target.value)}
-                                        className="w-full p-3 bg-slate-50 dark:bg-[#0B0D13] text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-mono"
+                                        className="w-full p-3 bg-slate-50 dark:bg-[#151926] text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.05] text-xs font-mono"
                                     >
                                         {tournaments.map((t) => (
                                             <option key={t.id} value={t.id}>
@@ -1788,7 +1788,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                             value={zoomUrl}
                                             onChange={(e) => setZoomUrl(e.target.value)}
                                             placeholder="https://zoom.us/j/1234567890?pwd=..."
-                                            className="w-full p-3.5 pr-24 bg-slate-50 dark:bg-[#0B0D13] text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                            className="w-full p-3.5 pr-24 bg-slate-50 dark:bg-[#151926] text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.05] text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                         />
                                         <button
                                             type="button"
@@ -1799,7 +1799,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                     setTimeout(() => setZoomCopied(false), 2000);
                                                 }
                                             }}
-                                            className="absolute right-2 top-2 px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-bold flex items-center gap-1 hover:bg-slate-100"
+                                            className="absolute right-2 top-2 px-2.5 py-1.5 rounded-lg bg-white dark:bg-white/[0.06] border border-slate-200 dark:border-white/[0.05] text-slate-700 dark:text-slate-300 text-[11px] font-bold flex items-center gap-1 hover:bg-slate-100"
                                         >
                                             {zoomCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                                             <span>{zoomCopied ? 'Copied' : 'Copy'}</span>
@@ -1821,7 +1821,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                             value={zoomMeetingId}
                                             onChange={(e) => setZoomMeetingId(e.target.value)}
                                             placeholder="e.g. 849 2049 1823"
-                                            className="w-full p-3 bg-slate-50 dark:bg-[#0B0D13] text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                            className="w-full p-3 bg-slate-50 dark:bg-[#151926] text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.05] text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                         />
                                     </div>
 
@@ -1834,7 +1834,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                             value={zoomPasscode}
                                             onChange={(e) => setZoomPasscode(e.target.value)}
                                             placeholder="e.g. PALAYOFFS"
-                                            className="w-full p-3 bg-slate-50 dark:bg-[#0B0D13] text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-amber-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                            className="w-full p-3 bg-slate-50 dark:bg-[#151926] text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.05] text-xs font-mono font-bold text-amber-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                         />
                                     </div>
                                 </div>
@@ -1848,7 +1848,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                             setZoomMeetingId('849 2049 1823');
                                             setZoomPasscode('PALAYOFFS');
                                         }}
-                                        className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-200 text-[11px] border border-slate-200 dark:border-slate-700"
+                                        className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-white/[0.05] text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-200 text-[11px] border border-slate-200 dark:border-white/[0.05]"
                                     >
                                         Preset: Default PalayOffs Zoom
                                     </button>
@@ -1857,7 +1857,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                         href={zoomUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-semibold hover:bg-blue-100 text-[11px] border border-blue-200 dark:border-blue-900 flex items-center gap-1"
+                                        className="px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-semibold hover:bg-blue-100 text-[11px] border border-blue-200 dark:border-blue-900/40 flex items-center gap-1"
                                     >
                                         <ExternalLink className="w-3 h-3" />
                                         <span>Test Open in Zoom</span>
@@ -1865,7 +1865,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                 </div>
 
                                 {/* Submit Save Button */}
-                                <div className="pt-4 border-t border-slate-200 dark:border-[#212638]">
+                                <div className="pt-4 border-t border-slate-200 dark:border-white/[0.04]">
                                     <button
                                         type="submit"
                                         disabled={savingZoom}
@@ -1882,13 +1882,13 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                             </form>
 
                             {/* Right: Live Generated QR Preview & Stadium Card Mirror */}
-                            <div className="lg:col-span-5 bg-slate-900 text-white rounded-3xl p-6 border border-slate-800 shadow-xl space-y-5">
+                            <div className="lg:col-span-5 bg-slate-900 text-white rounded-3xl p-6 border border-slate-800 dark:border-white/[0.04] shadow-xl space-y-5">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2 text-xs font-mono font-bold text-blue-400 uppercase">
                                         <QrCode className="w-4 h-4" />
                                         <span>Live Dynamic QR Preview</span>
                                     </div>
-                                    <span className="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 text-[10px] font-mono border border-emerald-800 font-bold">
+                                    <span className="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 text-[10px] font-mono border border-emerald-800/60 font-bold">
                                         ● Real-Time Sync
                                     </span>
                                 </div>
@@ -1909,7 +1909,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                 </div>
 
                                 {/* Arena Card Preview Info */}
-                                <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs font-mono space-y-2">
+                                <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 dark:border-white/[0.05] text-xs font-mono space-y-2">
                                     <div className="flex items-center justify-between text-slate-400">
                                         <span>Meeting ID:</span>
                                         <strong className="text-white text-sm">{zoomMeetingId || 'Not set'}</strong>
@@ -1918,7 +1918,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                         <span>Passcode:</span>
                                         <strong className="text-amber-400 text-sm">{zoomPasscode || 'None'}</strong>
                                     </div>
-                                    <div className="truncate text-[10px] text-slate-500 pt-1 border-t border-slate-800">
+                                    <div className="truncate text-[10px] text-slate-500 pt-1 border-t border-slate-800 dark:border-white/[0.04]">
                                         URL: {zoomUrl}
                                     </div>
                                 </div>
@@ -1942,7 +1942,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                     onClick={() => !loading && setConfirmModal(null)}
                 >
                     <div
-                        className="relative w-full max-w-md bg-white dark:bg-[#141722] border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl p-6 sm:p-7 text-slate-900 dark:text-slate-100 overflow-hidden space-y-5"
+                        className="relative w-full max-w-md bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.05] rounded-3xl shadow-2xl p-6 sm:p-7 text-slate-900 dark:text-slate-100 overflow-hidden space-y-5"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Glow effect */}
@@ -1954,7 +1954,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                             disabled={loading}
                             onClick={() => setConfirmModal(null)}
                             aria-label="Close Confirmation Modal"
-                            className="absolute top-5 right-5 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer disabled:opacity-40"
+                            className="absolute top-5 right-5 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer disabled:opacity-40"
                         >
                             <X className="w-4 h-4" />
                         </button>
@@ -1988,12 +1988,12 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                         </p>
 
                         {/* Action Buttons */}
-                        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-200 dark:border-slate-800">
+                        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-200 dark:border-white/[0.04]">
                             <button
                                 type="button"
                                 disabled={loading}
                                 onClick={() => setConfirmModal(null)}
-                                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 transition-all cursor-pointer disabled:opacity-50"
+                                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.05] dark:hover:bg-white/[0.08] text-xs font-bold text-slate-700 dark:text-slate-300 transition-all cursor-pointer disabled:opacity-50"
                             >
                                 Cancel
                             </button>

@@ -4,7 +4,7 @@ import { Radio, ExternalLink, Flame, Trophy, Play, Swords } from 'lucide-react';
 export default function FeaturedMatchHero({ match }) {
     if (!match) {
         return (
-            <div className="rounded-2xl bg-white dark:bg-[#141722] border border-slate-200 dark:border-slate-800 p-6 text-center text-slate-500 shadow-sm">
+            <div className="rounded-2xl bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.04] p-6 text-center text-slate-500 shadow-sm">
                 No active featured match scheduled.
             </div>
         );
@@ -21,22 +21,22 @@ export default function FeaturedMatchHero({ match }) {
     const streamUrl = match.stream_url || 'https://www.youtube.com';
 
     return (
-        <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-2xl p-4 sm:p-6 md:p-8 transition-all bg-white dark:bg-[#121520]">
+        <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/[0.04] shadow-sm dark:shadow-2xl p-4 sm:p-6 md:p-8 transition-all bg-white dark:bg-[#121520]">
             {/* Dynamic Hex Color Gradient Backdrop */}
             <div
-                className="absolute inset-0 opacity-20 dark:opacity-40 transition-all duration-700 pointer-events-none"
+                className="absolute inset-0 opacity-20 dark:opacity-30 transition-all duration-700 pointer-events-none"
                 style={{
                     background: `linear-gradient(135deg, ${colorA} 0%, rgba(20, 23, 34, 0.4) 50%, ${colorB} 100%)`,
                 }}
             />
 
             {/* Glass overlay pattern */}
-            <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/60 to-transparent dark:from-[#0D0F15] dark:via-[#141722]/80 dark:to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/60 to-transparent dark:from-[#0D0F15] dark:via-[#121520]/80 dark:to-transparent pointer-events-none" />
 
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                 {/* Left: Match Headliner & Competing Teams */}
                 <div className="flex-1 space-y-4 text-center md:text-left w-full">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700/60 text-xs backdrop-blur-md">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.05] text-xs backdrop-blur-md">
                         {isLive ? (
                             <>
                                 <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping" />
@@ -94,7 +94,7 @@ export default function FeaturedMatchHero({ match }) {
                         </div>
 
                         {match.scheduled_at && (
-                            <div className="ml-2 sm:ml-4 pl-2 sm:pl-4 border-l border-slate-200 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400 font-mono">
+                            <div className="ml-2 sm:ml-4 pl-2 sm:pl-4 border-l border-slate-200 dark:border-white/[0.06] text-xs text-slate-500 dark:text-slate-400 font-mono">
                                 <div>Scheduled</div>
                                 <div className="text-slate-900 dark:text-white font-semibold">
                                     {new Date(match.scheduled_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -120,7 +120,7 @@ export default function FeaturedMatchHero({ match }) {
 
                 {/* Right: Modern Head-to-Head Emblem */}
                 <div className="flex items-center justify-center p-2 sm:p-4 shrink-0">
-                    <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-3xl bg-slate-100 dark:bg-[#181E2E] border border-slate-200 dark:border-slate-800 flex items-center justify-center shadow-lg">
+                    <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-3xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.04] flex items-center justify-center shadow-lg">
                         <Swords className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-rose-500 animate-pulse" />
                         <span className="absolute -bottom-2 px-2.5 sm:px-3 py-0.5 rounded-full bg-rose-600 text-white text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-widest shadow-sm">
                             HEAD-TO-HEAD

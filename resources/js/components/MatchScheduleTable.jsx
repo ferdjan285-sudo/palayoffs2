@@ -31,9 +31,9 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
     });
 
     return (
-        <div id="schedules-section" className="rounded-3xl bg-white dark:bg-[#141722] border border-slate-200 dark:border-slate-800 p-4 sm:p-6 shadow-sm dark:shadow-xl transition-all">
+        <div id="schedules-section" className="rounded-3xl bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.04] p-4 sm:p-6 shadow-sm dark:shadow-xl transition-all">
             {/* Header & Status Filter Pills */}
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-200 dark:border-slate-800">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-200 dark:border-white/[0.04]">
                 <div>
                     <h3 className="text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                         <Calendar className="w-4 h-4 text-rose-500" />
@@ -43,7 +43,7 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
                 </div>
 
                 {/* Filter Pills */}
-                <div className="flex items-center gap-1 bg-slate-100 dark:bg-[#0B0D13] p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs overflow-x-auto">
+                <div className="flex items-center gap-1 bg-slate-100 dark:bg-white/[0.03] p-1 rounded-xl border border-slate-200 dark:border-white/[0.04] text-xs overflow-x-auto">
                     {['all', 'live', 'scheduled', 'finished'].map((filterKey) => (
                         <button
                             key={filterKey}
@@ -79,7 +79,7 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
                             <div
                                 key={item.id}
                                 onClick={() => onSelectMatch && onSelectMatch(item)}
-                                className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#0E111A] border border-slate-200 dark:border-slate-800 space-y-3 shadow-xs active:scale-[0.99] transition-transform cursor-pointer"
+                                className="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.03] space-y-3 shadow-xs active:scale-[0.99] transition-transform cursor-pointer"
                             >
                                 {/* Top Bar: Identifier, Round & Status */}
                                 <div className="flex items-center justify-between gap-2 text-xs">
@@ -91,7 +91,7 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
                                             {item.round_name}
                                         </span>
                                         {item.best_of && (
-                                            <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-950/80 text-purple-700 dark:text-purple-300 font-bold">
+                                            <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-bold">
                                                 BO{item.best_of}
                                             </span>
                                         )}
@@ -103,18 +103,18 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
                                             Live
                                         </span>
                                     ) : isFinished ? (
-                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase font-mono bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase font-mono bg-slate-200 dark:bg-white/[0.06] text-slate-700 dark:text-slate-300">
                                             Finished
                                         </span>
                                     ) : (
-                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase font-mono bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300">
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase font-mono bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300">
                                             Scheduled
                                         </span>
                                     )}
                                 </div>
 
                                 {/* Teams Head-to-Head Card */}
-                                <div className="p-2.5 rounded-xl bg-white dark:bg-[#141722] border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                                <div className="p-2.5 rounded-xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-transparent flex items-center justify-between gap-2">
                                     {/* Team A */}
                                     <div className="flex items-center gap-1.5 min-w-0 flex-1">
                                         <span
@@ -129,7 +129,7 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
                                     </div>
 
                                     {/* Score */}
-                                    <div className="font-mono font-black text-sm px-2 py-1 rounded-lg bg-slate-100 dark:bg-[#0B0D13] text-slate-900 dark:text-white shrink-0">
+                                    <div className="font-mono font-black text-sm px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/[0.05] text-slate-900 dark:text-white shrink-0">
                                         <span>{item.score_a}</span> : <span>{item.score_b}</span>
                                     </div>
 
@@ -182,7 +182,7 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
             <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left text-xs">
                     <thead>
-                        <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 font-mono text-[11px] uppercase">
+                        <tr className="border-b border-slate-200 dark:border-white/[0.04] text-slate-500 dark:text-slate-400 font-mono text-[11px] uppercase">
                             <th className="py-3 px-3">Date & Time</th>
                             <th className="py-3 px-3">Round / Match</th>
                             <th className="py-3 px-3 text-right">Faction A</th>
@@ -193,7 +193,7 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
                             <th className="py-3 px-3 text-right">Broadcast</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-200 dark:divide-[#1B2030]">
+                    <tbody className="divide-y divide-slate-200 dark:divide-white/[0.03]">
                         {filtered.length === 0 ? (
                             <tr>
                                 <td colSpan="8" className="py-8 text-center text-slate-500">
@@ -213,7 +213,7 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
                                     <tr
                                         key={item.id}
                                         onClick={() => onSelectMatch && onSelectMatch(item)}
-                                        className="hover:bg-slate-50 dark:hover:bg-[#181D2D] transition-colors cursor-pointer group"
+                                        className="hover:bg-slate-50 dark:hover:bg-white/[0.03] transition-colors cursor-pointer group"
                                     >
                                         <td className="py-3.5 px-3 font-mono text-slate-600 dark:text-slate-300 whitespace-nowrap">
                                             <div className="flex items-center gap-1.5">
@@ -225,7 +225,7 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
                                         <td className="py-3.5 px-3 whitespace-nowrap font-semibold text-slate-800 dark:text-slate-200">
                                             <span>{item.round_name}</span>
                                             {item.best_of && (
-                                                <span className="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#151926] text-purple-700 dark:text-purple-300 font-bold border border-purple-200 dark:border-purple-800/60">
+                                                <span className="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-white/[0.04] text-purple-700 dark:text-purple-300 font-bold border border-purple-200 dark:border-purple-800/30">
                                                     BO{item.best_of}
                                                 </span>
                                             )}
@@ -249,7 +249,7 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
                                         </td>
 
                                         <td className="py-3.5 px-2 text-center whitespace-nowrap">
-                                            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-[#0B0D13] border border-slate-200 dark:border-slate-800 font-mono font-black text-sm text-slate-900 dark:text-slate-100">
+                                            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.04] font-mono font-black text-sm text-slate-900 dark:text-slate-100">
                                                 <span className={item.score_a > item.score_b ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-600 dark:text-slate-400'}>
                                                     {item.score_a}
                                                 </span>
@@ -284,7 +284,7 @@ export default function MatchScheduleTable({ matches = [], onSelectMatch }) {
                                                     Live
                                                 </span>
                                             ) : isFinished ? (
-                                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase font-mono bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400">
+                                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase font-mono bg-slate-100 text-slate-700 dark:bg-white/[0.06] dark:text-slate-300">
                                                     Finished
                                                 </span>
                                             ) : (

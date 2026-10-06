@@ -38,7 +38,7 @@ export default function LoginModal({ onSuccess }) {
             aria-modal="true"
             aria-labelledby="login-modal-title"
         >
-            <div className="relative w-full max-w-md bg-white dark:bg-[#141722] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl dark:shadow-2xl p-6 sm:p-8 overflow-hidden text-slate-900 dark:text-slate-100 transition-colors duration-200">
+            <div className="relative w-full max-w-md bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.05] rounded-2xl shadow-xl dark:shadow-2xl p-6 sm:p-8 overflow-hidden text-slate-900 dark:text-slate-100 transition-colors duration-200">
                 {/* Background decorative glows */}
                 <div className="absolute -top-24 -left-24 w-48 h-48 bg-rose-500/10 dark:bg-rose-600/20 rounded-full blur-3xl pointer-events-none" />
                 <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-purple-500/10 dark:bg-purple-600/20 rounded-full blur-3xl pointer-events-none" />
@@ -47,7 +47,7 @@ export default function LoginModal({ onSuccess }) {
                 <button
                     onClick={() => setLoginModalOpen(false)}
                     aria-label="Close Login Modal"
-                    className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 transition-colors"
+                    className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] transition-colors"
                 >
                     <X className="w-4 h-4" />
                 </button>
@@ -64,7 +64,7 @@ export default function LoginModal({ onSuccess }) {
                 </div>
 
                 {/* Quick 1-Click Admin Preset */}
-                <div className="mb-6 p-3 rounded-xl bg-slate-50 dark:bg-[#0F121B] border border-slate-200 dark:border-slate-800">
+                <div className="mb-6 p-3 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.04]">
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                             <Sparkles className="w-3 h-3 text-amber-500 dark:text-amber-400" />
@@ -74,7 +74,7 @@ export default function LoginModal({ onSuccess }) {
                     <button
                         type="button"
                         onClick={() => fillCredentials('admin@palayoffs.com', 'admin123')}
-                        className="w-full flex items-center justify-between p-2.5 rounded-lg bg-white dark:bg-[#181D2D] hover:bg-purple-50 dark:hover:bg-purple-900/30 border border-slate-200 dark:border-slate-700 text-left transition-all text-xs font-semibold text-purple-700 dark:text-purple-300 shadow-sm cursor-pointer"
+                        className="w-full flex items-center justify-between p-2.5 rounded-lg bg-white dark:bg-[#151926] hover:bg-purple-50 dark:hover:bg-purple-900/30 border border-slate-200 dark:border-white/[0.05] text-left transition-all text-xs font-semibold text-purple-700 dark:text-purple-300 shadow-sm cursor-pointer"
                     >
                         <div className="flex items-center gap-2.5">
                             <Shield className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />
@@ -83,7 +83,7 @@ export default function LoginModal({ onSuccess }) {
                                 <span className="text-[10px] text-slate-500 dark:text-purple-400/70 font-mono">admin@palayoffs.com</span>
                             </div>
                         </div>
-                        <span className="text-[10px] font-mono font-bold bg-purple-100 dark:bg-purple-950/60 px-2 py-0.5 rounded border border-purple-200 dark:border-purple-800">
+                        <span className="text-[10px] font-mono font-bold bg-purple-100 dark:bg-purple-950/60 px-2 py-0.5 rounded border border-purple-200 dark:border-purple-800/40">
                             Auto-Fill
                         </span>
                     </button>

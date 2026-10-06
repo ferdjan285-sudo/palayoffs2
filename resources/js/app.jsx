@@ -135,10 +135,10 @@ function AppContent() {
             {/* Quick Match Inspect Modal */}
             {selectedMatchModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-                    <div className="relative w-full max-w-md bg-white dark:bg-[#141722] border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl text-slate-900 dark:text-slate-100">
+                    <div className="relative w-full max-w-md bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.05] rounded-3xl p-6 shadow-2xl text-slate-900 dark:text-slate-100">
                         <button
                             onClick={() => setSelectedMatchModal(null)}
-                            className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl bg-slate-100 dark:bg-slate-800 transition-colors"
+                            className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl bg-slate-100 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] transition-colors"
                         >
                             <X className="w-4 h-4" />
                         </button>
@@ -150,7 +150,7 @@ function AppContent() {
                             <h3 className="text-base font-black text-slate-900 dark:text-white">Match Fixture Intelligence</h3>
                         </div>
 
-                        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0D0F15] border border-slate-200 dark:border-slate-800 space-y-3.5 text-xs">
+                        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.04] space-y-3.5 text-xs">
                             <div className="flex items-center justify-between">
                                 <span className="text-slate-500 dark:text-slate-400">Match Status</span>
                                 <span className="font-black uppercase text-slate-900 dark:text-white font-mono">
@@ -165,7 +165,7 @@ function AppContent() {
                                 </span>
                             </div>
 
-                            <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800">
+                            <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-white/[0.04]">
                                 <span className="text-slate-500 dark:text-slate-400 font-bold">Faction Seed A</span>
                                 <span className="font-black text-slate-900 dark:text-white">
                                     {selectedMatchModal.division_a?.name || 'TBD'}
@@ -179,7 +179,7 @@ function AppContent() {
                                 </span>
                             </div>
 
-                            <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800 font-mono">
+                            <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-white/[0.04] font-mono">
                                 <span className="text-slate-500 dark:text-slate-400">Score Tracker</span>
                                 <span className="text-base font-black text-rose-600 dark:text-rose-400">
                                     {selectedMatchModal.score_a ?? 0} : {selectedMatchModal.score_b ?? 0}
