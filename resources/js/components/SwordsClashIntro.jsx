@@ -49,10 +49,7 @@ export default function SwordsClashIntro({ onComplete }) {
                     30% { transform: scale(2.2); opacity: 1; }
                     100% { transform: scale(3.5); opacity: 0; }
                 }
-                @keyframes shockwaveRing {
-                    0% { transform: scale(0.3); opacity: 1; }
-                    100% { transform: scale(2.8); opacity: 0; }
-                }
+                
                 @keyframes titleRise {
                     0% { transform: translateY(16px); opacity: 0; }
                     40% { transform: translateY(16px); opacity: 0; }
@@ -61,11 +58,7 @@ export default function SwordsClashIntro({ onComplete }) {
             `}</style>
 
             <div className="relative flex flex-col items-center justify-center p-6 text-center max-w-sm mx-auto">
-                {/* 1. Shockwave Aura Ring */}
-                <div 
-                    className="absolute w-40 h-40 sm:w-52 sm:h-52 rounded-full border-2 border-rose-500/60 pointer-events-none"
-                    style={{ animation: 'shockwaveRing 0.9s ease-out forwards' }}
-                />
+
 
                 {/* 2. Central Spark Explosion Glow */}
                 <div 
