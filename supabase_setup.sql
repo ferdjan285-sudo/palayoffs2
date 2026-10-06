@@ -7,7 +7,11 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- 2. CREATE TABLES
+-- 2. DROP OLD OBSOLETE OBJECTS (Clean Migration)
+DROP VIEW IF EXISTS public.tournament_matches CASCADE;
+DROP TABLE IF EXISTS public.tournament_matches CASCADE;
+
+-- 3. CREATE TABLES
 
 -- USERS TABLE
 CREATE TABLE IF NOT EXISTS public.users (
@@ -122,7 +126,7 @@ CREATE TABLE IF NOT EXISTS public.sessions (
     last_activity INTEGER NOT NULL
 );
 
--- 3. PERFORMANCE INDEXES (Optimized for instant query speeds)
+-- 4. PERFORMANCE INDEXES (Optimized for instant query speeds)
 CREATE INDEX IF NOT EXISTS idx_matches_tournament_id ON public.matches(tournament_id);
 CREATE INDEX IF NOT EXISTS idx_matches_status ON public.matches(status);
 CREATE INDEX IF NOT EXISTS idx_matches_bracket ON public.matches(bracket_type, round_level);
@@ -133,7 +137,7 @@ CREATE INDEX IF NOT EXISTS idx_pat_tokenable ON public.personal_access_tokens(to
 CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON public.sessions(user_id);
 CREATE INDEX IF NOT EXISTS idx_sessions_last_activity ON public.sessions(last_activity);
 
--- 4. SEED CANONICAL DATA (With 'MLBB PalayOffs Cup 2026')
+-- 5. SEED CANONICAL DATA (With 'MLBB PalayOffs Cup 2026')
 
 -- A. Insert Sports
 INSERT INTO public.sports (id, name, slug, icon_path, is_active)
@@ -150,18 +154,18 @@ VALUES
     (1, 'Mauve', '#B784A7', '/assets/divisions/mauve.svg', 0),
     (2, 'Cyan', '#00E5FF', '/assets/divisions/cyan.svg', 0),
     (3, 'Mint', '#98FF98', '/assets/divisions/mint.svg', 0),
-    (4, 'Olive', '#808000', '/assets/divisions/olive.svg', 0)
+    (4, 'Peach', '#FFCBA4', '/assets/divisions/peach.svg', 0)
 ON CONFLICT (id) DO UPDATE 
 SET name = EXCLUDED.name, color_hex = EXCLUDED.color_hex, logo_path = EXCLUDED.logo_path;
 
 -- C. Insert Users (Admin & Referees with Bcrypt Passwords)
--- Password for all is: password
+-- Password for both is: admin123
 INSERT INTO public.users (id, name, email, password, role)
 VALUES 
-    (1, 'Tournament Director', 'admin@palayoffs.com', '$2y$12$RvyhM2H8v8hRjJk4e5p4jOMjV9x0Dk2lP8YqQ1sQ1sQ1sQ1sQ1sQ1', 'admin'),
-    (2, 'Stage Referee Alpha', 'referee@palayoffs.com', '$2y$12$RvyhM2H8v8hRjJk4e5p4jOMjV9x0Dk2lP8YqQ1sQ1sQ1sQ1sQ1sQ1', 'referee')
+    (1, 'Tournament Director', 'admin@palayoffs.com', '$2y$10$OyGaOOETGMdfZccDff5z0uHbiTa/Fet1Kaw.JgvESPxFAAgf1OrnW', 'admin'),
+    (2, 'Stage Referee Alpha', 'referee@palayoffs.com', '$2y$10$OyGaOOETGMdfZccDff5z0uHbiTa/Fet1Kaw.JgvESPxFAAgf1OrnW', 'referee')
 ON CONFLICT (id) DO UPDATE 
-SET name = EXCLUDED.name, email = EXCLUDED.email, role = EXCLUDED.role;
+SET name = EXCLUDED.name, email = EXCLUDED.email, password = EXCLUDED.password, role = EXCLUDED.role;
 
 -- D. Insert Tournament (MLBB PalayOffs Cup 2026)
 INSERT INTO public.tournaments (id, sport_id, title, format, status, stream_url, zoom_meeting_id, zoom_passcode)
@@ -171,7 +175,7 @@ ON CONFLICT (id) DO UPDATE
 SET title = EXCLUDED.title, format = EXCLUDED.format, status = EXCLUDED.status, stream_url = EXCLUDED.stream_url, zoom_meeting_id = EXCLUDED.zoom_meeting_id, zoom_passcode = EXCLUDED.zoom_passcode;
 
 -- E. Insert Initial Double Elimination Matches
--- Upper Round 1 (M1: Mauve vs Mint, M2: Olive vs Cyan)
+-- Upper Round 1 (M1: Mauve vs Mint, M2: Peach vs Cyan)
 -- Lower Round 1 (LB-R1)
 -- Upper Final (UB-F)
 -- Lower Final (LB-F)
