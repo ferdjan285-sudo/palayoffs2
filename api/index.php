@@ -48,10 +48,42 @@ if ($databaseUrl || $dbConnection === 'pgsql') {
     putenv('DB_CONNECTION=pgsql');
     $_ENV['DB_CONNECTION'] = 'pgsql';
     $_SERVER['DB_CONNECTION'] = 'pgsql';
+
     if ($databaseUrl) {
-        putenv("DATABASE_URL={$databaseUrl}");
-        $_ENV['DATABASE_URL'] = $databaseUrl;
-        $_SERVER['DATABASE_URL'] = $databaseUrl;
+        $parsed = parse_url($databaseUrl);
+        if ($parsed) {
+            if (!empty($parsed['host'])) {
+                putenv("DB_HOST={$parsed['host']}");
+                $_ENV['DB_HOST'] = $parsed['host'];
+                $_SERVER['DB_HOST'] = $parsed['host'];
+            }
+            if (!empty($parsed['port'])) {
+                putenv("DB_PORT={$parsed['port']}");
+                $_ENV['DB_PORT'] = (string)$parsed['port'];
+                $_SERVER['DB_PORT'] = (string)$parsed['port'];
+            }
+            if (!empty($parsed['user'])) {
+                $user = urldecode($parsed['user']);
+                putenv("DB_USERNAME={$user}");
+                $_ENV['DB_USERNAME'] = $user;
+                $_SERVER['DB_USERNAME'] = $user;
+            }
+            if (!empty($parsed['pass'])) {
+                $pass = urldecode($parsed['pass']);
+                putenv("DB_PASSWORD={$pass}");
+                $_ENV['DB_PASSWORD'] = $pass;
+                $_SERVER['DB_PASSWORD'] = $pass;
+            }
+            if (!empty($parsed['path'])) {
+                $dbName = ltrim($parsed['path'], '/');
+                putenv("DB_DATABASE={$dbName}");
+                $_ENV['DB_DATABASE'] = $dbName;
+                $_SERVER['DB_DATABASE'] = $dbName;
+            }
+            putenv('DB_SSLMODE=require');
+            $_ENV['DB_SSLMODE'] = 'require';
+            $_SERVER['DB_SSLMODE'] = 'require';
+        }
     }
 } elseif (!$dbConnection || $dbConnection === 'sqlite') {
     putenv('DB_CONNECTION=sqlite');
