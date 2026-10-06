@@ -32,7 +32,7 @@
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/app.jsx'])
 </head>
-<body class="bg-slate-50 dark:bg-[#0D0F15] text-slate-900 dark:text-slate-100 antialiased selection:bg-rose-500 selection:text-white transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-[#0D0F15] text-slate-900 dark:text-slate-100 antialiased selection:bg-rose-500 selection:text-white">
     <div id="root"></div>
 </body>
 </html>

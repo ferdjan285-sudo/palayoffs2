@@ -59,7 +59,7 @@ function AppContent() {
     const isInsidePortal = currentView === 'admin' && user;
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-[#0D0F15] text-slate-900 dark:text-slate-100 flex flex-col antialiased selection:bg-rose-500 selection:text-white transition-colors duration-200">
+        <div className="min-h-screen bg-slate-50 dark:bg-[#0D0F15] text-slate-900 dark:text-slate-100 flex flex-col antialiased selection:bg-rose-500 selection:text-white">
             {/* Top Navigation Bar with Text-Aligned Links & Top-Left Login Portal Button */}
             <Header
                 searchQuery={searchQuery}

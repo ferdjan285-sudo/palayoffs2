@@ -7,20 +7,50 @@ export function ThemeProvider({ children }) {
         return localStorage.getItem('palayoffs_theme') || 'light';
     });
 
-    useEffect(() => {
+    const applyTheme = (nextTheme) => {
+        // Temporarily disable CSS transitions during theme switch to prevent whitening outlines and color flash
+        const css = document.createElement('style');
+        css.type = 'text/css';
+        css.appendChild(
+            document.createTextNode(
+                `* {
+                   -webkit-transition: none !important;
+                   -moz-transition: none !important;
+                   -o-transition: none !important;
+                   -ms-transition: none !important;
+                   transition: none !important;
+                }`
+            )
+        );
+        document.head.appendChild(css);
+
         const root = document.documentElement;
-        if (theme === 'dark') {
+        if (nextTheme === 'dark') {
             root.classList.add('dark');
             root.classList.remove('light');
         } else {
             root.classList.remove('dark');
             root.classList.add('light');
         }
-        localStorage.setItem('palayoffs_theme', theme);
+        localStorage.setItem('palayoffs_theme', nextTheme);
+
+        // Force reflow and remove temporary stylesheet
+        const _ = window.getComputedStyle(css).opacity;
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                if (document.head.contains(css)) {
+                    document.head.removeChild(css);
+                }
+            }, 30);
+        });
+    };
+
+    useEffect(() => {
+        applyTheme(theme);
     }, [theme]);
 
     const toggleTheme = () => {
-        setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+        setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
     };
 
     return (
