@@ -128,14 +128,38 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
                     const isZero = pts === 0;
                     const material = getTierMaterial(index, pts);
                     const percent = isZero ? 0 : Math.min(100, Math.round((pts / maxPoints) * 100));
+                    const isCyan = div.name?.toLowerCase().includes('cyan');
 
                     return (
-                        <button
-                            key={div.id}
-                            type="button"
-                            onClick={() => setSelectedDivision(div)}
-                            className="w-full text-left relative rounded-2xl p-3.5 sm:p-4 transition-all duration-200 bg-white dark:bg-[#121624] border border-slate-200/80 dark:border-white/[0.03] shadow-xs hover:shadow-md hover:dark:bg-[#161C2E] group overflow-hidden cursor-pointer active:scale-[0.99]"
-                        >
+                        <React.Fragment key={div.id}>
+                            {isCyan && (
+                                <div className="relative overflow-hidden rounded-2xl p-4 sm:p-5 bg-gradient-to-b from-cyan-500/10 via-cyan-500/[0.04] to-transparent dark:from-cyan-950/40 dark:via-cyan-900/15 dark:to-transparent border border-cyan-400/30 dark:border-cyan-400/20 text-center flex flex-col items-center justify-center shadow-xs group/trophy my-1">
+                                    {/* Ambient Neon Atmosphere */}
+                                    <div className="absolute -top-10 w-32 h-32 bg-cyan-400/20 dark:bg-cyan-400/15 rounded-full blur-2xl pointer-events-none" />
+                                    <div className="absolute -bottom-8 w-24 h-24 bg-amber-400/15 dark:bg-amber-400/10 rounded-full blur-xl pointer-events-none" />
+
+                                    {/* Large Championship Trophy Cup */}
+                                    <div className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-gradient-to-tr from-amber-500/20 via-yellow-400/25 to-cyan-400/20 dark:from-amber-500/30 dark:via-yellow-400/25 dark:to-cyan-400/25 border border-amber-400/40 dark:border-amber-300/30 flex items-center justify-center shadow-lg shadow-amber-500/10 mb-2.5 transition-all duration-300 group-hover/trophy:scale-105 group-hover/trophy:shadow-cyan-500/20">
+                                        <Trophy className="w-9 h-9 sm:w-11 sm:h-11 text-amber-500 dark:text-yellow-300 fill-amber-400/40 filter drop-shadow-md" />
+                                    </div>
+
+                                    {/* Title Below Cup */}
+                                    <div className="relative z-10 space-y-1">
+                                        <h4 className="text-xs sm:text-sm md:text-base font-black tracking-tight uppercase text-slate-900 dark:text-white">
+                                            {tournament?.title ? tournament.title.replace(/invitational/gi, '').replace(/\s+/g, ' ').trim() : 'MLBB PalayOffs Cup 2026'}
+                                        </h4>
+                                        <p className="text-[10px] sm:text-[11px] font-mono font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                                            Championship Cup
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+
+                            <button
+                                type="button"
+                                onClick={() => setSelectedDivision(div)}
+                                className="w-full text-left relative rounded-2xl p-3.5 sm:p-4 transition-all duration-200 bg-white dark:bg-[#121624] border border-slate-200/80 dark:border-white/[0.03] shadow-xs hover:shadow-md hover:dark:bg-[#161C2E] group overflow-hidden cursor-pointer active:scale-[0.99]"
+                            >
                             {/* Card Header: Unboxed Rank Number/Icon + Division Details */}
                             <div className="relative z-10 flex items-center justify-between gap-3 mb-2.5">
                                 <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
@@ -209,6 +233,7 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
                                 />
                             </div>
                         </button>
+                    </React.Fragment>
                     );
                 })}
             </div>

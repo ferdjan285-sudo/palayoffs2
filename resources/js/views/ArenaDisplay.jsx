@@ -194,7 +194,7 @@ export default function ArenaDisplay({ landingData, onExit, onRefresh }) {
                             </span>
                         </div>
                         <p className="hidden sm:block text-xs text-slate-500 dark:text-slate-400 font-semibold tracking-wide mt-0.5 truncate">
-                            {tournament?.title || 'MLBB Championship'} · Live Stage Feed
+                            {(tournament?.title ? tournament.title.replace(/invitational/gi, '').replace(/\s+/g, ' ').trim() : 'MLBB PalayOffs Cup 2026')} · Live Stage Feed
                         </p>
                     </div>
                 </div>
@@ -700,12 +700,26 @@ export default function ArenaDisplay({ landingData, onExit, onRefresh }) {
                                 const rank = index + 1;
                                 const color = div.color_hex || '#B784A7';
                                 const points = div.total_accumulated_points ?? 0;
+                                const isCyan = div.name?.toLowerCase().includes('cyan');
 
                                 return (
-                                    <div 
-                                        key={div.id}
-                                        className="flex items-center justify-between p-2.5 sm:p-3 rounded-2xl bg-slate-50 dark:bg-[#121624] border border-slate-200 dark:border-[#20263B] shadow-sm transition-all"
-                                    >
+                                    <React.Fragment key={div.id}>
+                                        {isCyan && (
+                                            <div className="relative overflow-hidden rounded-2xl p-3 bg-gradient-to-b from-cyan-500/10 via-cyan-500/[0.04] to-transparent dark:from-cyan-950/40 dark:via-cyan-900/15 dark:to-transparent border border-cyan-400/30 dark:border-cyan-400/20 text-center flex flex-col items-center justify-center my-1 group">
+                                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500/20 via-yellow-400/25 to-cyan-400/20 border border-amber-400/40 flex items-center justify-center shadow-md mb-1.5">
+                                                    <Trophy className="w-6 h-6 text-amber-500 dark:text-yellow-300 fill-amber-400/40" />
+                                                </div>
+                                                <h5 className="text-[11px] font-black uppercase text-slate-900 dark:text-white tracking-tight">
+                                                    {tournament?.title ? tournament.title.replace(/invitational/gi, '').replace(/\s+/g, ' ').trim() : 'MLBB PalayOffs Cup 2026'}
+                                                </h5>
+                                                <p className="text-[9px] font-mono font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                                                    Championship Cup
+                                                </p>
+                                            </div>
+                                        )}
+                                        <div 
+                                            className="flex items-center justify-between p-2.5 sm:p-3 rounded-2xl bg-slate-50 dark:bg-[#121624] border border-slate-200 dark:border-[#20263B] shadow-sm transition-all"
+                                        >
                                         <div className="flex items-center gap-2.5 min-w-0">
                                             {/* Rank Medal */}
                                             <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono font-black text-[11px] shrink-0 ${
@@ -749,8 +763,9 @@ export default function ArenaDisplay({ landingData, onExit, onRefresh }) {
                                             </div>
                                         </div>
                                     </div>
-                                );
-                            })}
+                                </React.Fragment>
+                            );
+                        })}
                         </div>
 
                         {/* Points Scheme Footnote */}

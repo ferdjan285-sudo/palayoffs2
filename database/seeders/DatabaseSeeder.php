@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
         // 4. Seed an Active Inaugural Tournament with 4-Team Double Elimination Knockout Tree
         $tournament = Tournament::create([
             'sport_id' => $mlbb->id,
-            'title' => 'MLBB PalayOffs Invitational Cup 2026',
+            'title' => 'MLBB PalayOffs Cup 2026',
             'format' => 'double_elimination',
             'status' => 'ongoing',
         ]);

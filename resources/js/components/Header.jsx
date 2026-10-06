@@ -142,7 +142,7 @@ export default function Header({
                         <div className="hidden lg:flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-[#12151E] border border-slate-200 dark:border-slate-800 text-xs">
                             <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
                             <span className="font-extrabold text-slate-800 dark:text-white truncate max-w-[180px]">
-                                {tournament?.title || 'Director Studio'}
+                                {tournament?.title ? tournament.title.replace(/invitational/gi, '').replace(/\s+/g, ' ').trim() : 'Director Studio'}
                             </span>
                         </div>
                     )}
@@ -173,7 +173,7 @@ export default function Header({
                             <span className="font-sans font-bold">Login</span>
                         </button>
                     ) : (
-                        <div className="flex items-center gap-1 sm:gap-1.5">
+                        <div className="flex items-center gap-1 sm:gap-2">
                             {/* View Switchers */}
                             {isAdmin && (
                                 <button
@@ -188,10 +188,26 @@ export default function Header({
                                 </button>
                             )}
 
-                            {/* User Initials Badge */}
-                            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-br from-purple-500 to-rose-600 flex items-center justify-center font-bold text-xs text-white shadow-xs shrink-0 border-0">
-                                {user.name.charAt(0).toUpperCase()}
+                            {/* User Initials Badge & Name */}
+                            <div className="flex items-center gap-1.5 px-2 py-1 rounded-xl bg-slate-100 dark:bg-[#121520] border border-slate-200/80 dark:border-white/[0.06]">
+                                <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-purple-500 to-rose-600 flex items-center justify-center font-bold text-[11px] text-white shadow-xs shrink-0 border-0">
+                                    {user.name.charAt(0).toUpperCase()}
+                                </div>
+                                <span className="hidden lg:inline text-xs font-bold text-slate-700 dark:text-slate-300 max-w-[100px] truncate">
+                                    {user.name}
+                                </span>
                             </div>
+
+                            {/* Prominent Desktop & Tablet Logout Button */}
+                            <button
+                                type="button"
+                                onClick={logout}
+                                title="Sign Out of Tournament Admin"
+                                className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 text-rose-600 dark:text-rose-400 text-xs font-bold transition-all cursor-pointer border border-rose-200/60 dark:border-rose-500/20 active:scale-95"
+                            >
+                                <LogOut className="w-3.5 h-3.5" />
+                                <span className="hidden sm:inline">Logout</span>
+                            </button>
                         </div>
                     )}
 

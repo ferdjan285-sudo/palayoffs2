@@ -45,7 +45,7 @@ import {
 import api from '../services/api';
 
 export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', setActiveTab, onLaunchArena }) {
-    const [title, setTitle] = useState('PalayOffs MLBB Pro Championship');
+    const [title, setTitle] = useState('MLBB PalayOffs Cup 2026');
     const [sportId, setSportId] = useState('');
     const [sports, setSports] = useState([]);
     const [divisions, setDivisions] = useState([]);
@@ -634,7 +634,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                     required
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
-                                    placeholder="e.g. MLBB PalayOffs Invitational Cup 2026"
+                                    placeholder="e.g. MLBB PalayOffs Cup 2026"
                                     className="w-full px-4 py-2.5 bg-slate-50 dark:bg-white/[0.03] text-slate-900 dark:text-slate-200 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-white/[0.05] focus:border-purple-500 focus:outline-none"
                                 />
                             </div>

@@ -8,6 +8,7 @@ import LoginModal from './components/LoginModal';
 import PublicLanding from './views/PublicLanding';
 import AdminDashboard from './views/AdminDashboard';
 import ArenaDisplay from './views/ArenaDisplay';
+import SwordsClashIntro from './components/SwordsClashIntro';
 import api from './services/api';
 import { X, ExternalLink, Play, Radio, Trophy, Shield } from 'lucide-react';
 
@@ -19,6 +20,7 @@ function AppContent() {
     const [landingData, setLandingData] = useState(null);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [selectedMatchModal, setSelectedMatchModal] = useState(null);
+    const [showIntro, setShowIntro] = useState(true);
 
     // Fetch Public Landing Data
     const fetchLandingData = async () => {
@@ -60,6 +62,9 @@ function AppContent() {
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#0D0F15] text-slate-900 dark:text-slate-100 flex flex-col antialiased selection:bg-rose-500 selection:text-white">
+            {/* 0. Swords Clash Opening Intro Animation */}
+            {showIntro && <SwordsClashIntro onComplete={() => setShowIntro(false)} />}
+
             {/* Top Navigation Bar with Text-Aligned Links & Top-Left Login Portal Button */}
             <Header
                 searchQuery={searchQuery}

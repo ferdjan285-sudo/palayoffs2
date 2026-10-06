@@ -41,8 +41,19 @@ if (!getenv('APP_KEY')) {
 }
 
 // Ensure Database is configured
+$databaseUrl = getenv('DATABASE_URL') ?: getenv('DB_URL');
 $dbConnection = getenv('DB_CONNECTION');
-if (!$dbConnection || $dbConnection === 'sqlite') {
+
+if ($databaseUrl || $dbConnection === 'pgsql') {
+    putenv('DB_CONNECTION=pgsql');
+    $_ENV['DB_CONNECTION'] = 'pgsql';
+    $_SERVER['DB_CONNECTION'] = 'pgsql';
+    if ($databaseUrl) {
+        putenv("DATABASE_URL={$databaseUrl}");
+        $_ENV['DATABASE_URL'] = $databaseUrl;
+        $_SERVER['DATABASE_URL'] = $databaseUrl;
+    }
+} elseif (!$dbConnection || $dbConnection === 'sqlite') {
     putenv('DB_CONNECTION=sqlite');
     $_ENV['DB_CONNECTION'] = 'sqlite';
     $_SERVER['DB_CONNECTION'] = 'sqlite';
