@@ -41,7 +41,7 @@ export default function LoginModal({ onSuccess }) {
             onClick={() => !isLoading && setLoginModalOpen(false)}
         >
             <div
-                className="relative w-full sm:max-w-md max-h-[92vh] overflow-y-auto bg-white dark:bg-[#121520] border-t sm:border border-slate-200/80 dark:border-white/[0.08] rounded-t-[28px] sm:rounded-3xl shadow-2xl p-6 sm:p-8 text-slate-900 dark:text-slate-100 transition-all"
+                className="relative w-full sm:max-w-md max-h-[92vh] overflow-y-auto bg-white dark:bg-[#121520] border-t sm:border border-slate-200/80 dark:border-white/[0.08] rounded-t-[28px] sm:rounded-3xl shadow-2xl p-6 sm:p-8 text-slate-900 dark:text-slate-100 transition-all animate-modal-pop"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Mobile Drag Indicator Bar */}

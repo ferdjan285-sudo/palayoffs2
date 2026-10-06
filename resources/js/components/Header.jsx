@@ -165,9 +165,10 @@ export default function Header({
                         <button
                             type="button"
                             onClick={() => setLoginModalOpen(true)}
-                            className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 shadow-sm border-0 outline-none focus:outline-none active:scale-95 cursor-pointer transition-all"
+                            className="group relative flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 shadow-sm hover:shadow-md hover:shadow-rose-600/20 border-0 outline-none focus:outline-none active:scale-90 cursor-pointer transition-all duration-150 overflow-hidden"
+                            title="Open Tournament Director Login"
                         >
-                            <Lock className="w-3.5 h-3.5 text-white/95" />
+                            <Lock className="w-3.5 h-3.5 text-white/95 group-hover:rotate-12 transition-transform duration-200" />
                             <span className="hidden sm:inline font-sans">Admin</span>
                             <span className="font-sans font-bold">Login</span>
                         </button>

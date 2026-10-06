@@ -72,7 +72,7 @@ export default function PublicLanding({ landingData, searchQuery, onSelectMatch 
     return (
         <div className="space-y-6 md:space-y-8 animate-fadeIn relative pb-12">
             {/* 1. WELCOMING TOURNAMENT OVERVIEW HUB & QUICK-NAVIGATION (First View UX Priority) */}
-            <section className="relative rounded-3xl bg-white dark:bg-[#0D101C] border border-slate-200/80 dark:border-white/[0.05] p-4 sm:p-6 md:p-8 shadow-xs dark:shadow-2xl overflow-hidden transition-all duration-200">
+            <section className="relative rounded-3xl bg-white dark:bg-[#0D101C] border border-slate-200/80 dark:border-white/[0.05] p-4 sm:p-6 md:p-8 shadow-xs dark:shadow-2xl overflow-hidden transition-all duration-200 animate-fade-in-scale">
                 {/* Background Subtle Gradient Glows */}
                 <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-rose-500/10 dark:bg-rose-500/15 blur-3xl pointer-events-none" />
                 <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-purple-500/10 dark:bg-purple-500/15 blur-3xl pointer-events-none" />
@@ -296,23 +296,23 @@ export default function PublicLanding({ landingData, searchQuery, onSelectMatch 
                 {/* Center / Left Main Column */}
                 <div className="lg:col-span-8 space-y-6 md:space-y-8 min-w-0">
                     {/* (C) Flowchart Matchmaking Bracket Canvas */}
-                    <section className="animate-reveal-up" style={{ animationDelay: '0.05s' }}>
+                    <section className="animate-fade-in-scale" style={{ animationDelay: '0.04s' }}>
                         <BracketFlowchart bracketData={bracketTree} onSelectMatch={onSelectMatch} />
                     </section>
 
                     {/* (D) Hero Featured Match Banner & Live Spotlight */}
-                    <section id="featured-section" className="animate-reveal-up" style={{ animationDelay: '0.15s' }}>
+                    <section id="featured-section" className="animate-fade-in-scale" style={{ animationDelay: '0.1s' }}>
                         <FeaturedMatchHero match={featuredMatch} />
                     </section>
 
                     {/* (F) Match Schedule & Chronological Log */}
-                    <section id="schedules-section" className="animate-reveal-up" style={{ animationDelay: '0.25s' }}>
+                    <section id="schedules-section" className="animate-fade-in-scale" style={{ animationDelay: '0.16s' }}>
                         <MatchScheduleTable matches={filteredSchedule} onSelectMatch={onSelectMatch} />
                     </section>
                 </div>
 
                 {/* (E) Right Bar: Division Leaderboard & Pointing Rules */}
-                <div id="leaderboard-section" className="lg:col-span-4 space-y-6 animate-reveal-up" style={{ animationDelay: '0.35s' }}>
+                <div id="leaderboard-section" className="lg:col-span-4 space-y-6 animate-fade-in-scale" style={{ animationDelay: '0.22s' }}>
                     <DivisionLeaderboard
                         divisions={divisions}
                         matches={bracketTree?.all_matches || schedule || []}
