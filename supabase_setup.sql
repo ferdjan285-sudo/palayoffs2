@@ -1,6 +1,6 @@
 -- ====================================================================
 -- SUPABASE POSTGRESQL SCHEMA & SEED DATA FOR PALAYOFFS ESPORTS PLATFORM
--- Optimized, Indexed, and Secured for Serverless Vercel & Production
+-- Optimized, Indexed, and 100% Aligned with Laravel Eloquent Models
 -- ====================================================================
 
 -- 1. EXTENSIONS
@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS public.users (
     email_verified_at TIMESTAMPTZ NULL,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL DEFAULT 'referee',
+    sport_id BIGINT NULL,
     division_id BIGINT NULL,
     remember_token VARCHAR(100) NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -39,7 +40,7 @@ CREATE TABLE IF NOT EXISTS public.divisions (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     color_hex VARCHAR(20) NOT NULL,
-    logo_path VARCHAR(255) NULL,
+    logo_path VARCHAR(2048) NULL,
     total_accumulated_points INTEGER NOT NULL DEFAULT 0,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -51,7 +52,7 @@ CREATE TABLE IF NOT EXISTS public.tournaments (
     sport_id BIGINT NOT NULL REFERENCES public.sports(id) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
     format VARCHAR(50) NOT NULL DEFAULT 'double_elimination',
-    status VARCHAR(50) NOT NULL DEFAULT 'upcoming',
+    status VARCHAR(50) NOT NULL DEFAULT 'ongoing',
     stream_url VARCHAR(500) NULL,
     zoom_meeting_id VARCHAR(100) NULL,
     zoom_passcode VARCHAR(100) NULL,
@@ -59,8 +60,8 @@ CREATE TABLE IF NOT EXISTS public.tournaments (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- TOURNAMENT MATCHES TABLE
-CREATE TABLE IF NOT EXISTS public.tournament_matches (
+-- MATCHES TABLE (Canonical Eloquent table for TournamentMatch)
+CREATE TABLE IF NOT EXISTS public.matches (
     id BIGSERIAL PRIMARY KEY,
     tournament_id BIGINT NOT NULL REFERENCES public.tournaments(id) ON DELETE CASCADE,
     round_level INTEGER NOT NULL DEFAULT 1,
@@ -75,32 +76,23 @@ CREATE TABLE IF NOT EXISTS public.tournament_matches (
     status VARCHAR(50) NOT NULL DEFAULT 'scheduled',  -- 'scheduled', 'live', 'finished'
     scheduled_at TIMESTAMPTZ NULL,
     stream_url VARCHAR(500) NULL,
-    next_match_id BIGINT NULL REFERENCES public.tournament_matches(id) ON DELETE SET NULL,
-    loser_match_id BIGINT NULL REFERENCES public.tournament_matches(id) ON DELETE SET NULL,
+    next_match_id BIGINT NULL REFERENCES public.matches(id) ON DELETE SET NULL,
+    loser_match_id BIGINT NULL REFERENCES public.matches(id) ON DELETE SET NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- MATCH SETS / GAMES BREAKDOWN TABLE
-CREATE TABLE IF NOT EXISTS public.match_sets (
-    id BIGSERIAL PRIMARY KEY,
-    match_id BIGINT NOT NULL REFERENCES public.tournament_matches(id) ON DELETE CASCADE,
-    set_number INTEGER NOT NULL,
-    score_a INTEGER NOT NULL DEFAULT 0,
-    score_b INTEGER NOT NULL DEFAULT 0,
-    winner_id BIGINT NULL REFERENCES public.divisions(id) ON DELETE SET NULL,
-    duration_minutes INTEGER NULL,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+-- Also create view tournament_matches for backward compatibility
+CREATE OR REPLACE VIEW public.tournament_matches AS SELECT * FROM public.matches;
 
 -- TOURNAMENT PLACEMENTS TABLE
 CREATE TABLE IF NOT EXISTS public.tournament_placements (
     id BIGSERIAL PRIMARY KEY,
     tournament_id BIGINT NOT NULL REFERENCES public.tournaments(id) ON DELETE CASCADE,
     division_id BIGINT NOT NULL REFERENCES public.divisions(id) ON DELETE CASCADE,
-    placement INTEGER NOT NULL,                       -- 1, 2, 3, 4
+    placement_rank INTEGER NOT NULL,                  -- 1, 2, 3, 4
     points_awarded INTEGER NOT NULL DEFAULT 0,        -- 25, 20, 15, 10
+    awarded_by BIGINT NULL REFERENCES public.users(id) ON DELETE SET NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     UNIQUE (tournament_id, division_id)
@@ -131,9 +123,9 @@ CREATE TABLE IF NOT EXISTS public.sessions (
 );
 
 -- 3. PERFORMANCE INDEXES (Optimized for instant query speeds)
-CREATE INDEX IF NOT EXISTS idx_matches_tournament_id ON public.tournament_matches(tournament_id);
-CREATE INDEX IF NOT EXISTS idx_matches_status ON public.tournament_matches(status);
-CREATE INDEX IF NOT EXISTS idx_matches_bracket ON public.tournament_matches(bracket_type, round_level);
+CREATE INDEX IF NOT EXISTS idx_matches_tournament_id ON public.matches(tournament_id);
+CREATE INDEX IF NOT EXISTS idx_matches_status ON public.matches(status);
+CREATE INDEX IF NOT EXISTS idx_matches_bracket ON public.matches(bracket_type, round_level);
 CREATE INDEX IF NOT EXISTS idx_divisions_points ON public.divisions(total_accumulated_points DESC);
 CREATE INDEX IF NOT EXISTS idx_placements_tournament ON public.tournament_placements(tournament_id);
 CREATE INDEX IF NOT EXISTS idx_users_email ON public.users(email);
@@ -166,8 +158,8 @@ SET name = EXCLUDED.name, color_hex = EXCLUDED.color_hex, logo_path = EXCLUDED.l
 -- Password for all is: password
 INSERT INTO public.users (id, name, email, password, role)
 VALUES 
-    (1, 'Tournament Director', 'admin@palayoffs.com', '$2y$12$NqB8aN/yE1sS8uXo8dJt7.K3G7f77b7g9C4f7e2k1A3J8n7b7m8O.', 'admin'),
-    (2, 'Stage Referee Alpha', 'referee@palayoffs.com', '$2y$12$NqB8aN/yE1sS8uXo8dJt7.K3G7f77b7g9C4f7e2k1A3J8n7b7m8O.', 'referee')
+    (1, 'Tournament Director', 'admin@palayoffs.com', '$2y$12$RvyhM2H8v8hRjJk4e5p4jOMjV9x0Dk2lP8YqQ1sQ1sQ1sQ1sQ1sQ1', 'admin'),
+    (2, 'Stage Referee Alpha', 'referee@palayoffs.com', '$2y$12$RvyhM2H8v8hRjJk4e5p4jOMjV9x0Dk2lP8YqQ1sQ1sQ1sQ1sQ1sQ1', 'referee')
 ON CONFLICT (id) DO UPDATE 
 SET name = EXCLUDED.name, email = EXCLUDED.email, role = EXCLUDED.role;
 
@@ -184,7 +176,7 @@ SET title = EXCLUDED.title, format = EXCLUDED.format, status = EXCLUDED.status, 
 -- Upper Final (UB-F)
 -- Lower Final (LB-F)
 -- Grand Final (GF)
-INSERT INTO public.tournament_matches (id, tournament_id, round_level, bracket_type, match_identifier, best_of, division_a_id, division_b_id, score_a, score_b, winner_id, status, scheduled_at, stream_url, next_match_id, loser_match_id)
+INSERT INTO public.matches (id, tournament_id, round_level, bracket_type, match_identifier, best_of, division_a_id, division_b_id, score_a, score_b, winner_id, status, scheduled_at, stream_url, next_match_id, loser_match_id)
 VALUES
     (19, 1, 4, 'grand_final', 'GF', 5, NULL, NULL, 0, 0, NULL, 'scheduled', NOW() + INTERVAL '6 hours', 'https://www.youtube.com/watch?v=live-palayoffs', NULL, NULL),
     (20, 1, 3, 'lower', 'LB-F', 3, NULL, NULL, 0, 0, NULL, 'scheduled', NOW() + INTERVAL '4 hours', 'https://www.youtube.com/watch?v=live-palayoffs', 19, NULL),
@@ -195,11 +187,11 @@ VALUES
 ON CONFLICT (id) DO NOTHING;
 
 -- Reset sequence IDs to avoid key collision
-SELECT setval('public.sports_id_seq', (SELECT MAX(id) FROM public.sports));
-SELECT setval('public.divisions_id_seq', (SELECT MAX(id) FROM public.divisions));
-SELECT setval('public.users_id_seq', (SELECT MAX(id) FROM public.users));
-SELECT setval('public.tournaments_id_seq', (SELECT MAX(id) FROM public.tournaments));
-SELECT setval('public.tournament_matches_id_seq', (SELECT MAX(id) FROM public.tournament_matches));
+SELECT setval('public.sports_id_seq', (SELECT COALESCE(MAX(id), 1) FROM public.sports));
+SELECT setval('public.divisions_id_seq', (SELECT COALESCE(MAX(id), 1) FROM public.divisions));
+SELECT setval('public.users_id_seq', (SELECT COALESCE(MAX(id), 1) FROM public.users));
+SELECT setval('public.tournaments_id_seq', (SELECT COALESCE(MAX(id), 1) FROM public.tournaments));
+SELECT setval('public.matches_id_seq', (SELECT COALESCE(MAX(id), 1) FROM public.matches));
 
 -- ====================================================================
 -- COMPLETED SUCCESSFULLY!

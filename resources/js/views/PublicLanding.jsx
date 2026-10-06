@@ -43,6 +43,10 @@ export default function PublicLanding({ landingData, searchQuery, onSelectMatch 
     const nextMatch = allMatches.find(m => !m.winner_id && m.status !== 'finished') || allMatches[0];
     const spotlightMatch = liveMatch || nextMatch;
 
+    // Standardized Tournament Title across all screens
+    const displayTitle = 'MLBB PalayOffs Cup 2026';
+    const activeLeader = leaderTeam || (divisions.length > 0 ? divisions[0] : { name: 'Mauve', total_accumulated_points: 0 });
+
     // Filter schedule if search query is active
     const filteredSchedule = schedule.filter((item) => {
         if (!searchQuery) return true;
@@ -96,7 +100,7 @@ export default function PublicLanding({ landingData, searchQuery, onSelectMatch 
 
                         <div>
                             <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight uppercase leading-tight">
-                                {tournament?.title ? tournament.title.replace(/invitational/gi, '').replace(/\s+/g, ' ').trim() : 'MLBB PalayOffs Cup 2026'}
+                                {displayTitle}
                             </h1>
                             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium mt-1 leading-relaxed">
                                 {tournament?.description || 'Official Mobile Legends 5v5 esports tournament portal. Track brackets, live match stages, schedules, and divisional standings in real-time.'}
@@ -104,14 +108,12 @@ export default function PublicLanding({ landingData, searchQuery, onSelectMatch 
                         </div>
 
                         {/* Leaderboard quick status pill */}
-                        {leaderTeam && (
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-[#131726] border border-slate-200 dark:border-white/[0.05] text-xs">
-                                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                                <span className="text-slate-500 dark:text-slate-400 font-mono text-[11px]">Current #1 Seed:</span>
-                                <strong className="text-slate-900 dark:text-white font-extrabold">{leaderTeam.name}</strong>
-                                <span className="font-mono text-purple-600 dark:text-purple-400 font-black">({leaderTeam.total_accumulated_points || 0} PTS)</span>
-                            </div>
-                        )}
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-[#131726] border border-slate-200 dark:border-white/[0.05] text-xs">
+                            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                            <span className="text-slate-500 dark:text-slate-400 font-mono text-[11px]">Current #1 Seed:</span>
+                            <strong className="text-slate-900 dark:text-white font-extrabold">{activeLeader.name}</strong>
+                            <span className="font-mono text-purple-600 dark:text-purple-400 font-black">({activeLeader.total_accumulated_points || 0} PTS)</span>
+                        </div>
                     </div>
 
                     {/* Right: High-Impact Catchy Current Fixture Arena Card */}
@@ -362,7 +364,7 @@ export default function PublicLanding({ landingData, searchQuery, onSelectMatch 
             </div>
 
             {/* FLOATING LEADERBOARD QUICK-ACTION WITH EXPANDABLE MINIMAL BREAKDOWN */}
-            {leaderTeam && (
+            {activeLeader && (
                 <div className="fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end gap-2">
                     {/* MINIMAL FLOATING BREAKDOWN POPUP (Triggered by < toggle) */}
                     {showBreakdown && (
@@ -475,7 +477,7 @@ export default function PublicLanding({ landingData, searchQuery, onSelectMatch 
                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
                                 </div>
                                 <div className="text-[9px] sm:text-[10px] text-white/90 truncate max-w-[120px] sm:max-w-[150px] font-bold mt-0.5">
-                                    1st: {leaderTeam.name} ({leaderTeam.total_accumulated_points || 0} PTS)
+                                    1st: {activeLeader.name} ({activeLeader.total_accumulated_points || 0} PTS)
                                 </div>
                             </div>
                         </button>

@@ -146,7 +146,7 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
                                     {/* Title Below Cup */}
                                     <div className="relative z-10 space-y-1">
                                         <h4 className="text-xs sm:text-sm md:text-base font-black tracking-tight uppercase text-slate-900 dark:text-white">
-                                            {tournament?.title ? tournament.title.replace(/invitational/gi, '').replace(/\s+/g, ' ').trim() : 'MLBB PalayOffs Cup 2026'}
+                                            MLBB PalayOffs Cup 2026
                                         </h4>
                                         <p className="text-[10px] sm:text-[11px] font-mono font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
                                             Championship Cup

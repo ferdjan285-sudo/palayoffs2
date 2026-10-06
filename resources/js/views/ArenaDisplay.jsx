@@ -194,7 +194,7 @@ export default function ArenaDisplay({ landingData, onExit, onRefresh }) {
                             </span>
                         </div>
                         <p className="hidden sm:block text-xs text-slate-500 dark:text-slate-400 font-semibold tracking-wide mt-0.5 truncate">
-                            {(tournament?.title ? tournament.title.replace(/invitational/gi, '').replace(/\s+/g, ' ').trim() : 'MLBB PalayOffs Cup 2026')} · Live Stage Feed
+                            MLBB PalayOffs Cup 2026 · Live Stage Feed
                         </p>
                     </div>
                 </div>
@@ -710,7 +710,7 @@ export default function ArenaDisplay({ landingData, onExit, onRefresh }) {
                                                     <Trophy className="w-6 h-6 text-amber-500 dark:text-yellow-300 fill-amber-400/40" />
                                                 </div>
                                                 <h5 className="text-[11px] font-black uppercase text-slate-900 dark:text-white tracking-tight">
-                                                    {tournament?.title ? tournament.title.replace(/invitational/gi, '').replace(/\s+/g, ' ').trim() : 'MLBB PalayOffs Cup 2026'}
+                                                    MLBB PalayOffs Cup 2026
                                                 </h5>
                                                 <p className="text-[9px] font-mono font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
                                                     Championship Cup

@@ -142,7 +142,7 @@ export default function Header({
                         <div className="hidden lg:flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-[#12151E] border border-slate-200 dark:border-slate-800 text-xs">
                             <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
                             <span className="font-extrabold text-slate-800 dark:text-white truncate max-w-[180px]">
-                                {tournament?.title ? tournament.title.replace(/invitational/gi, '').replace(/\s+/g, ' ').trim() : 'Director Studio'}
+                                MLBB PalayOffs Cup 2026
                             </span>
                         </div>
                     )}

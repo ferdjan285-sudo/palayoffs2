@@ -5,19 +5,19 @@ export default function SwordsClashIntro({ onComplete }) {
     const [phase, setPhase] = useState('active'); // 'active' | 'dissolve' | 'done'
 
     useEffect(() => {
-        // Snappy 1.2s esports clash intro:
+        // Snappy 2.2s esports clash intro:
         // 0.0s - 0.4s: dynamic sword clash strike & shockwave
-        // 0.4s - 0.85s: hold impact spark & glow
-        // 0.85s - 1.2s: smooth fade dissolve
-        // 1.2s+: complete unmount
+        // 0.4s - 1.85s: hold impact spark, glow & clash showcase
+        // 1.85s - 2.2s: smooth fade dissolve
+        // 2.2s+: complete unmount
         const dissolveTimer = setTimeout(() => {
             setPhase('dissolve');
-        }, 850);
+        }, 1850);
 
         const doneTimer = setTimeout(() => {
             setPhase('done');
             if (onComplete) onComplete();
-        }, 1200);
+        }, 2200);
 
         return () => {
             clearTimeout(dissolveTimer);
