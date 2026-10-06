@@ -182,8 +182,23 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
                 )}
             </div>
 
-            {/* Bottom Staff Profile Card */}
-            <div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0E1017]">
+            {/* Bottom Staff Profile Card & Quick Admin Creation */}
+            <div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0E1017] space-y-2">
+                {isAdmin && (
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setCurrentView('admin');
+                            if (setAdminTab) setAdminTab('users');
+                        }}
+                        className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:hover:bg-emerald-900/60 border border-emerald-300/60 dark:border-emerald-500/30 shadow-xs transition-all active:scale-95 cursor-pointer group"
+                        title="Create new Admin / Referee account in Supabase database"
+                    >
+                        <UserPlus className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform" />
+                        <span>+ Create Admin Account</span>
+                    </button>
+                )}
+
                 <div className="p-3 rounded-2xl bg-white dark:bg-[#141722] border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 shadow-sm">
                     <div className="flex items-center gap-2.5 min-w-0">
                         <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-rose-600 flex items-center justify-center font-black text-xs text-white shrink-0 shadow-sm">
@@ -200,9 +215,10 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
                     </div>
 
                     <button
+                        type="button"
                         onClick={logout}
                         title="Sign Out"
-                        className="p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        className="p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                     >
                         <LogOut className="w-4 h-4" />
                     </button>

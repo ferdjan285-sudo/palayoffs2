@@ -89,6 +89,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
     const [zoomPasscode, setZoomPasscode] = useState('PALAYOFFS');
     const [adminQrPreview, setAdminQrPreview] = useState('');
     const [zoomCopied, setZoomCopied] = useState(false);
+    const [savingZoom, setSavingZoom] = useState(false);
     // Custom Confirmation Modal state
     const [confirmModal, setConfirmModal] = useState(null);
 
