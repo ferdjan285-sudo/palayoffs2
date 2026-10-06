@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Swords, Sparkles } from 'lucide-react';
+import { Swords, Flame, Sparkles } from 'lucide-react';
 
 export default function SwordsClashIntro({ onComplete }) {
     const [phase, setPhase] = useState('active'); // 'active' | 'dissolve' | 'done'
 
     useEffect(() => {
-        // Snappy 2.2s esports clash intro:
-        // 0.0s - 0.4s: dynamic sword clash strike & shockwave
-        // 0.4s - 1.85s: hold impact spark, glow & clash showcase
-        // 1.85s - 2.2s: smooth fade dissolve
-        // 2.2s+: complete unmount
+        // Satisfying 2.4s esports crossed blades animation:
+        // 0.0s - 0.5s: dramatic dual blade strike impact & shockwave flash
+        // 0.5s - 1.9s: holding sparks, glow aura & title reveal
+        // 1.9s - 2.4s: smooth dissolve transition
+        // 2.4s+: unmount
         const dissolveTimer = setTimeout(() => {
             setPhase('dissolve');
-        }, 1850);
+        }, 1900);
 
         const doneTimer = setTimeout(() => {
             setPhase('done');
             if (onComplete) onComplete();
-        }, 2200);
+        }, 2400);
 
         return () => {
             clearTimeout(dissolveTimer);
@@ -33,32 +33,71 @@ export default function SwordsClashIntro({ onComplete }) {
                 setPhase('done');
                 if (onComplete) onComplete();
             }}
-            className={`fixed inset-0 z-[99999] w-screen h-screen min-h-[100dvh] flex items-center justify-center bg-slate-950/95 backdrop-blur-md transition-opacity duration-300 pointer-events-none select-none touch-none overflow-hidden ${
-                phase === 'dissolve' ? 'opacity-0' : 'opacity-100'
-            }`}
+            className="fixed inset-0 z-[999999] w-screen h-screen min-h-[100dvh] flex items-center justify-center bg-[#07090E] transition-opacity duration-500 pointer-events-auto select-none touch-none overflow-hidden"
+            style={{ opacity: phase === 'dissolve' ? 0 : 1 }}
         >
-            <div className="relative flex flex-col items-center justify-center scale-90 sm:scale-100">
-                {/* Clash Shockwave Flash */}
-                <div className="absolute w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-amber-400/30 blur-xl animate-clash-shockwave pointer-events-none" />
-                <div className="absolute w-12 h-12 rounded-full bg-white animate-clash-spark pointer-events-none" />
+            {/* Inline Self-Contained Keyframe Styles (Zero external dependencies) */}
+            <style>{`
+                @keyframes clashImpactPulse {
+                    0% { transform: scale(0.2); opacity: 0; }
+                    40% { transform: scale(1.4); opacity: 1; filter: drop-shadow(0 0 35px #f43f5e); }
+                    60% { transform: scale(0.95); opacity: 1; }
+                    100% { transform: scale(1); opacity: 1; }
+                }
+                @keyframes sparkFlash {
+                    0% { transform: scale(0); opacity: 0; }
+                    30% { transform: scale(2.2); opacity: 1; }
+                    100% { transform: scale(3.5); opacity: 0; }
+                }
+                @keyframes shockwaveRing {
+                    0% { transform: scale(0.3); opacity: 1; }
+                    100% { transform: scale(2.8); opacity: 0; }
+                }
+                @keyframes titleRise {
+                    0% { transform: translateY(16px); opacity: 0; }
+                    40% { transform: translateY(16px); opacity: 0; }
+                    100% { transform: translateY(0); opacity: 1; }
+                }
+            `}</style>
 
-                {/* Minimalist Dual Crossed Blades Icon & Strike Effect */}
-                <div className="relative z-10 flex items-center justify-center mb-2">
-                    {/* Left Sword */}
-                    <div className="animate-sword-left text-rose-500 filter drop-shadow-[0_0_12px_rgba(244,63,94,0.8)]">
-                        <Swords className="w-16 h-16 sm:w-20 sm:h-20" />
+            <div className="relative flex flex-col items-center justify-center p-6 text-center max-w-sm mx-auto">
+                {/* 1. Shockwave Aura Ring */}
+                <div 
+                    className="absolute w-40 h-40 sm:w-52 sm:h-52 rounded-full border-2 border-rose-500/60 pointer-events-none"
+                    style={{ animation: 'shockwaveRing 0.9s ease-out forwards' }}
+                />
+
+                {/* 2. Central Spark Explosion Glow */}
+                <div 
+                    className="absolute w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-tr from-amber-400 to-rose-500 blur-2xl pointer-events-none opacity-80"
+                    style={{ animation: 'sparkFlash 0.8s ease-out forwards' }}
+                />
+
+                {/* 3. Epic Crossed Blades Icon */}
+                <div 
+                    className="relative z-10 flex items-center justify-center mb-3"
+                    style={{ animation: 'clashImpactPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}
+                >
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-tr from-rose-600 via-rose-500 to-amber-500 p-1 shadow-2xl flex items-center justify-center">
+                        <div className="w-full h-full rounded-[22px] bg-[#0B0E17] flex items-center justify-center">
+                            <Swords className="w-10 h-10 sm:w-12 sm:h-12 text-rose-500 filter drop-shadow-[0_0_15px_rgba(244,63,94,0.9)]" />
+                        </div>
                     </div>
                 </div>
 
-                {/* Snappy Clean Title (Minimal, No clutter) */}
-                <div className="relative z-10 text-center animate-emblem-reveal">
-                    <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white flex items-center justify-center gap-1.5 drop-shadow-md">
+                {/* 4. Official Tournament Logo & Badge */}
+                <div 
+                    className="relative z-10 space-y-1.5"
+                    style={{ animation: 'titleRise 0.7s ease-out forwards' }}
+                >
+                    <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-white flex items-center justify-center gap-1.5 drop-shadow-lg">
                         <span>PALAY</span>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-400">OFFS</span>
-                    </h2>
-                    <span className="text-[10px] font-mono font-bold tracking-widest text-slate-400 uppercase block mt-0.5">
-                        MLBB 2026
-                    </span>
+                    </h1>
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] sm:text-xs font-mono font-bold tracking-widest text-slate-300 uppercase">
+                        <Flame className="w-3 h-3 text-rose-500" />
+                        <span>MLBB PalayOffs Cup 2026</span>
+                    </div>
                 </div>
             </div>
         </div>

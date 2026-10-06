@@ -63,24 +63,6 @@ export const AuthProvider = ({ children }) => {
             }
             throw new Error(res.data.message || 'Login failed');
         } catch (err) {
-            // Fallback for Tournament Director login if serverless Sanctum token storage is unreachable
-            const cleanEmail = (email || '').trim().toLowerCase();
-            if (cleanEmail === 'admin@palayoffs.com' && password === 'admin123') {
-                const fallbackUser = {
-                    id: 1,
-                    name: 'Tournament Director',
-                    email: 'admin@palayoffs.com',
-                    role: 'admin',
-                    sport_id: null,
-                };
-                const fallbackToken = 'demo-admin-token-' + Date.now();
-                setToken(fallbackToken);
-                setUser(fallbackUser);
-                localStorage.setItem('palayoffs_auth_token', fallbackToken);
-                localStorage.setItem('palayoffs_user', JSON.stringify(fallbackUser));
-                setLoginModalOpen(false);
-                return fallbackUser;
-            }
             throw new Error(err.response?.data?.message || err.message || 'Login failed');
         }
     };

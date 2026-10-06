@@ -11,7 +11,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>PalayOffs — Esports Tournament Platform & Matchmaking Engine</title>
+    <title>MLBB PalayOffs Cup 2026</title>
     <meta name="description" content="Official Mobile Legends 5v5 esports tournament portal. Track brackets, live match stages, schedules, and divisional standings in real-time.">
 
     <script>
