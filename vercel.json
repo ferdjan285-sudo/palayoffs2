@@ -40,7 +40,6 @@
     "APP_ENV": "production",
     "APP_DEBUG": "false",
     "APP_KEY": "base64:PMueLfYpTnf1z3aDOANZdXRq9AE8OYtLhP8i8bx6VkI=",
-    "DB_CONNECTION": "sqlite",
     "CACHE_STORE": "array",
     "SESSION_DRIVER": "cookie",
     "LOG_CHANNEL": "stderr"

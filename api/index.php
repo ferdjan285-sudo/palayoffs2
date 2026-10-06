@@ -43,8 +43,9 @@ if (!getenv('APP_KEY')) {
 // Ensure Database is configured
 $databaseUrl = getenv('DATABASE_URL') ?: getenv('DB_URL');
 $dbConnection = getenv('DB_CONNECTION');
+$hasPgsqlDriver = extension_loaded('pdo_pgsql');
 
-if ($databaseUrl || $dbConnection === 'pgsql') {
+if (($databaseUrl || $dbConnection === 'pgsql') && $hasPgsqlDriver) {
     putenv('DB_CONNECTION=pgsql');
     $_ENV['DB_CONNECTION'] = 'pgsql';
     $_SERVER['DB_CONNECTION'] = 'pgsql';
@@ -85,7 +86,8 @@ if ($databaseUrl || $dbConnection === 'pgsql') {
             $_SERVER['DB_SSLMODE'] = 'require';
         }
     }
-} elseif (!$dbConnection || $dbConnection === 'sqlite') {
+} else {
+    // Fallback to SQLite
     putenv('DB_CONNECTION=sqlite');
     $_ENV['DB_CONNECTION'] = 'sqlite';
     $_SERVER['DB_CONNECTION'] = 'sqlite';
