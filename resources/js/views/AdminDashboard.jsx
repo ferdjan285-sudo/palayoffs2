@@ -242,7 +242,14 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
 
     useEffect(() => {
         fetchAdminData();
+        fetchUsersList();
     }, []);
+
+    useEffect(() => {
+        if (activeTab === 'staff') {
+            fetchUsersList();
+        }
+    }, [activeTab]);
 
     // Generate Scannable QR Code whenever zoomUrl changes
     useEffect(() => {

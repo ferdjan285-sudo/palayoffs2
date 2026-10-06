@@ -460,7 +460,7 @@ class AdminTournamentController extends Controller
     {
         return response()->json([
             'success' => true,
-            'sports' => Sport::where('is_active', true)->get(),
+            'sports' => Sport::whereRaw('is_active IS NOT FALSE')->get(),
             'divisions' => Division::all(),
         ]);
     }
