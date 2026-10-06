@@ -1,6 +1,15 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
+  "builds": [
+    {
+      "src": "api/index.php",
+      "use": "@vercel/php",
+      "config": {
+        "runtime": "docker"
+      }
+    }
+  ],
   "functions": {
     "api/index.php": {
       "runtime": "vercel-php@0.7.4",
@@ -42,6 +51,14 @@
     "APP_KEY": "base64:PMueLfYpTnf1z3aDOANZdXRq9AE8OYtLhP8i8bx6VkI=",
     "CACHE_STORE": "array",
     "SESSION_DRIVER": "cookie",
-    "LOG_CHANNEL": "stderr"
+    "LOG_CHANNEL": "stderr",
+    "DB_CONNECTION": "pgsql",
+    "DATABASE_URL": "postgresql://postgres.izalyiouqqmzwtppwehg:FerdjanBote29@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require",
+    "DB_HOST": "aws-0-ap-southeast-1.pooler.supabase.com",
+    "DB_PORT": "6543",
+    "DB_DATABASE": "postgres",
+    "DB_USERNAME": "postgres.izalyiouqqmzwtppwehg",
+    "DB_PASSWORD": "FerdjanBote29",
+    "DB_SSLMODE": "require"
   }
 }
