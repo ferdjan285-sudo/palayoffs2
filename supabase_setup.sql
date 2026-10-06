@@ -7,9 +7,15 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- 2. DROP OLD OBSOLETE OBJECTS (Clean Migration)
-DROP VIEW IF EXISTS public.tournament_matches CASCADE;
-DROP TABLE IF EXISTS public.tournament_matches CASCADE;
+-- 2. SAFE DROP OLD OBSOLETE OBJECTS (Clean Migration without 42809 Error)
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'tournament_matches') THEN
+        DROP TABLE public.tournament_matches CASCADE;
+    ELSIF EXISTS (SELECT 1 FROM pg_views WHERE schemaname = 'public' AND viewname = 'tournament_matches') THEN
+        DROP VIEW public.tournament_matches CASCADE;
+    END IF;
+END $$;
 
 -- 3. CREATE TABLES
 
