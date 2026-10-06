@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <radialGradient id="mintGlow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#E8F5E9" />
+      <stop offset="50%" stop-color="#98FF98" />
+      <stop offset="100%" stop-color="#00796B" />
+    </radialGradient>
+    <linearGradient id="neonMint" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A7F3D0" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+    <filter id="mintShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#10B981" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <!-- Outer Shield -->
+  <path d="M100 15 L168 46 L156 126 L100 186 L44 126 L32 46 Z" fill="url(#mintGlow)" stroke="#F0FDF4" stroke-width="4" filter="url(#mintShadow)" />
+  <!-- Inner Shield Core -->
+  <path d="M100 28 L154 54 L144 118 L100 170 L56 118 L46 54 Z" fill="#042F2C" stroke="#34D399" stroke-width="2" />
+  <!-- Lightning Tiger Crest -->
+  <path d="M100 48 L122 75 L144 68 L130 96 L118 102 L100 142 L82 102 L70 96 L56 68 L78 75 Z" fill="url(#neonMint)" stroke="#FFF" stroke-width="2" />
+  <!-- Central Lightning Blade -->
+  <polygon points="100,64 112,88 102,96 110,120 90,92 98,84" fill="#F0FDF4" stroke="#059669" stroke-width="1.5" />
+  <!-- Letter M -->
+  <text x="100" y="104" font-family="system-ui, sans-serif" font-weight="900" font-size="20" fill="#064E3B" text-anchor="middle" dominant-baseline="middle">M</text>
+  <!-- Crown Accent -->
+  <polygon points="100,34 104,42 112,42 106,47 108,55 100,50 92,55 94,47 88,42 96,42" fill="#FBBF24" />
+</svg>

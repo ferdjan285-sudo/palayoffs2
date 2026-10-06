@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../**/*.jsx';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    --color-bg-base: #F8FAFC;
+    --color-card-panel: #FFFFFF;
+    --color-card-panel-hover: #F1F5F9;
+    --color-sidebar: #FFFFFF;
+    --color-border-subtle: #E2E8F0;
+}
+
+@layer base {
+    body {
+        background-color: #F8FAFC;
+        color: #0F172A;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        overflow-x: hidden;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .dark body,
+    html.dark body {
+        background-color: #0D0F15;
+        color: #F1F5F9;
+    }
+}
+
+/* Custom Scrollbar for gaming dashboard */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #0D0F15;
+}
+::-webkit-scrollbar-thumb {
+    background: #252B3E;
+    border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #3B4463;
+}
+
+/* Neon glow animations & utilities */
+@keyframes pulse-glow {
+    0%, 100% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+}
+
+.animate-pulse-glow {
+    animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+.bracket-line-resolved {
+    filter: drop-shadow(0 0 6px currentColor);
+}

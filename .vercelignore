@@ -1,0 +1,12 @@
+.git
+.github
+.env.local
+.env.testing
+tests
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+!storage/framework/views/.gitignore
+node_modules
+.phpunit.cache
