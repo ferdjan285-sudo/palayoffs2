@@ -8,43 +8,37 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
     const sorted = [...divisions].sort((a, b) => (b.total_accumulated_points || 0) - (a.total_accumulated_points || 0));
     const maxPoints = Math.max(...sorted.map((d) => d.total_accumulated_points || 0), 25);
 
-    const getTierMaterial = (rankIndex) => {
+    const getTierMaterial = (rankIndex, pts) => {
+        const isZero = pts === 0;
+
         switch (rankIndex) {
             case 0:
                 return {
-                    rankStr: '01',
-                    badgeBg: 'bg-amber-400 text-slate-950 font-black',
-                    icon: <Crown className="w-4 h-4 text-amber-500 fill-amber-500" />,
-                    barGradient: 'from-amber-400 to-yellow-500',
+                    rankStr: '#1',
+                    icon: <Crown className="w-4 h-4 text-amber-500 fill-amber-500 shrink-0" />,
+                    barGradient: isZero ? 'bg-slate-300 dark:bg-slate-700' : 'bg-gradient-to-r from-amber-400 to-yellow-500',
                     tierTag: 'CHAMPIONSHIP TIER',
-                    tierTagClass: 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300',
                 };
             case 1:
                 return {
-                    rankStr: '02',
-                    badgeBg: 'bg-slate-300 text-slate-950 font-black',
-                    icon: <Medal className="w-4 h-4 text-slate-400 fill-slate-300" />,
-                    barGradient: 'from-slate-300 to-slate-400',
+                    rankStr: '#2',
+                    icon: <Medal className="w-4 h-4 text-slate-400 fill-slate-300 shrink-0" />,
+                    barGradient: isZero ? 'bg-slate-300 dark:bg-slate-700' : 'bg-gradient-to-r from-slate-400 to-slate-500',
                     tierTag: 'RUNNER-UP',
-                    tierTagClass: 'bg-slate-100 text-slate-700 dark:bg-slate-800/60 dark:text-slate-300',
                 };
             case 2:
                 return {
-                    rankStr: '03',
-                    badgeBg: 'bg-amber-700 text-white font-black',
-                    icon: <Award className="w-4 h-4 text-amber-600 fill-amber-700" />,
-                    barGradient: 'from-amber-600 to-amber-700',
+                    rankStr: '#3',
+                    icon: <Award className="w-4 h-4 text-amber-600 fill-amber-700 shrink-0" />,
+                    barGradient: isZero ? 'bg-slate-300 dark:bg-slate-700' : 'bg-gradient-to-r from-amber-600 to-amber-700',
                     tierTag: 'PODIUM CONTENDER',
-                    tierTagClass: 'bg-orange-50 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300',
                 };
             default:
                 return {
-                    rankStr: '04',
-                    badgeBg: 'bg-slate-200 dark:bg-white/[0.08] text-slate-700 dark:text-slate-300 font-black',
-                    icon: <Shield className="w-4 h-4 text-slate-400" />,
-                    barGradient: 'from-slate-400 to-slate-500',
+                    rankStr: `#${rankIndex + 1}`,
+                    icon: <Shield className="w-4 h-4 text-slate-400 shrink-0" />,
+                    barGradient: isZero ? 'bg-slate-300 dark:bg-slate-700' : 'bg-gradient-to-r from-slate-400 to-slate-500',
                     tierTag: 'CHALLENGER',
-                    tierTagClass: 'bg-slate-100 text-slate-600 dark:bg-slate-800/40 dark:text-slate-400',
                 };
         }
     };
@@ -112,7 +106,7 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
 
     return (
         <div id="leaderboard-section" className="space-y-4">
-            {/* Header with Live Status Tag */}
+            {/* Header with Clean Mobile-Responsive Live Status Tag */}
             <div className="flex items-center justify-between pb-1">
                 <div>
                     <h3 className="text-base font-black text-slate-900 dark:text-white uppercase tracking-tight flex items-center gap-2">
@@ -121,18 +115,19 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
                     </h3>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400">Official tournament standings · Tap team for history</p>
                 </div>
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/[0.04] text-[10px] font-mono font-bold text-slate-600 dark:text-slate-300">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/[0.08] text-[10px] font-mono font-bold text-slate-600 dark:text-slate-300 shadow-xs shrink-0">
                     <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-                    LIVE LEDGER
+                    <span>LIVE LEDGER</span>
                 </div>
             </div>
 
-            {/* Clean Cards Stack without harsh outline fatigue */}
+            {/* Clean Cards Stack without excessive color clutter */}
             <div className="space-y-2.5">
                 {sorted.map((div, index) => {
-                    const material = getTierMaterial(index);
                     const pts = div.total_accumulated_points || 0;
-                    const percent = Math.min(100, Math.round((pts / maxPoints) * 100));
+                    const isZero = pts === 0;
+                    const material = getTierMaterial(index, pts);
+                    const percent = isZero ? 0 : Math.min(100, Math.round((pts / maxPoints) * 100));
 
                     return (
                         <button
@@ -141,18 +136,19 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
                             onClick={() => setSelectedDivision(div)}
                             className="w-full text-left relative rounded-2xl p-3.5 sm:p-4 transition-all duration-200 bg-white dark:bg-[#121624] border border-slate-200/80 dark:border-white/[0.03] shadow-xs hover:shadow-md hover:dark:bg-[#161C2E] group overflow-hidden cursor-pointer active:scale-[0.99]"
                         >
-                            {/* Card Header: Medallion + Division Details */}
+                            {/* Card Header: Unboxed Rank Number/Icon + Division Details */}
                             <div className="relative z-10 flex items-center justify-between gap-3 mb-2.5">
                                 <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                                    {/* Rank Medallion */}
-                                    <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center shrink-0 ${material.badgeBg} shadow-xs`}>
-                                        <span className="font-mono text-xs font-black tracking-tight">{material.rankStr}</span>
+                                    {/* Unboxed Rank Number & Distinctive Colored Icon */}
+                                    <div className="flex items-center gap-1 shrink-0 font-mono font-black text-sm text-slate-700 dark:text-slate-300">
+                                        {material.icon}
+                                        <span className="text-xs">{material.rankStr}</span>
                                     </div>
 
-                                    {/* Team Logo Badge */}
+                                    {/* Team Logo / Initial Badge */}
                                     {div.logo_path ? (
                                         <div 
-                                            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center p-1 shrink-0 overflow-hidden bg-slate-50 dark:bg-white/[0.04]"
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center p-1 shrink-0 overflow-hidden bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.04]"
                                         >
                                             <img src={div.logo_path} alt={div.name} className="w-full h-full object-contain filter drop-shadow-sm" />
                                         </div>
@@ -164,15 +160,17 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
                                             <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white tracking-tight truncate group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                                                 {div.name} Division
                                             </h4>
-                                            {material.icon}
                                         </div>
 
                                         <div className="flex items-center gap-2 mt-0.5">
+                                            {/* ONLY Colored Dot */}
                                             <span
-                                                className="w-2 h-2 rounded-full shrink-0 shadow-xs"
-                                                style={{ backgroundColor: div.color_hex }}
+                                                className="w-2.5 h-2.5 rounded-full shrink-0 shadow-xs"
+                                                style={{ backgroundColor: div.color_hex || '#B784A7' }}
+                                                title={`Faction Color: ${div.color_hex}`}
                                             />
-                                            <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md ${material.tierTagClass}`}>
+                                            {/* Single unified neutral/muted tier label */}
+                                            <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/[0.05] text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-white/[0.04] uppercase">
                                                 {material.tierTag}
                                             </span>
                                             <span className="text-[10px] text-purple-600 dark:text-purple-400 font-mono font-bold hidden sm:inline group-hover:underline flex items-center gap-0.5">
@@ -183,11 +181,17 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
                                     </div>
                                 </div>
 
-                                {/* Points Capsule */}
+                                {/* Points Display: On 0 PTS just black/neutral */}
                                 <div className="text-right shrink-0">
-                                    <div className="text-base sm:text-lg font-black font-mono text-slate-900 dark:text-white tracking-tight">
+                                    <div className={`text-base sm:text-lg font-black font-mono tracking-tight ${
+                                        isZero 
+                                            ? 'text-slate-900 dark:text-white' 
+                                            : 'text-slate-900 dark:text-white'
+                                    }`}>
                                         {pts}{' '}
-                                        <span className="text-xs font-sans font-bold text-rose-500">
+                                        <span className={`text-xs font-sans font-bold ${
+                                            isZero ? 'text-slate-500 dark:text-slate-400' : 'text-rose-500'
+                                        }`}>
                                             PTS
                                         </span>
                                     </div>
@@ -200,7 +204,7 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
                             {/* Clean Progress Bar without double outline */}
                             <div className="relative z-10 w-full bg-slate-100 dark:bg-black/30 h-1.5 sm:h-2 rounded-full overflow-hidden p-0.5">
                                 <div
-                                    className={`h-full rounded-full transition-all duration-700 ease-out bg-gradient-to-r ${material.barGradient}`}
+                                    className={`h-full rounded-full transition-all duration-700 ease-out ${material.barGradient}`}
                                     style={{ width: `${percent}%` }}
                                 />
                             </div>
@@ -221,31 +225,31 @@ export default function DivisionLeaderboard({ divisions = [], matches = [], tour
 
                 <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
                     <div className="p-2 rounded-xl bg-slate-50 dark:bg-white/[0.02] flex items-center justify-between">
-                        <span className="text-amber-600 dark:text-amber-300 font-bold flex items-center gap-1">
-                            <Crown className="w-3 h-3 text-amber-500" /> 1st Place
+                        <span className="text-slate-700 dark:text-slate-300 font-bold flex items-center gap-1">
+                            <Crown className="w-3 h-3 text-amber-500 fill-amber-500" /> 1st Place
                         </span>
-                        <span className="text-emerald-600 dark:text-emerald-400 font-black">+25 PTS</span>
+                        <span className="text-slate-900 dark:text-white font-black">+25 PTS</span>
                     </div>
 
                     <div className="p-2 rounded-xl bg-slate-50 dark:bg-white/[0.02] flex items-center justify-between">
                         <span className="text-slate-700 dark:text-slate-300 font-bold flex items-center gap-1">
-                            <Medal className="w-3 h-3 text-slate-400" /> 2nd Place
+                            <Medal className="w-3 h-3 text-slate-400 fill-slate-400" /> 2nd Place
                         </span>
-                        <span className="text-cyan-600 dark:text-cyan-400 font-black">+20 PTS</span>
+                        <span className="text-slate-900 dark:text-white font-black">+20 PTS</span>
                     </div>
 
                     <div className="p-2 rounded-xl bg-slate-50 dark:bg-white/[0.02] flex items-center justify-between">
-                        <span className="text-amber-700 dark:text-amber-400 font-bold flex items-center gap-1">
-                            <Award className="w-3 h-3 text-amber-600" /> 3rd Place
+                        <span className="text-slate-700 dark:text-slate-300 font-bold flex items-center gap-1">
+                            <Award className="w-3 h-3 text-amber-700 fill-amber-700" /> 3rd Place
                         </span>
-                        <span className="text-amber-600 dark:text-amber-400 font-black">+15 PTS</span>
+                        <span className="text-slate-900 dark:text-white font-black">+15 PTS</span>
                     </div>
 
                     <div className="p-2 rounded-xl bg-slate-50 dark:bg-white/[0.02] flex items-center justify-between">
-                        <span className="text-slate-600 dark:text-slate-400 font-bold flex items-center gap-1">
+                        <span className="text-slate-700 dark:text-slate-300 font-bold flex items-center gap-1">
                             <Shield className="w-3 h-3 text-slate-400" /> 4th Place
                         </span>
-                        <span className="text-slate-600 dark:text-slate-400 font-black">+10 PTS</span>
+                        <span className="text-slate-900 dark:text-white font-black">+10 PTS</span>
                     </div>
                 </div>
 

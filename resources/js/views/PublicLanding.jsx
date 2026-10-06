@@ -134,10 +134,10 @@ export default function PublicLanding({ landingData, searchQuery, onSelectMatch 
                             </div>
 
                             {/* Head-to-Head Mini Preview */}
-                            <div className="flex items-center justify-between gap-3 text-center">
-                                <div className="flex-1 min-w-0">
+                            <div className="grid grid-cols-11 items-center gap-1.5 text-center">
+                                <div className="col-span-4 min-w-0">
                                     <div 
-                                        className="w-9 h-9 mx-auto rounded-xl flex items-center justify-center font-black text-xs text-slate-950 shadow-xs mb-1 border"
+                                        className="w-10 h-10 mx-auto rounded-xl flex items-center justify-center font-black text-xs text-slate-950 shadow-xs mb-1 border"
                                         style={{ 
                                             backgroundColor: (spotlightMatch.division_a?.color_hex || '#B784A7') + '33',
                                             borderColor: spotlightMatch.division_a?.color_hex || '#B784A7'
@@ -150,16 +150,16 @@ export default function PublicLanding({ landingData, searchQuery, onSelectMatch 
                                     </span>
                                 </div>
 
-                                <div className="flex flex-col items-center shrink-0">
-                                    <div className="font-mono font-black text-base text-slate-900 dark:text-white">
-                                        {spotlightMatch.score_a ?? 0} - {spotlightMatch.score_b ?? 0}
+                                <div className="col-span-3 flex flex-col items-center justify-center shrink-0">
+                                    <div className="font-mono font-black text-sm sm:text-base text-slate-900 dark:text-white">
+                                        {spotlightMatch.score_a ?? 0} : {spotlightMatch.score_b ?? 0}
                                     </div>
-                                    <span className="text-[9px] font-mono uppercase text-slate-400">VS</span>
+                                    <span className="text-[9px] font-mono font-bold uppercase text-rose-500">VS</span>
                                 </div>
 
-                                <div className="flex-1 min-w-0">
+                                <div className="col-span-4 min-w-0">
                                     <div 
-                                        className="w-9 h-9 mx-auto rounded-xl flex items-center justify-center font-black text-xs text-slate-950 shadow-xs mb-1 border"
+                                        className="w-10 h-10 mx-auto rounded-xl flex items-center justify-center font-black text-xs text-slate-950 shadow-xs mb-1 border"
                                         style={{ 
                                             backgroundColor: (spotlightMatch.division_b?.color_hex || '#98FF98') + '33',
                                             borderColor: spotlightMatch.division_b?.color_hex || '#98FF98'
