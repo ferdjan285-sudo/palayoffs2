@@ -759,28 +759,14 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                             </div>
                         </div>
 
-                        {/* Broadcast Stream URL */}
-                        <div>
-                            <label className="block text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
-                                Official Live Broadcast Link (YouTube / Twitch / Kick)
-                            </label>
-                            <input
-                                type="url"
-                                value={streamUrl}
-                                onChange={(e) => setStreamUrl(e.target.value)}
-                                placeholder="https://www.youtube.com/watch?v=..."
-                                className="w-full px-4 py-2.5 bg-slate-50 dark:bg-white/[0.03] text-slate-900 dark:text-slate-200 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-white/[0.05] font-mono"
-                            />
-                        </div>
-
                         {/* Submit Action */}
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-4 px-6 rounded-2xl font-black text-sm text-white bg-purple-600 hover:bg-purple-700 shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] disabled:opacity-50"
+                            className="w-full py-4 px-6 rounded-2xl font-black text-sm text-white bg-rose-600 hover:bg-rose-700 shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] disabled:opacity-50"
                         >
                             <ShieldCheck className="w-5 h-5" />
-                            <span>Commit Pairings & Initialize Adjacency Nodes</span>
+                            <span>Commit Pairings & Initialize Tournament Nodes</span>
                         </button>
                     </form>
                 </div>
@@ -1021,7 +1007,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                     onClick={() => setMatchStageFilter('all')}
                                     className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                                         matchStageFilter === 'all'
-                                            ? 'bg-purple-600 text-white shadow-sm'
+                                            ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-950 shadow-sm'
                                             : 'bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/[0.04]'
                                     }`}
                                 >
@@ -1040,11 +1026,11 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                             onClick={() => setMatchStageFilter(matchStageFilter === p.id ? 'all' : p.id)}
                                             className={`p-3.5 rounded-xl text-left transition-all border cursor-pointer relative ${
                                                 isSelected
-                                                    ? 'ring-2 ring-purple-500 shadow-md bg-purple-500/10 border-purple-500/40'
+                                                    ? 'ring-2 ring-rose-500 shadow-sm bg-rose-500/10 border-rose-500/40'
                                                     : p.isDone
                                                     ? 'bg-emerald-500/5 border-emerald-500/20 hover:bg-emerald-500/10'
                                                     : p.unlocked
-                                                    ? 'bg-slate-50 dark:bg-white/[0.02] border-slate-200 dark:border-white/[0.04] hover:border-purple-400'
+                                                    ? 'bg-slate-50 dark:bg-white/[0.02] border-slate-200 dark:border-white/[0.04] hover:border-rose-400'
                                                     : 'bg-slate-50/50 dark:bg-white/[0.01] border-slate-200/60 dark:border-white/[0.02] opacity-60'
                                             }`}
                                         >
@@ -1056,7 +1042,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                     p.isDone
                                                         ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
                                                         : p.unlocked
-                                                        ? 'bg-purple-500/20 text-purple-600 dark:text-purple-300'
+                                                        ? 'bg-rose-500/20 text-rose-600 dark:text-rose-400'
                                                         : 'bg-slate-200 dark:bg-white/[0.05] text-slate-500'
                                                 }`}>
                                                     {!p.unlocked && <Lock className="w-2.5 h-2.5" />}
@@ -1075,10 +1061,10 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                             </div>
                         </div>
 
-                        {/* COMPACT ACTIVE STAGE GUIDANCE BANNER */}
-                        <div className="p-3.5 rounded-xl bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 text-xs flex flex-wrap items-center justify-between gap-3 text-slate-700 dark:text-purple-200">
+                        {/* COMPACT ACTIVE STAGE GUIDANCE BANNER (MINIMAL 3 COLORS) */}
+                        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.05] text-xs flex flex-wrap items-center justify-between gap-3 text-slate-700 dark:text-slate-300">
                             <div className="flex items-center gap-2.5">
-                                <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shrink-0" />
+                                <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse shrink-0" />
                                 <div>
                                     {!p1AllDone ? (
                                         <span><strong>Current Step: Phase 1 (Opening Matches M1 & M2).</strong> M1 and M2 are displayed first below. Log each game; the series winner is auto-declared and unlocks Phase 2.</span>
@@ -1097,7 +1083,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                 <button
                                     type="button"
                                     onClick={() => setMatchStageFilter('all')}
-                                    className="text-[11px] font-bold text-purple-600 dark:text-purple-400 hover:underline cursor-pointer"
+                                    className="text-[11px] font-bold text-slate-900 dark:text-white hover:underline cursor-pointer"
                                 >
                                     Show All Stages
                                 </button>
@@ -1139,98 +1125,108 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                 ? 'bg-slate-50/50 dark:bg-white/[0.01] border-dashed border-slate-200 dark:border-white/[0.03]'
                                                 : m.winner_id
                                                 ? 'bg-white dark:bg-[#121623] border-emerald-500/30 shadow-sm'
-                                                : 'bg-white dark:bg-[#121623] border-slate-200 dark:border-white/[0.04] shadow-sm hover:border-purple-500/50'
+                                                : 'bg-white dark:bg-[#121623] border-slate-200 dark:border-white/[0.04] shadow-sm hover:border-slate-400'
                                         }`}
                                     >
-                                        {/* 1. COMPACT HEADER BAR */}
-                                        <div className="p-3 sm:p-4 bg-slate-50/70 dark:bg-white/[0.02] border-b border-slate-200 dark:border-white/[0.03] flex flex-wrap items-center justify-between gap-3">
-                                            <div className="flex items-center gap-2.5 min-w-0">
-                                                <span className="px-2.5 py-1 rounded-lg bg-purple-600 text-white font-mono font-black text-xs shadow-sm">
-                                                    {m.match_identifier}
-                                                </span>
-                                                <div className="min-w-0">
-                                                    <h4 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white truncate">
-                                                        {meta.title}
-                                                    </h4>
-                                                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block truncate">
-                                                        {meta.flow}
+                                        {/* 1. COMPACT HEADER BAR - FULLY RESPONSIVE ON MOBILE */}
+                                        <div className="p-3 sm:p-4 bg-slate-50/70 dark:bg-white/[0.02] border-b border-slate-200 dark:border-white/[0.03] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                            {/* Row 1: ID, Title & Status Pill */}
+                                            <div className="flex items-center justify-between gap-2.5 min-w-0 flex-1">
+                                                <div className="flex items-center gap-2.5 min-w-0">
+                                                    <span className="px-2.5 py-1 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-mono font-black text-xs shadow-sm shrink-0">
+                                                        {m.match_identifier}
                                                     </span>
+                                                    <div className="min-w-0">
+                                                        <h4 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white truncate">
+                                                            {meta.title}
+                                                        </h4>
+                                                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block truncate">
+                                                            {meta.flow}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                {/* Status Pill (always visible and unclipped) */}
+                                                <div className="shrink-0">
+                                                    {m.winner_id ? (
+                                                        <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] sm:text-[11px] font-mono flex items-center gap-1 border border-emerald-500/30 whitespace-nowrap">
+                                                            <Check className="w-3 h-3" />
+                                                            <span>Concluded</span>
+                                                        </span>
+                                                    ) : isUnlocked ? (
+                                                        <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold text-[10px] sm:text-[11px] font-mono flex items-center gap-1 border border-rose-500/30 whitespace-nowrap">
+                                                            <Unlock className="w-3 h-3" />
+                                                            <span>{gamesPlayed > 0 ? `Live (G${nextGameNo})` : 'Ready to Log'}</span>
+                                                        </span>
+                                                    ) : (
+                                                        <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg bg-slate-200 dark:bg-white/[0.05] text-slate-500 font-bold text-[10px] sm:text-[11px] font-mono flex items-center gap-1 border border-slate-300 dark:border-white/[0.05] whitespace-nowrap">
+                                                            <Lock className="w-3 h-3 text-slate-400" />
+                                                            <span>Locked</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </div>
 
-                                            <div className="flex items-center gap-2 shrink-0">
-                                                {/* Series Format Selector: BO1, BO3, BO5, BO7 */}
-                                                <div className="flex items-center bg-white dark:bg-[#151926] border border-slate-200 dark:border-white/[0.05] rounded-lg p-0.5 text-xs font-mono">
-                                                    <span className="px-1.5 text-slate-400 text-[10px] uppercase font-bold">Series:</span>
-                                                    {[1, 3, 5, 7].map((num) => {
-                                                        // Prevent switching mid-series to a format that would already be decided
-                                                        const tooShort = !m.winner_id && Math.ceil(num / 2) <= Math.max(liveA, liveB);
-                                                        return (
-                                                        <button
-                                                            key={num}
-                                                            type="button"
-                                                            disabled={loading || tooShort}
-                                                            onClick={() => handleUpdateBestOf(m.id, num)}
-                                                            className={`px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer transition-colors disabled:opacity-30 disabled:cursor-not-allowed ${
-                                                                bestOfVal === num
-                                                                    ? 'bg-purple-600 text-white shadow-sm'
-                                                                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.05]'
-                                                            }`}
-                                                            title={tooShort ? `Current series score exceeds BO${num}` : `Set series format to Best of ${num}`}
-                                                        >
-                                                            BO{num}
-                                                        </button>
-                                                        );
-                                                    })}
+                                            {/* Row 2 on mobile / Right column on desktop: Series Format Selector */}
+                                            <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200/50 dark:border-white/[0.02]">
+                                                <div className="flex items-center bg-white dark:bg-[#151926] border border-slate-200 dark:border-white/[0.05] rounded-lg p-0.5 text-xs font-mono w-full sm:w-auto justify-between sm:justify-start">
+                                                    <span className="px-1.5 text-slate-400 text-[10px] uppercase font-bold shrink-0">Series:</span>
+                                                    <div className="flex items-center gap-0.5">
+                                                        {[1, 3, 5, 7].map((num) => {
+                                                            const tooShort = !m.winner_id && Math.ceil(num / 2) <= Math.max(liveA, liveB);
+                                                            return (
+                                                            <button
+                                                                key={num}
+                                                                type="button"
+                                                                disabled={loading || tooShort}
+                                                                onClick={() => handleUpdateBestOf(m.id, num)}
+                                                                className={`px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer transition-colors disabled:opacity-30 disabled:cursor-not-allowed ${
+                                                                    bestOfVal === num
+                                                                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-sm'
+                                                                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.05]'
+                                                                }`}
+                                                                title={tooShort ? `Current series score exceeds BO${num}` : `Set series format to Best of ${num}`}
+                                                            >
+                                                                BO{num}
+                                                            </button>
+                                                            );
+                                                        })}
+                                                    </div>
                                                 </div>
-
-                                                {/* Status Pill */}
-                                                {m.winner_id ? (
-                                                    <span className="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold text-[11px] font-mono flex items-center gap-1 border border-emerald-500/30">
-                                                        <Check className="w-3 h-3" />
-                                                        <span>Concluded</span>
-                                                    </span>
-                                                ) : isUnlocked ? (
-                                                    <span className="px-2.5 py-1 rounded-lg bg-purple-500/15 text-purple-600 dark:text-purple-300 font-bold text-[11px] font-mono flex items-center gap-1 border border-purple-500/30">
-                                                        <Unlock className="w-3 h-3" />
-                                                        <span>{gamesPlayed > 0 ? `Live · Game ${nextGameNo}` : 'Ready to Log'}</span>
-                                                    </span>
-                                                ) : (
-                                                    <span className="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-white/[0.05] text-slate-500 font-bold text-[11px] font-mono flex items-center gap-1 border border-slate-300 dark:border-white/[0.05]">
-                                                        <Lock className="w-3 h-3 text-amber-500" />
-                                                        <span>Locked</span>
-                                                    </span>
-                                                )}
                                             </div>
                                         </div>
 
                                         {/* 2. MATCHUP & WINNER LOGGING BODY */}
-                                        <div className="p-4 sm:p-5 space-y-4">
+                                        <div className="p-3.5 sm:p-5 space-y-4">
                                             {/* COMPETITORS VS ROW */}
-                                            <div className="grid grid-cols-1 md:grid-cols-11 items-center gap-3">
+                                            <div className="grid grid-cols-1 md:grid-cols-11 items-center gap-2.5 sm:gap-3">
                                                 {/* Competitor A Card */}
-                                                <div className={`md:col-span-5 p-3.5 rounded-xl border flex items-center justify-between gap-3 ${
+                                                <div className={`md:col-span-5 p-3 sm:p-3.5 rounded-xl border flex items-center justify-between gap-3 ${
                                                     m.winner_id === divA?.id
                                                         ? 'bg-emerald-500/10 border-emerald-500/40 ring-1 ring-emerald-500/30'
                                                         : 'bg-slate-50 dark:bg-[#151928] border-slate-200 dark:border-white/[0.03]'
                                                 }`}>
-                                                    <div className="flex items-center gap-3 min-w-0">
+                                                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
                                                         <div
-                                                            className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm text-slate-950 shrink-0 shadow-sm"
+                                                            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden flex items-center justify-center font-black text-sm text-slate-950 shrink-0 shadow-sm border border-black/5 dark:border-white/10"
                                                             style={{ backgroundColor: divA?.color_hex || '#B784A7' }}
                                                         >
-                                                            {divA?.name ? divA.name.charAt(0) : 'A'}
+                                                            {divA?.logo_path ? (
+                                                                <img src={divA.logo_path} alt={divA.name} className="w-full h-full object-cover" />
+                                                            ) : (
+                                                                <span>{divA?.name ? divA.name.charAt(0) : 'A'}</span>
+                                                            )}
                                                         </div>
-                                                        <div className="min-w-0">
+                                                        <div className="min-w-0 flex-1">
                                                             <span className="text-[10px] font-mono text-slate-400 uppercase block">Slot A</span>
-                                                            <h5 className="font-extrabold text-sm text-slate-900 dark:text-white truncate">
+                                                            <h5 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white truncate" title={divA?.name || 'Awaiting Competitor'}>
                                                                 {divA?.name || 'Awaiting Competitor'}
                                                             </h5>
                                                         </div>
                                                     </div>
 
                                                     <div className="text-right shrink-0">
-                                                        <span className="font-mono text-2xl font-black text-slate-900 dark:text-white">
+                                                        <span className="font-mono text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
                                                             {scoreAVal}
                                                         </span>
                                                         {m.winner_id === divA?.id && (
@@ -1242,35 +1238,39 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                 </div>
 
                                                 {/* VS Middle Badge */}
-                                                <div className="md:col-span-1 flex flex-col items-center justify-center py-1">
-                                                    <span className="text-xs font-black font-mono px-2 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                                                <div className="md:col-span-1 flex items-center justify-center py-0.5">
+                                                    <span className="text-[10px] sm:text-xs font-black font-mono px-2 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                                                         VS
                                                     </span>
                                                 </div>
 
                                                 {/* Competitor B Card */}
-                                                <div className={`md:col-span-5 p-3.5 rounded-xl border flex items-center justify-between gap-3 ${
+                                                <div className={`md:col-span-5 p-3 sm:p-3.5 rounded-xl border flex items-center justify-between gap-3 ${
                                                     m.winner_id === divB?.id
                                                         ? 'bg-emerald-500/10 border-emerald-500/40 ring-1 ring-emerald-500/30'
                                                         : 'bg-slate-50 dark:bg-[#151928] border-slate-200 dark:border-white/[0.03]'
                                                 }`}>
-                                                    <div className="flex items-center gap-3 min-w-0">
+                                                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
                                                         <div
-                                                            className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm text-slate-950 shrink-0 shadow-sm"
+                                                            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden flex items-center justify-center font-black text-sm text-slate-950 shrink-0 shadow-sm border border-black/5 dark:border-white/10"
                                                             style={{ backgroundColor: divB?.color_hex || '#98FF98' }}
                                                         >
-                                                            {divB?.name ? divB.name.charAt(0) : 'B'}
+                                                            {divB?.logo_path ? (
+                                                                <img src={divB.logo_path} alt={divB.name} className="w-full h-full object-cover" />
+                                                            ) : (
+                                                                <span>{divB?.name ? divB.name.charAt(0) : 'B'}</span>
+                                                            )}
                                                         </div>
-                                                        <div className="min-w-0">
+                                                        <div className="min-w-0 flex-1">
                                                             <span className="text-[10px] font-mono text-slate-400 uppercase block">Slot B</span>
-                                                            <h5 className="font-extrabold text-sm text-slate-900 dark:text-white truncate">
+                                                            <h5 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white truncate" title={divB?.name || 'Awaiting Competitor'}>
                                                                 {divB?.name || 'Awaiting Competitor'}
                                                             </h5>
                                                         </div>
                                                     </div>
 
                                                     <div className="text-right shrink-0">
-                                                        <span className="font-mono text-2xl font-black text-slate-900 dark:text-white">
+                                                        <span className="font-mono text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
                                                             {scoreBVal}
                                                         </span>
                                                         {m.winner_id === divB?.id && (
@@ -1287,7 +1287,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                             {!isUnlocked && (
                                                 <div className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-white/[0.01] border border-dashed border-slate-300 dark:border-white/[0.03] text-xs flex items-center justify-between gap-3">
                                                     <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400">
-                                                        <Lock className="w-4 h-4 text-amber-500 shrink-0" />
+                                                        <Lock className="w-4 h-4 text-slate-400 shrink-0" />
                                                         <span><strong>Fixture Locked:</strong> {pendingMsg}. Will automatically unlock as soon as prior matches finish.</span>
                                                     </div>
                                                 </div>
@@ -1297,7 +1297,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                             {isUnlocked && m.winner_id && (
                                                 <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/30 flex flex-wrap items-center justify-between gap-3">
                                                     <div className="flex items-center gap-2 text-xs font-bold text-emerald-800 dark:text-emerald-300">
-                                                        <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
+                                                        <Trophy className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                                                         <span>
                                                             Series Concluded: <strong>{m.winner?.name || 'Winner'}</strong> won the match ({scoreAVal} - {scoreBVal}). Bracket nodes advanced.
                                                         </span>
@@ -1317,24 +1317,24 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
 
                                             {/* CASE 3: PER-GAME LOGGING (AUTO-DECLARES SERIES WINNER) */}
                                             {isUnlocked && !m.winner_id && (
-                                                <div className="p-4 rounded-xl bg-purple-50/70 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 space-y-4">
+                                                <div className="p-4 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.04] space-y-4">
                                                     {/* Instruction line */}
                                                     <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                                                        <span className="font-extrabold text-slate-800 dark:text-purple-200 flex items-center gap-1.5">
-                                                            <Crown className="w-4 h-4 text-amber-500" />
+                                                        <span className="font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5">
+                                                            <Crown className="w-4 h-4 text-rose-500" />
                                                             <span>Log Game {nextGameNo} Winner</span>
                                                         </span>
                                                         <span className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
-                                                            Best of {bestOfVal} · First to <strong className="text-purple-600 dark:text-purple-300">{winsNeeded}</strong> win{winsNeeded > 1 ? 's' : ''} is auto-declared
+                                                            Best of {bestOfVal} · First to <strong className="text-rose-600 dark:text-rose-400 font-bold">{winsNeeded}</strong> win{winsNeeded > 1 ? 's' : ''} is auto-declared
                                                         </span>
                                                     </div>
 
                                                     {/* Per-team game logging */}
                                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                                         {[
-                                                            { side: 'a', div: divA, wins: liveA, fallback: 'Competitor A', grad: 'from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500', pip: 'bg-purple-500' },
-                                                            { side: 'b', div: divB, wins: liveB, fallback: 'Competitor B', grad: 'from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500', pip: 'bg-emerald-500' },
-                                                        ].map(({ side, div, wins, fallback, grad, pip }) => {
+                                                            { side: 'a', div: divA, wins: liveA, fallback: 'Competitor A', btnColor: 'bg-rose-600 hover:bg-rose-500 text-white', pip: 'bg-rose-500' },
+                                                            { side: 'b', div: divB, wins: liveB, fallback: 'Competitor B', btnColor: 'bg-emerald-600 hover:bg-emerald-500 text-white', pip: 'bg-emerald-500' },
+                                                        ].map(({ side, div, wins, fallback, btnColor, pip }) => {
                                                             const isMatchPoint = wins === winsNeeded - 1;
                                                             return (
                                                                 <div key={side} className="p-3 rounded-xl bg-white dark:bg-[#151926] border border-slate-200 dark:border-white/[0.04] space-y-3">
@@ -1343,7 +1343,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                                             {div?.name || fallback}
                                                                         </span>
                                                                         {isMatchPoint && (
-                                                                            <span className="text-[10px] font-mono font-black uppercase px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 animate-pulse">
+                                                                            <span className="text-[10px] font-mono font-black uppercase px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 animate-pulse">
                                                                                 Match Point
                                                                             </span>
                                                                         )}
@@ -1367,7 +1367,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                                             type="button"
                                                                             disabled={loading || !divA || !divB}
                                                                             onClick={() => handleLogGame(m, side, 1, divA, divB, bestOfVal, liveA, liveB)}
-                                                                            className={`flex-1 py-2.5 px-3 rounded-lg bg-gradient-to-r ${grad} text-white font-extrabold text-xs shadow-md transition-all active:scale-[0.98] cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed`}
+                                                                            className={`flex-1 py-2.5 px-3 rounded-lg ${btnColor} font-extrabold text-xs shadow-sm transition-all active:scale-[0.98] cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed`}
                                                                             title={isMatchPoint ? 'Winning this game clinches the series' : `Log Game ${nextGameNo} for this team`}
                                                                         >
                                                                             <Check className="w-3.5 h-3.5" />
@@ -1377,7 +1377,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                                             type="button"
                                                                             disabled={loading || wins === 0}
                                                                             onClick={() => handleLogGame(m, side, -1, divA, divB, bestOfVal, liveA, liveB)}
-                                                                            className="px-2.5 rounded-lg bg-slate-100 dark:bg-white/[0.04] text-slate-500 hover:text-rose-500 border border-slate-200 dark:border-white/[0.05] transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+                                                                            className="px-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/[0.05] transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
                                                                             title="Undo one game win"
                                                                         >
                                                                             <RotateCcw className="w-3.5 h-3.5" />
@@ -1399,7 +1399,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                 <button
                                                     type="button"
                                                     onClick={() => setOpenAdvancedMatch({ ...openAdvancedMatch, [m.id]: !isAdvancedOpen })}
-                                                    className="text-[11px] font-bold text-slate-500 hover:text-purple-600 dark:hover:text-purple-400 flex items-center gap-1.5 transition-colors cursor-pointer"
+                                                    className="text-[11px] font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
                                                 >
                                                     <Settings className="w-3 h-3" />
                                                     <span>{isAdvancedOpen ? 'Hide' : 'Show'} Advanced Settings (Schedule & Manual Overrides)</span>
@@ -1497,7 +1497,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleSaveMatch(m.id)}
-                                                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-sm cursor-pointer"
+                                                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950 hover:opacity-90 font-bold text-xs shadow-sm cursor-pointer"
                                                             >
                                                                 <Save className="w-3.5 h-3.5" />
                                                                 <span>Save Overrides</span>
