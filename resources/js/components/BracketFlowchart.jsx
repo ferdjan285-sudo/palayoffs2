@@ -10,12 +10,15 @@ import {
     Radio,
     Sparkles,
     Layers,
-    ChevronRight
+    Shield,
+    Zap,
+    ChevronRight,
+    SlidersHorizontal
 } from 'lucide-react';
 
 export default function BracketFlowchart({ bracketData, onSelectMatch }) {
     const allMatches = bracketData?.all_matches || [];
-    const [mobileSection, setMobileSection] = useState('all'); // 'all' | 'upper' | 'lower' | 'final'
+    const [bracketView, setBracketView] = useState('all'); // 'all' | 'upper' | 'lower' | 'final'
     
     // Find matches by identifier
     const m1 = allMatches.find(m => m.match_identifier === 'M1' || m.match_identifier === 'UB1' || m.identifier === 'M1' || m.identifier === 'UB1');
@@ -33,16 +36,23 @@ export default function BracketFlowchart({ bracketData, onSelectMatch }) {
         return null;
     };
 
+    const STAGES = [
+        { id: 'all', label: 'All Stages', icon: Swords, badge: 'Full View', color: 'from-cyan-600 to-blue-600' },
+        { id: 'upper', label: 'Upper Bracket', icon: Shield, badge: 'Winners (Bo3)', color: 'from-sky-600 to-blue-700' },
+        { id: 'lower', label: 'Lower Bracket', icon: Zap, badge: 'Deciders', color: 'from-rose-600 to-red-700' },
+        { id: 'final', label: 'Grand Final', icon: Crown, badge: 'Championship (Bo5)', color: 'from-amber-500 to-yellow-600' },
+    ];
+
     return (
-        <div id="bracket-section" className="relative w-full rounded-3xl bg-white dark:bg-[#080B14] border border-slate-200 dark:border-[#1E2538] p-4 sm:p-6 md:p-8 shadow-sm dark:shadow-2xl overflow-hidden select-none transition-colors duration-200">
+        <div id="bracket-section" className="relative w-full rounded-3xl bg-white dark:bg-[#080B14] border border-slate-200 dark:border-[#1E2538] p-4 sm:p-6 md:p-8 shadow-sm dark:shadow-2xl overflow-hidden select-none transition-colors duration-200 animate-reveal-up">
             {/* Top Atmospheric Glow */}
             <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
 
             {/* 1. TOURNAMENT BANNER HEADER */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 sm:pb-6 mb-6 sm:mb-8 border-b border-slate-200 dark:border-[#182033]">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 sm:pb-6 mb-5 sm:mb-6 border-b border-slate-200 dark:border-[#182033]">
                 {/* Left: Mobile Legends Brand Mark */}
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-yellow-400 p-0.5 shadow-md flex items-center justify-center font-black text-slate-950 text-lg sm:text-xl tracking-tighter">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-yellow-400 p-0.5 shadow-md flex items-center justify-center font-black text-slate-950 text-lg sm:text-xl tracking-tighter shrink-0">
                         M
                     </div>
                     <div>
@@ -52,7 +62,7 @@ export default function BracketFlowchart({ bracketData, onSelectMatch }) {
                             </span>
                         </div>
                         <p className="text-[9px] sm:text-[10px] tracking-[0.25em] text-slate-500 dark:text-slate-400 font-mono uppercase">
-                            BANG BANG
+                            BANG BANG · 5v5
                         </p>
                     </div>
                 </div>
@@ -62,7 +72,7 @@ export default function BracketFlowchart({ bracketData, onSelectMatch }) {
                     <h2 className="text-xl sm:text-2xl md:text-3xl font-black italic tracking-wide text-slate-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-white dark:via-slate-100 dark:to-amber-200 uppercase drop-shadow-sm">
                         4-Team Double Elimination
                     </h2>
-                    <p className="text-[11px] sm:text-xs md:text-sm font-mono tracking-[0.2em] sm:tracking-[0.3em] text-cyan-600 dark:text-cyan-400 uppercase font-bold mt-0.5">
+                    <p className="text-[10px] sm:text-xs md:text-sm font-mono tracking-[0.2em] sm:tracking-[0.3em] text-cyan-600 dark:text-cyan-400 uppercase font-bold mt-0.5">
                         TOURNAMENT BRACKET
                     </p>
                 </div>
@@ -78,39 +88,62 @@ export default function BracketFlowchart({ bracketData, onSelectMatch }) {
                 </div>
             </div>
 
-            {/* MOBILE SECTION QUICK SELECTOR (Shown on < xl screens) */}
-            <div className="xl:hidden flex items-center gap-1.5 overflow-x-auto pb-3 mb-4 no-scrollbar">
-                {[
-                    { id: 'all', label: 'All Brackets' },
-                    { id: 'upper', label: 'Upper Bracket (Winners)' },
-                    { id: 'lower', label: 'Lower Bracket (Elimination)' },
-                    { id: 'final', label: 'Grand Final (Gold)' },
-                ].map((tab) => (
-                    <button
-                        key={tab.id}
-                        type="button"
-                        onClick={() => setMobileSection(tab.id)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
-                            mobileSection === tab.id
-                                ? 'bg-cyan-600 text-white shadow-sm'
-                                : 'bg-slate-100 dark:bg-[#121624] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                        }`}
-                    >
-                        {tab.label}
-                    </button>
-                ))}
+            {/* 2. RE-DESIGNED BRACKET STAGE SELECTOR (Sleek Segmented Control for Mobile & Desktop) */}
+            <div className="mb-6">
+                <div className="flex items-center justify-between gap-2 mb-2 px-1">
+                    <span className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                        <SlidersHorizontal className="w-3.5 h-3.5 text-cyan-500" />
+                        <span>Filter Tournament Stage:</span>
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400">Tap to inspect node</span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-100 dark:bg-[#0E121E] p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800/80">
+                    {STAGES.map((s) => {
+                        const Icon = s.icon;
+                        const isCurrent = bracketView === s.id;
+                        return (
+                            <button
+                                key={s.id}
+                                type="button"
+                                onClick={() => setBracketView(s.id)}
+                                className={`flex items-center gap-2 p-2 sm:p-2.5 rounded-xl text-left transition-all duration-200 cursor-pointer ${
+                                    isCurrent
+                                        ? `bg-gradient-to-r ${s.color} text-white shadow-md font-black`
+                                        : 'text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-[#181E30]'
+                                }`}
+                            >
+                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
+                                    isCurrent ? 'bg-white/20' : 'bg-slate-200/70 dark:bg-slate-800'
+                                }`}>
+                                    <Icon className="w-3.5 h-3.5" />
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                    <span className="block text-xs font-bold leading-tight truncate">
+                                        {s.label}
+                                    </span>
+                                    <span className={`text-[9px] font-mono block truncate ${
+                                        isCurrent ? 'text-white/80' : 'text-slate-400'
+                                    }`}>
+                                        {s.badge}
+                                    </span>
+                                </div>
+                            </button>
+                        );
+                    })}
+                </div>
             </div>
 
-            {/* 2. MAIN TOURNAMENT BRACKETING GRID */}
+            {/* 3. MAIN TOURNAMENT BRACKETING GRID */}
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 sm:gap-8 items-stretch">
                 {/* LEFT & CENTER: Upper and Lower Brackets */}
                 <div className={`xl:col-span-8 space-y-6 sm:space-y-8 flex flex-col justify-between ${
-                    mobileSection === 'final' ? 'hidden xl:flex' : 'flex'
+                    bracketView === 'final' ? 'hidden xl:flex' : 'flex'
                 }`}>
                     
                     {/* ====== A. UPPER BRACKET ====== */}
-                    <div className={`relative rounded-3xl bg-slate-50/70 dark:bg-[#0B101D]/90 border border-sky-200 dark:border-[#1B4079] p-4 sm:p-6 shadow-sm dark:shadow-2xl overflow-hidden ${
-                        mobileSection === 'lower' ? 'hidden xl:block' : 'block'
+                    <div className={`relative rounded-3xl bg-slate-50/70 dark:bg-[#0B101D]/90 border border-sky-200 dark:border-[#1B4079] p-4 sm:p-6 shadow-sm dark:shadow-2xl overflow-hidden transition-all ${
+                        bracketView === 'lower' ? 'hidden xl:block' : 'block'
                     }`}>
                         {/* Upper Bracket Header Tag */}
                         <div className="flex items-center justify-between mb-4 sm:mb-6">
@@ -191,8 +224,8 @@ export default function BracketFlowchart({ bracketData, onSelectMatch }) {
                     </div>
 
                     {/* ====== B. LOWER BRACKET ====== */}
-                    <div className={`relative rounded-3xl bg-slate-50/70 dark:bg-[#140A10]/90 border border-rose-200 dark:border-[#8A182E] p-4 sm:p-6 shadow-sm dark:shadow-2xl overflow-hidden ${
-                        mobileSection === 'upper' ? 'hidden xl:block' : 'block'
+                    <div className={`relative rounded-3xl bg-slate-50/70 dark:bg-[#140A10]/90 border border-rose-200 dark:border-[#8A182E] p-4 sm:p-6 shadow-sm dark:shadow-2xl overflow-hidden transition-all ${
+                        bracketView === 'upper' ? 'hidden xl:block' : 'block'
                     }`}>
                         {/* Lower Bracket Header Tag */}
                         <div className="flex items-center justify-between mb-4 sm:mb-6">
@@ -274,7 +307,7 @@ export default function BracketFlowchart({ bracketData, onSelectMatch }) {
 
                 {/* RIGHT: Grand Final Championship Card */}
                 <div className={`xl:col-span-4 flex flex-col justify-center pt-6 sm:pt-8 ${
-                    mobileSection === 'upper' || mobileSection === 'lower' ? 'hidden xl:flex' : 'flex'
+                    bracketView === 'upper' || bracketView === 'lower' ? 'hidden xl:flex' : 'flex'
                 }`}>
                     <div className="relative rounded-3xl bg-white dark:bg-[#0B101D] border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm dark:shadow-2xl flex flex-col justify-center overflow-visible">
                         {/* Championship Crown Badge */}
@@ -376,7 +409,7 @@ export default function BracketFlowchart({ bracketData, onSelectMatch }) {
                 </div>
             </div>
 
-            {/* 3. BOTTOM LEGEND BAR */}
+            {/* 4. BOTTOM LEGEND BAR */}
             <div className="mt-6 sm:mt-8 pt-4 sm:pt-5 border-t border-slate-200 dark:border-[#182033] flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs">
                 {/* Left: 4 Teams Total Note */}
                 <div className="flex items-center gap-2.5 sm:gap-3 text-slate-700 dark:text-slate-300">
