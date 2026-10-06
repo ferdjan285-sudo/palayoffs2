@@ -130,18 +130,27 @@ if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
 }
 
 // Ensure Authorization header is passed to PHP environment in FastCGI / Vercel
-if (!isset($_SERVER['HTTP_AUTHORIZATION'])) {
-    if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+if (empty($_SERVER['HTTP_AUTHORIZATION'])) {
+    if (!empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+    } elseif (!empty($_SERVER['HTTP_X_AUTHORIZATION'])) {
+        $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['HTTP_X_AUTHORIZATION'];
+    } elseif (function_exists('getallheaders')) {
+        $headers = getallheaders();
+        foreach ($headers as $k => $v) {
+            if (strcasecmp($k, 'authorization') === 0 || strcasecmp($k, 'x-authorization') === 0) {
+                $_SERVER['HTTP_AUTHORIZATION'] = $v;
+                break;
+            }
+        }
     } elseif (function_exists('apache_request_headers')) {
         $headers = apache_request_headers();
-        if (isset($headers['Authorization'])) {
-            $_SERVER['HTTP_AUTHORIZATION'] = $headers['Authorization'];
-        } elseif (isset($headers['authorization'])) {
-            $_SERVER['HTTP_AUTHORIZATION'] = $headers['authorization'];
+        foreach ($headers as $k => $v) {
+            if (strcasecmp($k, 'authorization') === 0 || strcasecmp($k, 'x-authorization') === 0) {
+                $_SERVER['HTTP_AUTHORIZATION'] = $v;
+                break;
+            }
         }
-    } elseif (isset($_SERVER['HTTP_X_AUTHORIZATION'])) {
-        $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['HTTP_X_AUTHORIZATION'];
     }
 }
 
