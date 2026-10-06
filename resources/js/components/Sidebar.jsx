@@ -24,10 +24,10 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
     return (
         <aside
             aria-label="Director Navigation Console"
-            className="w-72 bg-white dark:bg-[#12151E] border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0 sticky top-20 self-start h-[calc(100vh-5rem)] overflow-hidden z-30 select-none shadow-sm dark:shadow-2xl transition-colors duration-200"
+            className="hidden lg:flex w-72 bg-white dark:bg-[#12151E] border-r border-slate-200 dark:border-slate-800 flex-col shrink-0 sticky top-20 self-start h-[calc(100vh-5rem)] overflow-hidden z-30 select-none shadow-sm dark:shadow-2xl transition-colors duration-200"
         >
             {/* Staff Console Header */}
-            <div className="h-22 px-6 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0E1017]">
+            <div className="h-20 px-6 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0E1017]">
                 <div className="flex items-center gap-3.5">
                     <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-600 via-rose-500 to-amber-500 p-0.5 shadow-md flex items-center justify-center">
                         <Flame className="w-5 h-5 text-white" />
@@ -37,7 +37,7 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
                             Palay<span className="text-rose-600 dark:text-rose-500">Offs</span>
                         </h2>
                         <span className="text-[10px] font-mono font-bold uppercase tracking-wider block mt-1 text-purple-600 dark:text-purple-400">
-                            DIRECTOR CONSOLE
+                            DIRECTOR STUDIO
                         </span>
                     </div>
                 </div>
@@ -50,7 +50,7 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
                     className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 hover:bg-slate-200 dark:bg-[#161B29] dark:hover:bg-[#1D2335] border border-slate-200 dark:border-slate-800 transition-all shadow-sm group"
                 >
                     <Eye className="w-4 h-4 text-rose-500 dark:text-rose-400 group-hover:scale-110 transition-transform" />
-                    <span>View Public Showcase</span>
+                    <span>View Public Tournament</span>
                 </button>
             </div>
 
@@ -95,7 +95,7 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
                                     <Calendar className={`w-4 h-4 shrink-0 ${
                                         currentView === 'admin' && adminTab === 'matches' ? 'text-white' : 'text-purple-500 dark:text-purple-400'
                                     }`} />
-                                    <span>Pairings & Schedule</span>
+                                    <span>Pairings & Results</span>
                                 </button>
 
                                 <button
@@ -112,7 +112,7 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
                                     <Award className={`w-4 h-4 shrink-0 ${
                                         currentView === 'admin' && adminTab === 'divisions' ? 'text-white' : 'text-purple-500 dark:text-purple-400'
                                     }`} />
-                                    <span>Divisions & Team Logos</span>
+                                    <span>Divisions & Logos</span>
                                 </button>
 
                                 <button
@@ -130,7 +130,7 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
                                         <Video className={`w-4 h-4 shrink-0 ${
                                             currentView === 'admin' && adminTab === 'zoom' ? 'text-white' : 'text-blue-500 dark:text-blue-400'
                                         }`} />
-                                        <span>Zoom & Stream Editor</span>
+                                        <span>Zoom & Stream</span>
                                     </div>
                                     <span className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded font-black ${
                                         currentView === 'admin' && adminTab === 'zoom'
@@ -143,7 +143,7 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
                             </nav>
                         </div>
 
-                        {/* LIVE EVENT STAGE PRESENTER MODE (Highlight Feature) */}
+                        {/* LIVE EVENT STAGE PRESENTER MODE */}
                         <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-2">
                             <p className="px-3 text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">
                                 Arena Stage Presenter

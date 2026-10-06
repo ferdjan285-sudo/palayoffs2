@@ -549,6 +549,33 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
             )}
 
 
+            {/* MOBILE ADMIN NAVIGATION BAR (< lg screens) */}
+            <div className="lg:hidden flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+                {[
+                    { id: 'bracket', label: 'Bracket Studio', icon: Layers },
+                    { id: 'matches', label: 'Pairings & Results', icon: Calendar },
+                    { id: 'divisions', label: 'Divisions & Logos', icon: Award },
+                    { id: 'zoom', label: 'Zoom Live Stream', icon: Video },
+                ].map((tab) => {
+                    const Icon = tab.icon;
+                    const isActive = activeTab === tab.id;
+                    return (
+                        <button
+                            key={tab.id}
+                            type="button"
+                            onClick={() => setActiveTab && setActiveTab(tab.id)}
+                            className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                                isActive
+                                    ? 'bg-purple-600 text-white shadow-md'
+                                    : 'bg-white dark:bg-[#141722] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
+                            }`}
+                        >
+                            <Icon className="w-4 h-4 shrink-0" />
+                            <span>{tab.label}</span>
+                        </button>
+                    );
+                })}
+            </div>
 
             {/* TAB 1: MATCHMAKING & SEED STUDIO */}
             {activeTab === 'bracket' && (

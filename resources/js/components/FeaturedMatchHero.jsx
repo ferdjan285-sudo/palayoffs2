@@ -54,14 +54,17 @@ export default function FeaturedMatchHero({ match }) {
                         <span className="text-amber-600 dark:text-amber-400 font-mono text-[11px] font-bold">{match.match_identifier || 'GF'}</span>
                     </div>
 
-                    <div>
-                        <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight uppercase flex items-center justify-center md:justify-start gap-2.5">
-                            {divA.logo_path && <img src={divA.logo_path} alt={divA.name} className="w-8 h-8 object-contain filter drop-shadow-sm" />}
-                            <span>{divA.name}</span>
-                            <span className="text-rose-500 font-sans text-xl">VS</span>
-                            <span>{divB.name}</span>
-                            {divB.logo_path && <img src={divB.logo_path} alt={divB.name} className="w-8 h-8 object-contain filter drop-shadow-sm" />}
-                        </h3>
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-3 text-lg sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight uppercase">
+                            <div className="flex items-center gap-1.5 sm:gap-2">
+                                {divA.logo_path && <img src={divA.logo_path} alt={divA.name} className="w-6 h-6 sm:w-8 sm:h-8 object-contain filter drop-shadow-sm" />}
+                                <span>{divA.name}</span>
+                            </div>
+                            <span className="text-rose-500 font-sans text-base sm:text-xl font-bold">VS</span>
+                            <div className="flex items-center gap-1.5 sm:gap-2">
+                                <span>{divB.name}</span>
+                                {divB.logo_path && <img src={divB.logo_path} alt={divB.name} className="w-6 h-6 sm:w-8 sm:h-8 object-contain filter drop-shadow-sm" />}
+                            </div>
+                        </div>
                         <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 font-medium mt-1">
                             {roundTitle}
                         </p>

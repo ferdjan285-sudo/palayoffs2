@@ -88,7 +88,7 @@ function AppContent() {
                     />
 
                     {/* Inside Portal Work Area */}
-                    <main className="flex-1 p-6 md:p-8 max-w-[1500px] w-full mx-auto overflow-y-auto">
+                    <main className="flex-1 p-3.5 sm:p-6 md:p-8 max-w-[1500px] w-full mx-auto overflow-y-auto">
                         {currentView === 'admin' && (
                             <AdminDashboard
                                 onDataChanged={fetchLandingData}
@@ -101,7 +101,7 @@ function AppContent() {
                 </div>
             ) : (
                 /* The Whole Full-Width Public Page (NO SIDEBAR) */
-                <main className="flex-1 w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+                <main className="flex-1 w-full max-w-[1720px] mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
                     <PublicLanding
                         landingData={landingData}
                         searchQuery={searchQuery}
