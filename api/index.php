@@ -44,53 +44,68 @@ if (!getenv('APP_KEY')) {
 $databaseUrl = getenv('DATABASE_URL') ?: getenv('DB_URL');
 $dbConnection = getenv('DB_CONNECTION');
 $hasPgsqlDriver = extension_loaded('pdo_pgsql');
+$usePgsql = false;
 
 if (($databaseUrl || $dbConnection === 'pgsql') && $hasPgsqlDriver) {
-    putenv('DB_CONNECTION=pgsql');
-    $_ENV['DB_CONNECTION'] = 'pgsql';
-    $_SERVER['DB_CONNECTION'] = 'pgsql';
+    try {
+        $host = getenv('DB_HOST') ?: '127.0.0.1';
+        $port = getenv('DB_PORT') ?: '5432';
+        $db = getenv('DB_DATABASE') ?: 'postgres';
+        $user = getenv('DB_USERNAME') ?: 'postgres';
+        $pass = getenv('DB_PASSWORD') ?: '';
 
-    if ($databaseUrl) {
-        $parsed = parse_url($databaseUrl);
-        if ($parsed) {
-            if (!empty($parsed['host'])) {
-                putenv("DB_HOST={$parsed['host']}");
-                $_ENV['DB_HOST'] = $parsed['host'];
-                $_SERVER['DB_HOST'] = $parsed['host'];
-            }
-            if (!empty($parsed['port'])) {
-                putenv("DB_PORT={$parsed['port']}");
-                $_ENV['DB_PORT'] = (string)$parsed['port'];
-                $_SERVER['DB_PORT'] = (string)$parsed['port'];
-            }
-            if (!empty($parsed['user'])) {
-                $user = urldecode($parsed['user']);
-                putenv("DB_USERNAME={$user}");
-                $_ENV['DB_USERNAME'] = $user;
-                $_SERVER['DB_USERNAME'] = $user;
-            }
-            if (!empty($parsed['pass'])) {
-                $pass = urldecode($parsed['pass']);
-                putenv("DB_PASSWORD={$pass}");
-                $_ENV['DB_PASSWORD'] = $pass;
-                $_SERVER['DB_PASSWORD'] = $pass;
-            }
-            if (!empty($parsed['path'])) {
-                $dbName = ltrim($parsed['path'], '/');
-                putenv("DB_DATABASE={$dbName}");
-                $_ENV['DB_DATABASE'] = $dbName;
-                $_SERVER['DB_DATABASE'] = $dbName;
-            }
-            putenv('DB_SSLMODE=require');
-            $_ENV['DB_SSLMODE'] = 'require';
-            $_SERVER['DB_SSLMODE'] = 'require';
+        if ($databaseUrl) {
+            $parsed = parse_url($databaseUrl);
+            if (!empty($parsed['host'])) $host = $parsed['host'];
+            if (!empty($parsed['port'])) $port = (string)$parsed['port'];
+            if (!empty($parsed['user'])) $user = urldecode($parsed['user']);
+            if (!empty($parsed['pass'])) $pass = urldecode($parsed['pass']);
+            if (!empty($parsed['path'])) $db = ltrim($parsed['path'], '/');
         }
+
+        $dsn = "pgsql:host={$host};port={$port};dbname={$db};sslmode=require";
+        $testPdo = new PDO($dsn, $user, $pass, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_TIMEOUT => 3,
+            PDO::ATTR_EMULATE_PREPARES => true,
+        ]);
+        $testPdo->query('SELECT 1');
+        $usePgsql = true;
+
+        putenv('DB_CONNECTION=pgsql');
+        $_ENV['DB_CONNECTION'] = 'pgsql';
+        $_SERVER['DB_CONNECTION'] = 'pgsql';
+        putenv("DB_HOST={$host}");
+        $_ENV['DB_HOST'] = $host;
+        $_SERVER['DB_HOST'] = $host;
+        putenv("DB_PORT={$port}");
+        $_ENV['DB_PORT'] = (string)$port;
+        $_SERVER['DB_PORT'] = (string)$port;
+        putenv("DB_DATABASE={$db}");
+        $_ENV['DB_DATABASE'] = $db;
+        $_SERVER['DB_DATABASE'] = $db;
+        putenv("DB_USERNAME={$user}");
+        $_ENV['DB_USERNAME'] = $user;
+        $_SERVER['DB_USERNAME'] = $user;
+        putenv("DB_PASSWORD={$pass}");
+        $_ENV['DB_PASSWORD'] = $pass;
+        $_SERVER['DB_PASSWORD'] = $pass;
+        putenv('DB_SSLMODE=require');
+        $_ENV['DB_SSLMODE'] = 'require';
+        $_SERVER['DB_SSLMODE'] = 'require';
+    } catch (\Throwable $e) {
+        error_log("PostgreSQL connection probe failed, falling back to SQLite: " . $e->getMessage());
+        $usePgsql = false;
     }
-} else {
-    // Fallback to SQLite
+}
+
+if (!$usePgsql) {
     putenv('DB_CONNECTION=sqlite');
     $_ENV['DB_CONNECTION'] = 'sqlite';
     $_SERVER['DB_CONNECTION'] = 'sqlite';
+    putenv('DATABASE_URL=');
+    $_ENV['DATABASE_URL'] = '';
+    $_SERVER['DB_DATABASE'] = '';
 
     $tmpDb = '/tmp/database.sqlite';
     if (!file_exists($tmpDb) || filesize($tmpDb) === 0) {
