@@ -64,5 +64,9 @@ if (!$dbConnection || $dbConnection === 'sqlite') {
 // Align server variables for correct URI and path resolution in Vercel
 $_SERVER['SCRIPT_NAME'] = '/index.php';
 $_SERVER['SCRIPT_FILENAME'] = __DIR__ . '/../public/index.php';
+if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+    $_SERVER['HTTPS'] = 'on';
+    $_SERVER['SERVER_PORT'] = 443;
+}
 
 require __DIR__ . '/../public/index.php';
