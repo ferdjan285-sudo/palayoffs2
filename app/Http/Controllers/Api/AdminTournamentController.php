@@ -464,4 +464,73 @@ class AdminTournamentController extends Controller
             'divisions' => Division::all(),
         ]);
     }
+
+    /**
+     * Get all staff / admin users from database.
+     */
+    public function getUsers(): JsonResponse
+    {
+        $users = \App\Models\User::select('id', 'name', 'email', 'role', 'created_at')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'users' => $users,
+        ]);
+    }
+
+    /**
+     * Create a new staff / admin user directly in database.
+     */
+    public function createUser(Request $request): JsonResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:6',
+            'role' => 'required|in:admin,referee',
+        ]);
+
+        $user = \App\Models\User::create([
+            'name' => $request->name,
+            'email' => strtolower(trim($request->email)),
+            'password' => \Illuminate\Support\Facades\Hash::make($request->password),
+            'role' => $request->role,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => "User {$user->name} created successfully as {$user->role}!",
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+                'created_at' => $user->created_at,
+            ],
+        ], 201);
+    }
+
+    /**
+     * Delete a staff / admin user.
+     */
+    public function deleteUser(int $id): JsonResponse
+    {
+        $user = \App\Models\User::find($id);
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'User not found.'], 404);
+        }
+
+        if ($user->id === auth()->id()) {
+            return response()->json(['success' => false, 'message' => 'You cannot delete your own account while logged in.'], 400);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User deleted successfully.',
+        ]);
+    }
 }

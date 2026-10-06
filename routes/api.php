@@ -52,4 +52,9 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'role.admin'])->group(functi
 
     Route::post('/zoom-stream', [AdminTournamentController::class, 'updateZoomStream']);
     Route::get('/meta', [AdminTournamentController::class, 'getMeta']);
+
+    // Admin User & Staff Account Management
+    Route::get('/users', [AdminTournamentController::class, 'getUsers']);
+    Route::post('/users', [AdminTournamentController::class, 'createUser']);
+    Route::delete('/users/{id}', [AdminTournamentController::class, 'deleteUser']);
 });

@@ -40,7 +40,14 @@ import {
     ChevronDown,
     ChevronUp,
     X,
-    AlertTriangle
+    AlertTriangle,
+    Users,
+    UserPlus,
+    Trash2,
+    KeyRound,
+    Mail,
+    UserCheck,
+    Database
 } from 'lucide-react';
 import api from '../services/api';
 
@@ -85,6 +92,89 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
     // Custom Confirmation Modal state
     const [confirmModal, setConfirmModal] = useState(null);
 
+    // User Account Management state (Direct Supabase sync test)
+    const [usersList, setUsersList] = useState([]);
+    const [loadingUsers, setLoadingUsers] = useState(false);
+    const [newUserName, setNewUserName] = useState('');
+    const [newUserEmail, setNewUserEmail] = useState('');
+    const [newUserPassword, setNewUserPassword] = useState('');
+    const [newUserRole, setNewUserRole] = useState('admin');
+    const [creatingUser, setCreatingUser] = useState(false);
+
+    const fetchUsersList = async () => {
+        try {
+            setLoadingUsers(true);
+            const res = await api.get('/admin/users');
+            if (res.data.success) {
+                setUsersList(res.data.users || []);
+            }
+        } catch (err) {
+            console.error('Failed fetching users:', err);
+        } finally {
+            setLoadingUsers(false);
+        }
+    };
+
+    const handleCreateUser = async (e) => {
+        e.preventDefault();
+        setSuccessBanner('');
+        setErrorBanner('');
+
+        if (!newUserName.trim() || !newUserEmail.trim() || !newUserPassword) {
+            setErrorBanner('Please fill in all fields (Name, Email, and Password).');
+            return;
+        }
+
+        try {
+            setCreatingUser(true);
+            const res = await api.post('/admin/users', {
+                name: newUserName.trim(),
+                email: newUserEmail.trim(),
+                password: newUserPassword,
+                role: newUserRole,
+            });
+
+            if (res.data.success) {
+                setSuccessBanner(res.data.message || `Account ${newUserName} successfully stored in Supabase database!`);
+                setNewUserName('');
+                setNewUserEmail('');
+                setNewUserPassword('');
+                setNewUserRole('admin');
+                await fetchUsersList();
+            }
+        } catch (err) {
+            setErrorBanner(err.response?.data?.message || 'Failed creating user account in Supabase database.');
+        } finally {
+            setCreatingUser(false);
+        }
+    };
+
+    const handleDeleteUser = (userId, userName) => {
+        setConfirmModal({
+            title: `Delete User: ${userName}?`,
+            description: `Are you sure you want to delete ${userName}'s account? This will immediately remove the record from your Supabase PostgreSQL database.`,
+            confirmLabel: 'Yes, Delete Account',
+            confirmColor: 'bg-rose-600 hover:bg-rose-700 text-white',
+            icon: 'reset',
+            onConfirm: async () => {
+                try {
+                    setLoading(true);
+                    setErrorBanner('');
+                    const res = await api.delete(`/admin/users/${userId}`);
+                    if (res.data.success) {
+                        setSuccessBanner(res.data.message || 'User deleted from Supabase database successfully.');
+                        await fetchUsersList();
+                    }
+                } catch (err) {
+                    setErrorBanner(err.response?.data?.message || 'Failed deleting user from Supabase.');
+                } finally {
+                    setLoading(false);
+                    setConfirmModal(null);
+                }
+            },
+        });
+    };
+
     const fetchAdminData = async () => {
         try {
             setLoading(true);
@@ -92,6 +182,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                 api.get('/admin/meta'),
                 api.get('/admin/tournaments'),
             ]);
+            fetchUsersList();
 
             if (metaRes.data.success) {
                 setSports(metaRes.data.sports || []);
@@ -577,6 +668,7 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                     { id: 'matches', label: 'Pairings & Results', icon: Calendar },
                     { id: 'divisions', label: 'Divisions & Logos', icon: Award },
                     { id: 'zoom', label: 'Zoom Live Stream', icon: Video },
+                    { id: 'users', label: 'Staff Accounts', icon: Users },
                 ].map((tab) => {
                     const Icon = tab.icon;
                     const isActive = activeTab === tab.id;
@@ -1944,9 +2036,203 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                     </div>
                                 </div>
 
-                                <p className="text-[11px] text-slate-400 leading-tight">
-                                    This QR code is rendered live on the <strong>Arena Stadium Display (`/arena`)</strong>. Spectators pointing their mobile phones at the screen will directly enter this Zoom meeting.
-                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* TAB 5: STAFF & ADMIN USER MANAGEMENT (DIRECT SUPABASE DATABASE PERSISTENCE) */}
+            {activeTab === 'users' && (
+                <div className="space-y-6">
+                    {/* Top Overview Card */}
+                    <div className="rounded-3xl bg-white dark:bg-[#121520] border border-slate-200 dark:border-white/[0.04] p-6 sm:p-8 shadow-sm dark:shadow-2xl space-y-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/[0.04]">
+                            <div className="flex items-center gap-3.5">
+                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-md shrink-0">
+                                    <Users className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <div className="flex items-center gap-2">
+                                        <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+                                            Staff & Admin Account Directory
+                                        </h3>
+                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 text-[10px] font-mono font-bold uppercase border border-emerald-300/40">
+                                            <Database className="w-3 h-3" />
+                                            Supabase DB
+                                        </span>
+                                    </div>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                                        Create tournament administrators and referee scorers. Accounts are stored directly in your Supabase PostgreSQL database.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={fetchUsersList}
+                                disabled={loadingUsers}
+                                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] text-xs font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/[0.04] transition-all cursor-pointer"
+                            >
+                                <RefreshCw className={`w-3.5 h-3.5 ${loadingUsers ? 'animate-spin' : ''}`} />
+                                <span>Sync Accounts</span>
+                            </button>
+                        </div>
+
+                        {/* Two-Column Layout: Create User Form + Summary */}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+                            {/* Create Form */}
+                            <div className="lg:col-span-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.04] p-5 space-y-4 shadow-sm">
+                                <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-white/[0.04]">
+                                    <UserPlus className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                                    <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">
+                                        Create New Account
+                                    </h4>
+                                </div>
+
+                                <form onSubmit={handleCreateUser} className="space-y-3.5">
+                                    <div>
+                                        <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">
+                                            Full Name / Display Name
+                                        </label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={newUserName}
+                                            onChange={(e) => setNewUserName(e.target.value)}
+                                            placeholder="e.g. Tournament Official / Alex"
+                                            className="w-full px-3.5 py-2.5 bg-white dark:bg-[#151926] text-xs font-medium text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.06] focus:border-emerald-500 focus:outline-none"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">
+                                            Email Address (Login Username)
+                                        </label>
+                                        <div className="relative">
+                                            <Mail className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                                            <input
+                                                type="email"
+                                                required
+                                                value={newUserEmail}
+                                                onChange={(e) => setNewUserEmail(e.target.value)}
+                                                placeholder="e.g. official@palayoffs.com"
+                                                className="w-full pl-9 pr-3.5 py-2.5 bg-white dark:bg-[#151926] text-xs font-medium text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.06] focus:border-emerald-500 focus:outline-none"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">
+                                            Account Password (Min 6 chars)
+                                        </label>
+                                        <div className="relative">
+                                            <KeyRound className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                                            <input
+                                                type="password"
+                                                required
+                                                minLength={6}
+                                                value={newUserPassword}
+                                                onChange={(e) => setNewUserPassword(e.target.value)}
+                                                placeholder="••••••••••••"
+                                                className="w-full pl-9 pr-3.5 py-2.5 bg-white dark:bg-[#151926] text-xs font-medium text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.06] focus:border-emerald-500 focus:outline-none"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">
+                                            Assigned Access Role
+                                        </label>
+                                        <select
+                                            value={newUserRole}
+                                            onChange={(e) => setNewUserRole(e.target.value)}
+                                            className="w-full px-3.5 py-2.5 bg-white dark:bg-[#151926] text-xs font-bold text-slate-900 dark:text-white rounded-xl border border-slate-200 dark:border-white/[0.06] focus:border-emerald-500 focus:outline-none"
+                                        >
+                                            <option value="admin">Administrator (Full Access)</option>
+                                            <option value="referee">Referee / Scorer (Match Operations)</option>
+                                        </select>
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        disabled={creatingUser}
+                                        className="w-full py-3 px-4 rounded-xl font-black text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] disabled:opacity-50"
+                                    >
+                                        {creatingUser ? (
+                                            <>
+                                                <span className="inline-block w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                                <span>Persisting to Supabase...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <UserPlus className="w-4 h-4" />
+                                                <span>Save to Database</span>
+                                            </>
+                                        )}
+                                    </button>
+                                </form>
+                            </div>
+
+                            {/* Existing Database Accounts Table */}
+                            <div className="lg:col-span-7 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.04] p-5 space-y-4 shadow-sm flex flex-col">
+                                <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-white/[0.04]">
+                                    <div className="flex items-center gap-2">
+                                        <UserCheck className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">
+                                            Existing Supabase Accounts ({usersList.length})
+                                        </h4>
+                                    </div>
+                                    <span className="text-[10px] font-mono text-slate-500">
+                                        table: `public.users`
+                                    </span>
+                                </div>
+
+                                <div className="flex-1 overflow-x-auto">
+                                    {usersList.length === 0 ? (
+                                        <div className="py-12 text-center text-slate-400 text-xs">
+                                            {loadingUsers ? 'Querying Supabase database...' : 'No additional staff accounts found. Create one on the left.'}
+                                        </div>
+                                    ) : (
+                                        <div className="divide-y divide-slate-200 dark:divide-white/[0.04]">
+                                            {usersList.map((u) => (
+                                                <div key={u.id} className="py-3 flex items-center justify-between gap-3 hover:bg-white/60 dark:hover:bg-white/[0.02] px-2 rounded-xl transition-colors">
+                                                    <div className="flex items-center gap-3 min-w-0">
+                                                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-purple-500 to-rose-600 flex items-center justify-center font-black text-xs text-white shrink-0">
+                                                            {u.name ? u.name.charAt(0).toUpperCase() : 'U'}
+                                                        </div>
+                                                        <div className="min-w-0">
+                                                            <div className="flex items-center gap-2 flex-wrap">
+                                                                <span className="text-xs font-black text-slate-900 dark:text-white truncate">
+                                                                    {u.name}
+                                                                </span>
+                                                                <span className={`text-[9px] font-mono font-bold uppercase px-2 py-0.5 rounded-full ${
+                                                                    u.role === 'admin'
+                                                                        ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300'
+                                                                        : 'bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300'
+                                                                }`}>
+                                                                    {u.role}
+                                                                </span>
+                                                            </div>
+                                                            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate">
+                                                                {u.email}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleDeleteUser(u.id, u.name)}
+                                                        title={`Delete ${u.name}`}
+                                                        className="p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors shrink-0 cursor-pointer"
+                                                    >
+                                                        <Trash2 className="w-3.5 h-3.5" />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>

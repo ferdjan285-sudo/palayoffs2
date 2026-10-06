@@ -14,7 +14,9 @@ import {
     Clock,
     Sparkles,
     CheckCircle2,
-    Video
+    Video,
+    Users,
+    UserPlus
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -139,6 +141,23 @@ export default function Sidebar({ currentView, setCurrentView, adminTab, setAdmi
                                     }`}>
                                         LIVE
                                     </span>
+                                </button>
+
+                                <button
+                                    onClick={() => {
+                                        setCurrentView('admin');
+                                        if (setAdminTab) setAdminTab('users');
+                                    }}
+                                    className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold transition-all cursor-pointer ${
+                                        currentView === 'admin' && adminTab === 'users'
+                                            ? 'bg-purple-600 text-white shadow-md'
+                                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1A1F2E]'
+                                    }`}
+                                >
+                                    <Users className={`w-4 h-4 shrink-0 ${
+                                        currentView === 'admin' && adminTab === 'users' ? 'text-white' : 'text-emerald-500 dark:text-emerald-400'
+                                    }`} />
+                                    <span>Staff & Admin Accounts</span>
                                 </button>
                             </nav>
                         </div>

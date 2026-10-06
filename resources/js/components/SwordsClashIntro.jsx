@@ -5,19 +5,19 @@ export default function SwordsClashIntro({ onComplete }) {
     const [phase, setPhase] = useState('active'); // 'active' | 'dissolve' | 'done'
 
     useEffect(() => {
-        // Snappy 0.8s Total Timeline:
-        // 0.0s - 0.25s: Fast snappy sword strike and impact spark
-        // 0.25s - 0.55s: Clean clash hold
-        // 0.55s - 0.85s: Quick smooth dissolve
-        // 0.85s+: Unmount
+        // Snappy 1.2s esports clash intro:
+        // 0.0s - 0.4s: dynamic sword clash strike & shockwave
+        // 0.4s - 0.85s: hold impact spark & glow
+        // 0.85s - 1.2s: smooth fade dissolve
+        // 1.2s+: complete unmount
         const dissolveTimer = setTimeout(() => {
             setPhase('dissolve');
-        }, 550);
+        }, 850);
 
         const doneTimer = setTimeout(() => {
             setPhase('done');
             if (onComplete) onComplete();
-        }, 850);
+        }, 1200);
 
         return () => {
             clearTimeout(dissolveTimer);
@@ -33,7 +33,7 @@ export default function SwordsClashIntro({ onComplete }) {
                 setPhase('done');
                 if (onComplete) onComplete();
             }}
-            className={`fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-md transition-opacity duration-300 pointer-events-none select-none ${
+            className={`fixed inset-0 z-[99999] w-screen h-screen min-h-[100dvh] flex items-center justify-center bg-slate-950/95 backdrop-blur-md transition-opacity duration-300 pointer-events-none select-none touch-none overflow-hidden ${
                 phase === 'dissolve' ? 'opacity-0' : 'opacity-100'
             }`}
         >
