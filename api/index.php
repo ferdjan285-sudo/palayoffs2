@@ -32,10 +32,23 @@ putenv('APP_CONFIG_CACHE=/tmp/bootstrap/cache/config.php');
 putenv('APP_ROUTES_CACHE=/tmp/bootstrap/cache/routes.php');
 putenv('APP_EVENTS_CACHE=/tmp/bootstrap/cache/events.php');
 
-// If using SQLite on Vercel without external DB, ensure database file exists in /tmp
-if (getenv('DB_CONNECTION') === 'sqlite' || !getenv('DB_CONNECTION')) {
+// Ensure APP_KEY is set
+if (!getenv('APP_KEY')) {
+    $fallbackKey = 'base64:PMueLfYpTnf1z3aDOANZdXRq9AE8OYtLhP8i8bx6VkI=';
+    putenv("APP_KEY={$fallbackKey}");
+    $_ENV['APP_KEY'] = $fallbackKey;
+    $_SERVER['APP_KEY'] = $fallbackKey;
+}
+
+// Ensure Database is configured
+$dbConnection = getenv('DB_CONNECTION');
+if (!$dbConnection || $dbConnection === 'sqlite') {
+    putenv('DB_CONNECTION=sqlite');
+    $_ENV['DB_CONNECTION'] = 'sqlite';
+    $_SERVER['DB_CONNECTION'] = 'sqlite';
+
     $tmpDb = '/tmp/database.sqlite';
-    if (!file_exists($tmpDb)) {
+    if (!file_exists($tmpDb) || filesize($tmpDb) === 0) {
         $sourceDb = __DIR__ . '/../database/database.sqlite';
         if (file_exists($sourceDb)) {
             @copy($sourceDb, $tmpDb);
