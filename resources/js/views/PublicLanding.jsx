@@ -116,105 +116,81 @@ export default function PublicLanding({ landingData, searchQuery, onSelectMatch 
                         </div>
                     </div>
 
-                    {/* Right: High-Impact Catchy Current Fixture Arena Card */}
+                    {/* Right: Sleek Minimalist Current Stage Fixture Card */}
                     {spotlightMatch && (
                         <div 
                             onClick={() => onSelectMatch ? onSelectMatch(spotlightMatch) : scrollToSection('featured-section', 'featured')}
-                            className="w-full lg:w-96 rounded-3xl bg-gradient-to-b from-white via-slate-50 to-slate-100/90 dark:from-[#151928] dark:via-[#121524] dark:to-[#0E111D] border-2 border-rose-500/30 dark:border-rose-500/40 p-4 sm:p-5 shadow-lg shadow-rose-500/5 hover:shadow-xl hover:shadow-rose-500/10 transition-all duration-300 cursor-pointer group relative overflow-hidden active:scale-[0.99]"
+                            className="w-full lg:w-96 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#10131D] border border-slate-200/70 dark:border-white/[0.06] p-4 sm:p-5 shadow-xs hover:shadow-md hover:border-slate-300 dark:hover:border-white/10 transition-all duration-200 cursor-pointer group relative overflow-hidden active:scale-[0.99]"
                         >
-                            {/* Ambient Duel Light Aura */}
-                            <div 
-                                className="absolute -top-12 -left-12 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
-                                style={{ backgroundColor: spotlightMatch.division_a?.color_hex || '#B784A7' }}
-                            />
-                            <div 
-                                className="absolute -bottom-12 -right-12 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
-                                style={{ backgroundColor: spotlightMatch.division_b?.color_hex || '#98FF98' }}
-                            />
-
-                            {/* Top Header Pill Bar */}
-                            <div className="relative z-10 flex items-center justify-between pb-3 mb-3 border-b border-slate-200/80 dark:border-white/[0.06]">
-                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-[10px] sm:text-xs font-mono font-black uppercase tracking-wider border border-rose-500/20">
-                                    <Radio className="w-3.5 h-3.5 animate-pulse text-rose-500" />
+                            {/* Top Header Status Bar */}
+                            <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-white/[0.04]">
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-white/[0.05] text-slate-700 dark:text-slate-300 text-[10px] font-mono font-semibold uppercase tracking-wider">
+                                    <span className={`w-1.5 h-1.5 rounded-full ${spotlightMatch.status === 'live' ? 'bg-rose-500 animate-pulse' : 'bg-slate-400 dark:bg-slate-500'}`} />
                                     <span>{spotlightMatch.status === 'live' ? 'Live Stage Clash' : 'Current Stage Fixture'}</span>
                                 </span>
                                 
-                                <span className="text-[10px] font-mono font-black px-2.5 py-1 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-950 uppercase shadow-xs">
+                                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-white/[0.06] text-slate-700 dark:text-slate-300 uppercase">
                                     {spotlightMatch.match_identifier || 'Stage UB1'} · BO{spotlightMatch.best_of || 3}
                                 </span>
                             </div>
 
                             {/* Center Duel Area: Head-to-Head Arena */}
-                            <div className="relative z-10 grid grid-cols-11 items-center gap-2 py-1">
+                            <div className="grid grid-cols-11 items-center gap-2 py-2">
                                 {/* Team A */}
                                 <div className="col-span-4 flex flex-col items-center text-center space-y-1.5 min-w-0">
-                                    <div 
-                                        className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center p-1.5 shadow-md transition-transform group-hover:scale-105 overflow-hidden border-2"
-                                        style={{ 
-                                            backgroundColor: (spotlightMatch.division_a?.color_hex || '#B784A7') + '22',
-                                            borderColor: spotlightMatch.division_a?.color_hex || '#B784A7',
-                                            boxShadow: `0 0 15px ${(spotlightMatch.division_a?.color_hex || '#B784A7')}40`
-                                        }}
-                                    >
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.06] flex items-center justify-center p-2 transition-transform group-hover:scale-105 overflow-hidden">
                                         {spotlightMatch.division_a?.logo_path ? (
-                                            <img src={spotlightMatch.division_a.logo_path} alt={spotlightMatch.division_a.name} className="w-full h-full object-contain filter drop-shadow-sm" />
+                                            <img src={spotlightMatch.division_a.logo_path} alt={spotlightMatch.division_a.name} className="w-full h-full object-contain" />
                                         ) : (
-                                            <span className="font-black text-sm text-slate-950" style={{ color: spotlightMatch.division_a?.color_hex || '#B784A7' }}>
+                                            <span className="font-extrabold text-sm text-slate-800 dark:text-slate-200">
                                                 {spotlightMatch.division_a?.name?.charAt(0) || 'A'}
                                             </span>
                                         )}
                                     </div>
-                                    <span className="block text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate max-w-full">
+                                    <span className="block text-xs font-bold text-slate-900 dark:text-slate-100 truncate max-w-full">
                                         {spotlightMatch.division_a?.name || 'Seed A'}
                                     </span>
                                 </div>
 
                                 {/* VS & Score Centerpiece */}
                                 <div className="col-span-3 flex flex-col items-center justify-center shrink-0">
-                                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#1C2134] border border-rose-500/40 flex items-center justify-center shadow-sm">
-                                        <Swords className="w-4 h-4 text-rose-500 animate-pulse" />
+                                    <div className="w-7 h-7 rounded-xl bg-slate-100 dark:bg-white/[0.04] flex items-center justify-center">
+                                        <Swords className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                                     </div>
-                                    <div className="mt-1 font-mono font-black text-sm sm:text-lg text-slate-900 dark:text-white tracking-tight">
+                                    <div className="mt-1 font-mono font-bold text-sm sm:text-base text-slate-900 dark:text-white tracking-tight">
                                         <span>{spotlightMatch.score_a ?? 0}</span>
                                         <span className="text-slate-400 mx-1">:</span>
                                         <span>{spotlightMatch.score_b ?? 0}</span>
                                     </div>
-                                    <span className="text-[9px] font-mono font-black uppercase tracking-widest text-rose-500">
+                                    <span className="text-[9px] font-mono uppercase font-semibold text-slate-400 dark:text-slate-500 tracking-wider">
                                         {spotlightMatch.status === 'live' ? 'LIVE' : 'VS'}
                                     </span>
                                 </div>
 
                                 {/* Team B */}
                                 <div className="col-span-4 flex flex-col items-center text-center space-y-1.5 min-w-0">
-                                    <div 
-                                        className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center p-1.5 shadow-md transition-transform group-hover:scale-105 overflow-hidden border-2"
-                                        style={{ 
-                                            backgroundColor: (spotlightMatch.division_b?.color_hex || '#98FF98') + '22',
-                                            borderColor: spotlightMatch.division_b?.color_hex || '#98FF98',
-                                            boxShadow: `0 0 15px ${(spotlightMatch.division_b?.color_hex || '#98FF98')}40`
-                                        }}
-                                    >
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.06] flex items-center justify-center p-2 transition-transform group-hover:scale-105 overflow-hidden">
                                         {spotlightMatch.division_b?.logo_path ? (
-                                            <img src={spotlightMatch.division_b.logo_path} alt={spotlightMatch.division_b.name} className="w-full h-full object-contain filter drop-shadow-sm" />
+                                            <img src={spotlightMatch.division_b.logo_path} alt={spotlightMatch.division_b.name} className="w-full h-full object-contain" />
                                         ) : (
-                                            <span className="font-black text-sm text-slate-950" style={{ color: spotlightMatch.division_b?.color_hex || '#98FF98' }}>
+                                            <span className="font-extrabold text-sm text-slate-800 dark:text-slate-200">
                                                 {spotlightMatch.division_b?.name?.charAt(0) || 'B'}
                                             </span>
                                         )}
                                     </div>
-                                    <span className="block text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate max-w-full">
+                                    <span className="block text-xs font-bold text-slate-900 dark:text-slate-100 truncate max-w-full">
                                         {spotlightMatch.division_b?.name || 'Seed B'}
                                     </span>
                                 </div>
                             </div>
 
-                            {/* Catchy Action Footer CTA */}
-                            <div className="relative z-10 mt-3.5 pt-2.5 border-t border-slate-200/60 dark:border-white/[0.04] flex items-center justify-between text-[11px] font-bold text-rose-600 dark:text-rose-400">
-                                <span className="flex items-center gap-1">
-                                    <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                            {/* Minimal Action Footer */}
+                            <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-white/[0.04] flex items-center justify-between text-[11px] font-semibold text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                                <span className="flex items-center gap-1.5">
+                                    <Sparkles className="w-3.5 h-3.5 text-slate-400" />
                                     <span>Matchup Arena</span>
                                 </span>
-                                <span className="group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5 font-mono text-[10px] uppercase font-black">
+                                <span className="group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5 font-mono text-[10px] uppercase">
                                     <span>Details & Lineup</span>
                                     <ArrowUpRight className="w-3.5 h-3.5" />
                                 </span>
