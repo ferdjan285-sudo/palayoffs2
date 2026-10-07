@@ -1322,94 +1322,164 @@ export default function AdminDashboard({ onDataChanged, activeTab = 'bracket', s
                                             {/* COMPETITORS VS ROW */}
                                             <div className="grid grid-cols-1 md:grid-cols-11 items-center gap-2.5 sm:gap-3">
                                                 {/* Competitor A Card */}
-                                                <div className={`md:col-span-5 p-3 sm:p-3.5 rounded-xl border flex items-center justify-between gap-3 ${
-                                                    m.winner_id === divA?.id
-                                                        ? 'bg-emerald-500/10 border-emerald-500/40 ring-1 ring-emerald-500/30'
-                                                        : 'bg-slate-50 dark:bg-[#151928] border-slate-200 dark:border-white/[0.03]'
-                                                }`}>
-                                                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-                                                        <div
-                                                            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden flex items-center justify-center font-black text-sm text-slate-950 shrink-0 shadow-sm border border-black/5 dark:border-white/10"
-                                                            style={{ backgroundColor: divA?.color_hex || '#B784A7' }}
-                                                        >
-                                                            {divA?.logo_path ? (
-                                                                <img src={divA.logo_path} alt={divA.name} className="w-full h-full object-cover" />
-                                                            ) : (
-                                                                <span>{divA?.name ? divA.name.charAt(0) : 'A'}</span>
+                                                {divA ? (
+                                                    <div className={`md:col-span-5 p-3.5 sm:p-4 rounded-2xl border flex items-center justify-between gap-3 transition-all ${
+                                                        m.winner_id === divA.id
+                                                            ? 'bg-emerald-500/10 border-emerald-500/30'
+                                                            : 'bg-white dark:bg-[#151928] border-slate-200/80 dark:border-white/[0.05] shadow-xs'
+                                                    }`}>
+                                                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                                                            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden flex items-center justify-center font-bold text-xs shrink-0 shadow-xs bg-slate-100 dark:bg-white/[0.05] border border-slate-200/60 dark:border-white/[0.08]">
+                                                                {divA.logo_path ? (
+                                                                    <img src={divA.logo_path} alt={divA.name} className="w-full h-full object-contain p-1" />
+                                                                ) : (
+                                                                    <span className="font-extrabold text-sm" style={{ color: divA.color_hex || '#B784A7' }}>
+                                                                        {divA.name.charAt(0)}
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                            <div className="min-w-0 flex-1">
+                                                                <div className="flex items-center gap-1.5">
+                                                                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Slot A</span>
+                                                                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: divA.color_hex || '#B784A7' }} />
+                                                                </div>
+                                                                <h5 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate" title={divA.name}>
+                                                                    {divA.name}
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="text-right shrink-0">
+                                                            <span className="font-mono text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                                                                {scoreAVal}
+                                                            </span>
+                                                            {m.winner_id === divA.id && (
+                                                                <span className="block text-[10px] text-emerald-500 font-bold uppercase font-mono">
+                                                                    👑 Winner
+                                                                </span>
                                                             )}
                                                         </div>
-                                                        <div className="min-w-0 flex-1">
-                                                            <span className="text-[10px] font-mono text-slate-400 uppercase block">Slot A</span>
-                                                            <h5 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white truncate" title={divA?.name || 'Awaiting Competitor'}>
-                                                                {divA?.name || 'Awaiting Competitor'}
-                                                            </h5>
+                                                    </div>
+                                                ) : (
+                                                    <div className="md:col-span-5 p-3.5 sm:p-4 rounded-2xl bg-slate-50/90 dark:bg-white/[0.02] border border-dashed border-slate-300 dark:border-white/[0.08] flex items-center justify-between gap-3 transition-all">
+                                                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                                                            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-slate-200/70 dark:bg-white/[0.04] text-slate-400 dark:text-slate-500 flex flex-col items-center justify-center shrink-0 border border-slate-200/60 dark:border-white/[0.06]">
+                                                                <Clock className="w-4 h-4 text-slate-400 mb-0.5" />
+                                                                <span className="text-[8px] font-mono font-bold uppercase text-slate-400">TBD</span>
+                                                            </div>
+                                                            <div className="min-w-0 flex-1">
+                                                                <div className="flex items-center gap-1.5 mb-0.5">
+                                                                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Slot A</span>
+                                                                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-200/70 dark:bg-white/[0.05] text-slate-600 dark:text-slate-400 font-semibold uppercase">
+                                                                        {m.match_identifier === 'GF' ? 'Championship Feeder' : m.match_identifier === 'LB-F' ? 'Bronze Feeder' : 'Bracket Feeder'}
+                                                                    </span>
+                                                                </div>
+                                                                <h5 className="font-bold text-xs text-slate-800 dark:text-slate-200 truncate">
+                                                                    {m.match_identifier === 'GF' ? 'Winner of Upper Final (UB-F)' : m.match_identifier === 'LB-F' ? 'Winner of Lower Round 1 (LB-R1)' : m.match_identifier === 'UB-F' ? 'Winner of Match 1 (M1)' : 'Winner of Prior Match'}
+                                                                </h5>
+                                                                <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono truncate">
+                                                                    {m.match_identifier === 'GF' ? 'Advances directly from UB-F' : m.match_identifier === 'LB-F' ? 'Advances from LB-R1' : 'Awaiting feeder resolution'}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="text-right shrink-0">
+                                                            <span className="text-[10px] font-mono font-semibold px-2 py-1 rounded-lg bg-slate-200/70 dark:bg-white/[0.04] text-slate-500 dark:text-slate-400 block whitespace-nowrap">
+                                                                Awaiting
+                                                            </span>
                                                         </div>
                                                     </div>
-
-                                                    <div className="text-right shrink-0">
-                                                        <span className="font-mono text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-                                                            {scoreAVal}
-                                                        </span>
-                                                        {m.winner_id === divA?.id && (
-                                                            <span className="block text-[10px] text-emerald-500 font-black uppercase font-mono">
-                                                                👑 Winner
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                </div>
+                                                )}
 
                                                 {/* VS Middle Badge */}
                                                 <div className="md:col-span-1 flex items-center justify-center py-0.5">
-                                                    <span className="text-[10px] sm:text-xs font-black font-mono px-2 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                                                    <span className="text-[10px] font-semibold font-mono px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-white/[0.05] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                                                         VS
                                                     </span>
                                                 </div>
 
                                                 {/* Competitor B Card */}
-                                                <div className={`md:col-span-5 p-3 sm:p-3.5 rounded-xl border flex items-center justify-between gap-3 ${
-                                                    m.winner_id === divB?.id
-                                                        ? 'bg-emerald-500/10 border-emerald-500/40 ring-1 ring-emerald-500/30'
-                                                        : 'bg-slate-50 dark:bg-[#151928] border-slate-200 dark:border-white/[0.03]'
-                                                }`}>
-                                                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-                                                        <div
-                                                            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden flex items-center justify-center font-black text-sm text-slate-950 shrink-0 shadow-sm border border-black/5 dark:border-white/10"
-                                                            style={{ backgroundColor: divB?.color_hex || '#98FF98' }}
-                                                        >
-                                                            {divB?.logo_path ? (
-                                                                <img src={divB.logo_path} alt={divB.name} className="w-full h-full object-cover" />
-                                                            ) : (
-                                                                <span>{divB?.name ? divB.name.charAt(0) : 'B'}</span>
+                                                {divB ? (
+                                                    <div className={`md:col-span-5 p-3.5 sm:p-4 rounded-2xl border flex items-center justify-between gap-3 transition-all ${
+                                                        m.winner_id === divB.id
+                                                            ? 'bg-emerald-500/10 border-emerald-500/30'
+                                                            : 'bg-white dark:bg-[#151928] border-slate-200/80 dark:border-white/[0.05] shadow-xs'
+                                                    }`}>
+                                                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                                                            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden flex items-center justify-center font-bold text-xs shrink-0 shadow-xs bg-slate-100 dark:bg-white/[0.05] border border-slate-200/60 dark:border-white/[0.08]">
+                                                                {divB.logo_path ? (
+                                                                    <img src={divB.logo_path} alt={divB.name} className="w-full h-full object-contain p-1" />
+                                                                ) : (
+                                                                    <span className="font-extrabold text-sm" style={{ color: divB.color_hex || '#98FF98' }}>
+                                                                        {divB.name.charAt(0)}
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                            <div className="min-w-0 flex-1">
+                                                                <div className="flex items-center gap-1.5">
+                                                                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Slot B</span>
+                                                                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: divB.color_hex || '#98FF98' }} />
+                                                                </div>
+                                                                <h5 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate" title={divB.name}>
+                                                                    {divB.name}
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="text-right shrink-0">
+                                                            <span className="font-mono text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                                                                {scoreBVal}
+                                                            </span>
+                                                            {m.winner_id === divB.id && (
+                                                                <span className="block text-[10px] text-emerald-500 font-bold uppercase font-mono">
+                                                                    👑 Winner
+                                                                </span>
                                                             )}
                                                         </div>
-                                                        <div className="min-w-0 flex-1">
-                                                            <span className="text-[10px] font-mono text-slate-400 uppercase block">Slot B</span>
-                                                            <h5 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white truncate" title={divB?.name || 'Awaiting Competitor'}>
-                                                                {divB?.name || 'Awaiting Competitor'}
-                                                            </h5>
+                                                    </div>
+                                                ) : (
+                                                    <div className="md:col-span-5 p-3.5 sm:p-4 rounded-2xl bg-slate-50/90 dark:bg-white/[0.02] border border-dashed border-slate-300 dark:border-white/[0.08] flex items-center justify-between gap-3 transition-all">
+                                                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                                                            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-slate-200/70 dark:bg-white/[0.04] text-slate-400 dark:text-slate-500 flex flex-col items-center justify-center shrink-0 border border-slate-200/60 dark:border-white/[0.06]">
+                                                                <Clock className="w-4 h-4 text-slate-400 mb-0.5" />
+                                                                <span className="text-[8px] font-mono font-bold uppercase text-slate-400">TBD</span>
+                                                            </div>
+                                                            <div className="min-w-0 flex-1">
+                                                                <div className="flex items-center gap-1.5 mb-0.5">
+                                                                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Slot B</span>
+                                                                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-200/70 dark:bg-white/[0.05] text-slate-600 dark:text-slate-400 font-semibold uppercase">
+                                                                        {m.match_identifier === 'GF' ? 'Championship Feeder' : m.match_identifier === 'LB-F' ? 'Bronze Feeder' : 'Bracket Feeder'}
+                                                                    </span>
+                                                                </div>
+                                                                <h5 className="font-bold text-xs text-slate-800 dark:text-slate-200 truncate">
+                                                                    {m.match_identifier === 'GF' ? 'Winner of Lower Final (LB-F)' : m.match_identifier === 'LB-F' ? 'Loser of Upper Final (UB-F)' : m.match_identifier === 'UB-F' ? 'Winner of Match 2 (M2)' : 'Winner of Prior Match'}
+                                                                </h5>
+                                                                <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono truncate">
+                                                                    {m.match_identifier === 'GF' ? 'Advances directly from LB-F' : m.match_identifier === 'LB-F' ? 'Drops down from UB-F' : 'Awaiting feeder resolution'}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="text-right shrink-0">
+                                                            <span className="text-[10px] font-mono font-semibold px-2 py-1 rounded-lg bg-slate-200/70 dark:bg-white/[0.04] text-slate-500 dark:text-slate-400 block whitespace-nowrap">
+                                                                Awaiting
+                                                            </span>
                                                         </div>
                                                     </div>
-
-                                                    <div className="text-right shrink-0">
-                                                        <span className="font-mono text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-                                                            {scoreBVal}
-                                                        </span>
-                                                        {m.winner_id === divB?.id && (
-                                                            <span className="block text-[10px] text-emerald-500 font-black uppercase font-mono">
-                                                                👑 Winner
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                </div>
+                                                )}
                                             </div>
 
                                             {/* 3. SIMPLIFIED WINNER LOGGING / STATUS ACTION */}
                                             {/* CASE 1: LOCKED FIXTURE */}
                                             {!isUnlocked && (
-                                                <div className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-white/[0.01] border border-dashed border-slate-300 dark:border-white/[0.03] text-xs flex items-center justify-between gap-3">
-                                                    <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400">
-                                                        <Lock className="w-4 h-4 text-slate-400 shrink-0" />
-                                                        <span><strong>Fixture Locked:</strong> {pendingMsg}. Will automatically unlock as soon as prior matches finish.</span>
+                                                <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200/80 dark:border-white/[0.05] text-xs flex items-center justify-between gap-3">
+                                                    <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400 min-w-0 flex-1">
+                                                        <div className="w-6 h-6 rounded-lg bg-slate-200/70 dark:bg-white/[0.05] flex items-center justify-center shrink-0">
+                                                            <Lock className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                                                        </div>
+                                                        <span className="text-xs truncate">
+                                                            <strong className="text-slate-800 dark:text-slate-200">Progression Locked:</strong> {pendingMsg}. Automatically resolves upon feeder match completion.
+                                                        </span>
                                                     </div>
                                                 </div>
                                             )}
